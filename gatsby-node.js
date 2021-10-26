@@ -11,20 +11,48 @@ const chunk = require(`lodash/chunk`)
  *
  * See https://www.gatsbyjs.com/docs/node-apis/#createPages for more info.
  */
+
 exports.createPages = async gatsbyUtilities => {
-  // Query our posts from the GraphQL server
-  const posts = await getPosts(gatsbyUtilities)
-
-  // If there are no posts in WordPress, don't do anything
-  if (!posts.length) {
-    return
+    const { actions, graphql, reporter} = gatsbyUtilities
+    const result = await graphql(`
+        {
+            allWpRecept {
+                nodes {
+                    id
+                    uri
+                    singlePaketAfc {
+                        tooltip
+                        tips
+                        tidFormat
+                        tid
+                        svarighetsgrad
+                        saHarGorDu
+                        kortBeskrivning
+                    }
+                }
+            }
+        }
+  `)
+  if (result.errors) {
+    reporter.error("There was an error fetching posts", result.errors)
   }
-
-  // If there are posts, create pages for them
-  await createIndividualBlogPostPages({ posts, gatsbyUtilities })
-
-  // And a paginated archive
-  await createBlogPostArchive({ posts, gatsbyUtilities })
+  
+  const { allWpRecept } = result.data
+  
+  // Define the template to use
+  const template = require.resolve(`./src/templates/receptPost.js`)
+  
+  if (allWpRecept.nodes.length) {
+    allWpRecept.nodes.map(recept => {
+      actions.createPage({
+        // It's best practice to use the uri field from WPGraphQL nodes when
+        // building
+        path: recept.uri,
+        component: template,
+        context: recept,
+      })
+    })
+  }
 }
 
 /**
