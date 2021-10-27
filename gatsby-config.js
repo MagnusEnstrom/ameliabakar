@@ -15,6 +15,16 @@ module.exports = {
    */
   plugins: [
     {
+        resolve: `gatsby-plugin-google-fonts`,
+        options: {
+            fonts: [
+                `Lusitana\:700`,
+                `Nunito\:300,400,600,700,800` // you can also specify font weights and styles
+            ],
+            display: 'swap'
+        }
+    },
+    {
       /**
        * First up is the WordPress source plugin that connects Gatsby
        * to your WordPress site.
