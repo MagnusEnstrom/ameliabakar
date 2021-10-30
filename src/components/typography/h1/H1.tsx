@@ -1,14 +1,9 @@
 import styled from '@emotion/styled'
 import React, { FC } from 'react'
-import colors from '../../../lib/colors'
-import radius from '../../../lib/radius'
+import typography from '../../../lib/typography'
 
 const StyledH1 = styled.h1({
-    fontWeight: 700,
-    fontSize: '24px',
-    lineHeight: '150%',
-    fontFamily: "'Lusitana', serif",
-
+    ...typography.h1Mobile
 })
 
 const H1: FC<React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>> = ({children, ...rest}) => {

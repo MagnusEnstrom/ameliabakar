@@ -2,10 +2,11 @@ import styled from '@emotion/styled'
 import React, { FC } from 'react'
 import colors from '../../../lib/colors'
 import radius from '../../../lib/radius'
+import typography from '../../../lib/typography'
 
 const StyledButton = styled.button({
+    ...typography.button,
     padding: '14px 40px 14px 40px',
-    fontSize: '15px',
 
     backgroundColor: colors.grey,
     color: colors.jet,
