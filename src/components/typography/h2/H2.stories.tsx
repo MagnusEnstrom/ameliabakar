@@ -18,5 +18,5 @@ const Template = (args) => <H2>{args.text}</H2>;
 export const Initial = Template.bind({});
 
 Initial.args = {
-  text: "font: 700 24px/150% 'Lusitana', serif; ",
+  text: "font: 700 20px/150% 'Lusitana', serif",
 };
