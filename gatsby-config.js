@@ -25,6 +25,14 @@ module.exports = {
         }
     },
     {
+        resolve: 'gatsby-plugin-react-svg',
+        options: {
+            rule: {
+                include: /assets/
+            }
+        }
+    },
+    {
       /**
        * First up is the WordPress source plugin that connects Gatsby
        * to your WordPress site.
