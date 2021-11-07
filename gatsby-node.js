@@ -15,23 +15,37 @@ const chunk = require(`lodash/chunk`)
 exports.createPages = async gatsbyUtilities => {
     const { actions, graphql, reporter} = gatsbyUtilities
     const result = await graphql(`
-        {
-            allWpRecept {
-                nodes {
-                    id
-                    uri
-                    singlePaketAfc {
-                        tooltip
-                        tips
-                        tidFormat
-                        tid
-                        svarighetsgrad
-                        saHarGorDu
-                        kortBeskrivning
+    {
+        allWpRecept {
+          nodes {
+            id
+            uri
+            title
+            singlePaketAfc {
+              tooltip
+              tips
+              tidFormat
+              tid
+              svarighetsgrad
+              saHarGorDu
+              kortBeskrivning
+              images {
+                localFile {
+                  childrenImageSharp {
+                    original {
+                      src
                     }
+                    fixed(width: 400, height: 400) {
+                      src
+                    }
+                  }
                 }
+              }
             }
+          }
         }
+      }
+      
   `)
   if (result.errors) {
     reporter.error("There was an error fetching posts", result.errors)
@@ -40,7 +54,7 @@ exports.createPages = async gatsbyUtilities => {
   const { allWpRecept } = result.data
   
   // Define the template to use
-  const template = require.resolve(`./src/templates/receptPost.js`)
+  const template = require.resolve(`./src/templates/receptPost.tsx`)
   
   if (allWpRecept.nodes.length) {
     allWpRecept.nodes.map(recept => {

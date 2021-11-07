@@ -1,21 +1,19 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import colors from '../../lib/colors'
 import typography from '../../lib/typography'
-import Hamburger from '../../assets/hamburger-menu.svg'
-import Heart from '../../assets/heart.svg'
-import Search from '../../assets/search.svg'
-import LogoUrl from '../../assets/logo.svg'
+import Hamburger from '../../assets/hamburger-menu-white.svg'
+import Heart from '../../assets/heart-white.svg'
+import Search from '../../assets/search-white.svg'
+import LogoUrl from '../../assets/logo-white.svg'
 
-const StyledHeader = styled.header(({transparent}: {transparent?: boolean}) => {
+const StyledHeader = styled.header(() => {
     return {
     ...typography.nav,
-    backgroundColor: transparent ? 'rgba(0, 0 ,0 ,0)' : colors.white,
+    backgroundColor: 'rgba(0, 0 ,0 ,0)',
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     width: '100%',
     padding: '20px 10px',
-    color: transparent ? '#FFFFFF' : 'inherit',
 }})
 
 const Logo = styled(LogoUrl)({
@@ -48,23 +46,17 @@ const SearchIcon = styled(Search)({
     marginRight: '24px',
 })
 
-type Props = {
-    transparent?: boolean;
-}
-const Header = ({transparent}: Props) => {
+const HeaderTransparent = () => {
     return (
-        <StyledHeader transparent={true}>
+        <StyledHeader>
             <Logo />
             <IconWrapper>
                 <SearchIcon />
                 <HeartIcon />
                 <HamburgerIcon />
             </IconWrapper>
-            {/* <Heart />
-            <Search />
-            <Hamburger /> */}
         </StyledHeader>
     )
 }
 
-export default Header
+export default HeaderTransparent;
