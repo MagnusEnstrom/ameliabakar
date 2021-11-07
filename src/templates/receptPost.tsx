@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link, graphql } from "gatsby"
 import Image from "gatsby-image"
 import parse from "html-react-parser"
@@ -17,6 +17,9 @@ import H2 from "../components/typography/h2/H2"
 import styled from "@emotion/styled"
 import ReceptInfo from "../components/receptInfo/ReceptInfo"
 import P from "../components/typography/p/P"
+import ContentNavWrapper from "../components/navigation/contentNavWrapper/ContentNavWrapper"
+import ContentNavItem from "../components/navigation/contentNavItem/ContentNavItem"
+import DoLikeThis from "../components/doLikeThis/DoLikeThis"
 
 
 const Title = styled(H2)({
@@ -36,6 +39,8 @@ const receptPost = ({pageContext}: Props) => {
     const images = pageContext?.singlePaketAfc?.images?.map((img) => {
         return img.localFile.childrenImageSharp[0].original.src
     })
+
+    const [activeNav, setActiveNav] = useState<'ingredienser' | 'detail'>('ingredienser')
   return (
     <Layout navImgs={images}>
         <Title>{pageContext.title}</Title>
@@ -43,6 +48,12 @@ const receptPost = ({pageContext}: Props) => {
         <StyledP>{pageContext.singlePaketAfc.kortBeskrivning}</StyledP>
         {/* Betygsätt */}
 
+        <ContentNavWrapper>
+            <ContentNavItem text={'Ingredienser'} onClick={() => setActiveNav('ingredienser')} active={activeNav === 'ingredienser'} />
+            <ContentNavItem text={'Gör såhär'} onClick={() => setActiveNav('detail')} active={activeNav === 'detail'} />
+        </ContentNavWrapper>
+
+        {activeNav === 'detail' && <DoLikeThis saHarGorDu={pageContext.singlePaketAfc.saHarGorDu} />}
         
         <pre>
             <code>
