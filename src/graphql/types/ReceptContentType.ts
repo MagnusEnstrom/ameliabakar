@@ -2,6 +2,7 @@ export type ReceptContent = {
     id: string;
     uri: string;
     title: string;
+    content: string;
     singlePaketAfc: {
       tooltip: null | string;
       tips: string;

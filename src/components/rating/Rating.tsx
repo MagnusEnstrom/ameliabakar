@@ -12,7 +12,6 @@ const Star = styled(StarIcon)(() => {
 })
 
 const RatingText = styled.span({
-
 })
 
 const RatingWrapper = styled.div({

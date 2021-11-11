@@ -20,6 +20,7 @@ import P from "../components/typography/p/P"
 import ContentNavWrapper from "../components/navigation/contentNavWrapper/ContentNavWrapper"
 import ContentNavItem from "../components/navigation/contentNavItem/ContentNavItem"
 import DoLikeThis from "../components/doLikeThis/DoLikeThis"
+import Ingredients from "../components/Ingredients/Ingredients"
 
 
 const Title = styled(H2)({
@@ -54,6 +55,7 @@ const receptPost = ({pageContext}: Props) => {
         </ContentNavWrapper>
 
         {activeNav === 'detail' && <DoLikeThis saHarGorDu={pageContext.singlePaketAfc.saHarGorDu} />}
+        {activeNav === 'ingredienser' && <Ingredients content={pageContext.content} />}
         
         <pre>
             <code>
