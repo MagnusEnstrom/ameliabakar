@@ -22,6 +22,11 @@ exports.createPages = async gatsbyUtilities => {
             uri
             title
             content
+            tags {
+                nodes {
+                    name
+                }
+            }
             singlePaketAfc {
               tooltip
               tips

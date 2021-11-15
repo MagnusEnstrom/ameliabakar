@@ -3,6 +3,11 @@ export type ReceptContent = {
     uri: string;
     title: string;
     content: string;
+    tags: {
+        nodes: {
+            name: 'string'
+        }[]
+    };
     singlePaketAfc: {
       tooltip: null | string;
       tips: string;

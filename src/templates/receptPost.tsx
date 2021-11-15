@@ -21,6 +21,8 @@ import ContentNavWrapper from "../components/navigation/contentNavWrapper/Conten
 import ContentNavItem from "../components/navigation/contentNavItem/ContentNavItem"
 import DoLikeThis from "../components/doLikeThis/DoLikeThis"
 import Ingredients from "../components/Ingredients/Ingredients"
+import Regular from "../components/chips/regular/regular"
+import Fab from "../components/fab/Fab"
 
 
 const Title = styled(H2)({
@@ -32,6 +34,18 @@ const Title = styled(H2)({
 const StyledP = styled(P)({
     textAlign: 'center',
     margin: '20px 10px',
+})
+const ChipArea = styled.div({
+    display: 'flex',
+    columnGap: '17.5px',
+    flexWrap: 'wrap',
+    margin: '32px 10px 0px 10px',
+    rowGap: '10px',
+})
+const FabArea = styled.div({
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginTop: '20px',
 })
 type Props = {pageContext: ReceptContent}
 const receptPost = ({pageContext}: Props) => {
@@ -56,12 +70,20 @@ const receptPost = ({pageContext}: Props) => {
 
         {activeNav === 'detail' && <DoLikeThis saHarGorDu={pageContext.singlePaketAfc.saHarGorDu} />}
         {activeNav === 'ingredienser' && <Ingredients content={pageContext.content} />}
-        
-        <pre>
-            <code>
+        <ChipArea>
+            {pageContext.tags.nodes.map(tag => <Regular text={tag.name} />)}
+        </ChipArea>
+        <FabArea>
+            <Fab variant={'save'} />
+            <Fab variant={'share'} />
+            <Fab variant={'print'} />
+        </FabArea>
+        <H2 style={{marginTop: '50px', textAlign: 'center'}}>Du kanske också gillar...</H2>
+        {/* <pre >
+            <code style={{ maxWidth: '100vw', overflow: 'scroll'}}>
                 {JSON.stringify(pageContext, null, 4)}
             </code>
-        </pre>
+        </pre> */}
     </Layout>
   )
 }
