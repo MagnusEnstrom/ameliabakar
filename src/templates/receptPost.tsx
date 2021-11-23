@@ -23,6 +23,7 @@ import DoLikeThis from "../components/doLikeThis/DoLikeThis"
 import Ingredients from "../components/Ingredients/Ingredients"
 import Regular from "../components/chips/regular/regular"
 import Fab from "../components/fab/Fab"
+import ResipeCard from "../components/recipeCard/ResipeCard"
 
 
 const Title = styled(H2)({
@@ -79,6 +80,7 @@ const receptPost = ({pageContext}: Props) => {
             <Fab variant={'print'} />
         </FabArea>
         <H2 style={{marginTop: '50px', textAlign: 'center'}}>Du kanske också gillar...</H2>
+        <ResipeCard pageContext={pageContext} />
         {/* <pre >
             <code style={{ maxWidth: '100vw', overflow: 'scroll'}}>
                 {JSON.stringify(pageContext, null, 4)}
