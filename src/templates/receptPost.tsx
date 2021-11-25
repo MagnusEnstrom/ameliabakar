@@ -80,7 +80,7 @@ const receptPost = ({pageContext}: Props) => {
             <Fab variant={'print'} />
         </FabArea>
         <H2 style={{marginTop: '50px', textAlign: 'center'}}>Du kanske också gillar...</H2>
-        <ResipeCard pageContext={pageContext} />
+        {/* <ResipeCard pageContext={pageContext} /> */}
         {/* <pre >
             <code style={{ maxWidth: '100vw', overflow: 'scroll'}}>
                 {JSON.stringify(pageContext, null, 4)}
