@@ -5,6 +5,7 @@ import InstagramIcon from '../../assets/instagram.svg'
 import EmailIcon from '../../assets/email.svg'
 import colors from '../../lib/colors';
 import typography from '../../lib/typography';
+import Subscribe from '../subscribe/Subscribe';
 
 const Logo = styled(LogoUrl)({
     border: 'none',
@@ -22,6 +23,7 @@ const Instagram = styled(InstagramIcon)({
 
 const ContactContainer = styled.div({
     ...typography.p,
+    fontWeight: 600,
     display: 'flex',
     marginBottom: '20px',
     justifyContent: 'start',
@@ -37,7 +39,7 @@ const Email = styled(EmailIcon)({
 
 const StyledFooter = styled.div({
     backgroundColor: colors.cultured,
-    padding: '50px 10px',
+    padding: '50px 20px',
     display: 'grid',
     gridTemplateAreas: `
     "logo logo"
@@ -49,7 +51,7 @@ const StyledFooter = styled.div({
     "inställngar inställngar"
     "copyright copyright"
     `
-})
+});
 
 const Footer = () => {
     return (
@@ -64,6 +66,7 @@ const Footer = () => {
                 contact@ameliabakar.se
             </ContactContainer>
 
+            <Subscribe style={{gridArea: 'nyhetsbrev', marginTop: '20px'}} />
             {/* nyhetsbrev */}
             {/* links */}
             {/* cookies */}

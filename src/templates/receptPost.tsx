@@ -24,6 +24,7 @@ import Ingredients from "../components/Ingredients/Ingredients"
 import Regular from "../components/chips/regular/regular"
 import Fab from "../components/fab/Fab"
 import ResipeCard from "../components/recipeCard/ResipeCard"
+import Footer from "../components/footer/Footer"
 
 
 const Title = styled(H2)({
