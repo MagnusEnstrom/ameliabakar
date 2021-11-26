@@ -40,7 +40,7 @@ const InputWrapper = styled.form({
 
 const Input = styled.input({
     borderRadius: radius.button,
-    marginLeft: '20px',
+    paddingLeft: '20px',
     border: 'none',
     fontWeight: 300,
     width: '100%',
@@ -58,8 +58,10 @@ const Input = styled.input({
 
 const ErrorMessage = styled.span({
     ...typography.note,
+    display: 'block',
     color: colors.fireOpal,
-    marginLeft: '24px',
+    marginLeft: '23px',
+    marginTop: '5px',
     // position: 'absolute',
 })
 
@@ -78,6 +80,7 @@ const Subscribe = ({...rest}: React.DetailedHTMLProps<React.HTMLAttributes<HTMLD
         }
 
         if(subscribeStatus !== 'success') {
+            setValue('')
             return setSubscriobeStatus('success')
         }
 
