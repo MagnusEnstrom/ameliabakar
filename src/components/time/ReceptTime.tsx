@@ -22,11 +22,12 @@ const TimeText = styled.span({
 type Props = {
     time: number;
     timeFormat: 'min' | 'h';
+    disableIcon?: boolean
 }
-const ReceptTime = ({time, timeFormat}: Props) => {
+const ReceptTime = ({time, timeFormat, disableIcon}: Props) => {
     return (
         <Time>
-            <Clock />
+            {!disableIcon && <Clock />}
             <TimeText>{time} {timeFormat === 'min' ? 'min' : 'h'}</TimeText>
         </Time>
     )

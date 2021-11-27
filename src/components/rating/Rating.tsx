@@ -12,7 +12,6 @@ const Star = styled(StarIcon)(() => {
 })
 
 const RatingText = styled.span({
-
 })
 
 const RatingWrapper = styled.div({
@@ -30,10 +29,10 @@ const DotWrapper = styled.div({
 })
 type Props = {
     rating: number
-}
-const Rating = ({rating}: Props) => {
+} & React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+const Rating = ({rating, ...rest}: Props) => {
     return (
-        <RatingWrapper>
+        <RatingWrapper {...rest}>
             <RatingText>{rating}</RatingText>
             <Star />
         </RatingWrapper>
