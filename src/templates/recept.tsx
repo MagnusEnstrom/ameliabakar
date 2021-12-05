@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
+import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
 import Secondary from '../components/buttons/secondary/Secondary'
 import Fab from '../components/fab/Fab'
 import SearchInput from '../components/Form.tsx/SearchInput'
@@ -32,6 +33,7 @@ const recept = ({pageContext}: Props) => {
     return (
         <Layout>
             <PageWrapper>
+                <Breadcrumbs style={{margin: '20px 10px 0px 10px'}} crumbs={[{name: 'Hem', to:'/'}, {name: 'Recept', to: '/recept'}]} />
                 <H1 style={{ textAlign: 'center', margin: '20px' }}>Recept</H1>
                 <SearchWrapper>
                     <StyledSearch placeholder={'Sök recept'} />
