@@ -12,6 +12,7 @@ const Star = styled(StarIcon)(() => {
 })
 
 const RatingText = styled.span({
+    wordBreak: 'keep-all',
 })
 
 const RatingWrapper = styled.div({

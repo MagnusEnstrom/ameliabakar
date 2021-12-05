@@ -14,7 +14,11 @@ const StyledFab = styled.button({
     backgroundColor: colors.white,
     border: 'none',
     boxShadow: '0px 8px 16px rgba(17, 17, 17, 0.04)',
-    
+    placeItems: 'center',
+    padding: '0px',
+    minWidth: '44px',
+    display: 'grid',
+    minHeight: '44px',
     '&:hover': {
         backgroundColor: colors.cultured,
         boxShadow: 'none',
@@ -23,39 +27,39 @@ const StyledFab = styled.button({
 
 type Props = {
     variant: 'share' | 'save' | 'print' | 'copy' | 'filter'
-}
+} & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
-const Fab = ({variant}: Props) => {
+const Fab = ({variant, ...rest}: Props) => {
     if(variant === 'save') {
         return (
-            <StyledFab>
+            <StyledFab {...rest}>
                 <Heart />
             </StyledFab>
         )
     }
     if(variant === 'print') {
         return (
-            <StyledFab>
+            <StyledFab {...rest}>
                 <Print />
             </StyledFab>
         )
     }
     if(variant === 'copy') {
         return (
-            <StyledFab>
+            <StyledFab {...rest}>
                 <Copy />
             </StyledFab>
         )
     }
     if(variant === 'filter') {
         return (
-            <StyledFab>
+            <StyledFab {...rest}>
                 <Filter />
             </StyledFab>
         )
     }
     return (
-        <StyledFab>
+        <StyledFab {...rest}>
             <ShareSvg />
         </StyledFab>
     )

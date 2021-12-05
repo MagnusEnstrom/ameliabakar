@@ -7,6 +7,7 @@ import ReceptTime from '../time/ReceptTime';
 import colors from '../../lib/colors';
 import ClockIcon from '../../assets/clock.svg'
 import Rating from '../rating/Rating';
+import { Link } from 'gatsby';
 
 const Time = styled.div({
     display: 'flex',
@@ -28,11 +29,14 @@ const TimeText = styled.span({
     ...typography.note,
 })
 
+const StyledLink = styled(Link)({
+    textDecoration: 'none',
+})
 const Card = styled.div(({imgUrl}: {imgUrl: string}) => {
     // 29 / 44
     return {
         minHeight: '220px',
-        width: '145px',
+        backgroundColor: colors.jet,
         backgroundImage: `url(${imgUrl})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
@@ -78,21 +82,31 @@ const CardText = styled.h2({
     justifySelf: 'center',
 })
 
-type Props = {pageContext: ReceptContent}
+type Props = {
+    url: string;
+    title: string;
+    tid: number;
+    tidFormat: string;
+    rating: number;
+    uri: string;
+}
 
-const ResipeCard = ({pageContext}: Props) => {
+const ResipeCard = ({tidFormat, rating, tid, title, url, uri}: Props) => {
     return (
-        <Card imgUrl={pageContext.singlePaketAfc.images[0].localFile.childrenImageSharp[0].original.src}>
+        <StyledLink to={uri}>
+
+        <Card imgUrl={url}>
             <HeartIcon />
             <Content>
-                <CardText>{pageContext.title}</CardText>
+                <CardText>{title}</CardText>
                 <Time>
                     <Clock />
-                    <TimeText>{pageContext.singlePaketAfc.tid} {pageContext.singlePaketAfc.tidFormat === 'min' ? 'min' : 'h'}</TimeText>
+                    <TimeText>{tid} {tidFormat === 'min' ? 'min' : 'h'}</TimeText>
                 </Time>
-                <Rating style={{ gridArea: 'Rating', justifySelf: 'end'}} rating={4.2} />
+                <Rating style={{ gridArea: 'Rating', justifySelf: 'end'}} rating={rating} />
             </Content>
         </Card>
+        </StyledLink>
     )
 }
 

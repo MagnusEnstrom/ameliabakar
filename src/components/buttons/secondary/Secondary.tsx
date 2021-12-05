@@ -13,6 +13,10 @@ const StyledButton = styled.button({
     border: 'none',
     borderRadius: radius.button,
     
+    ':focus': {
+        backgroundColor: colors.grey,
+        color: colors.jet,
+    },
     '&:hover': {
         backgroundColor: colors.silver,
         color: colors.white,

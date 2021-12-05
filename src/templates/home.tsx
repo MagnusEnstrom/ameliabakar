@@ -12,10 +12,25 @@ import PartyDrawSvg from '../assets/party-draw.svg'
 import DeliveryDraw from '../assets/order-delivery-draw.svg'
 import HangoutDraw from '../assets/hangout-draw.svg'
 import Primary from '../components/buttons/primary/Primary'
+import Popular from '../components/recipes/popular/Popular'
+import Latest from '../components/recipes/latest/Latest'
+import Tips from '../components/tips/Tips'
+import HomeImg from './home.png'
 
 const TextWrapper = styled.div({
     textAlign: 'center',
     padding: '0px 10px',
+})
+
+const TextWrapperSvg = styled.div({
+    justifySelf: 'center',
+    textAlign: 'center',
+    padding: '0px 10px',
+    maxWidth: '22ch'
+})
+
+const HomePageImg = styled.img({
+    width: '100%',
 })
 
 const PartyDraw = styled(PartyDrawSvg)({
@@ -37,10 +52,11 @@ const H3 = styled.h2({
 
 const home = () => {
     return (
-        <Layout>
+        <Layout isHomePage={true}>
             <AreaWrapper>
                 <TextWrapper>
-                    <H2>Recept för alla!</H2>
+                    <HomePageImg src={HomeImg} />
+                    <H2 style={{ marginTop: '30px' }}>Recept för alla!</H2>
                     <P>
                         Det finns alltid en anledning att baka. Här hittar du mina egna recept för alla typer av svårighetsgrader och varianter. 
                     </P>
@@ -52,8 +68,8 @@ const home = () => {
                     <Secondary>Här hittar du mina recept</Secondary>
                 </Link>
 
-                <H2Decoration style={{margin: '0px 10px'}} text={'Populära recept'} />
-                {/* render popular recepie */}
+                <H2Decoration style={{margin: '0px 10px 30px 10px'}} text={'Populära recept'} />
+                <Popular style={{ margin: '0px 10px'}} />
                 {/* render pick of amelia */}
 
                 <TextWrapper>
@@ -72,10 +88,11 @@ const home = () => {
                 
                 <SubHome />
 
-                {/* Rednder tips */}
-
-                <H2Decoration style={{margin: '0px 10px'}} text={'Senaste recepten'} />
-                {/*  render latest recepies */}
+                <Tips />
+                
+                <H2Decoration style={{margin: '50px 10px 30px 10px'}} text={'Senaste recepten'} />
+                <Latest style={{ margin: '0px 10px'}} />
+                
                 <Link to={'/recept'} style={{ justifySelf: 'center', margin: '30px 0px 50px 0px' }}>
                     <Secondary>Visa alla recept</Secondary>
                 </Link>
@@ -83,28 +100,28 @@ const home = () => {
                 <H2Decoration style={{margin: '0px 10px'}} text={'Utbudet'} />
 
                 <PartyDraw />
-                <TextWrapper>
+                <TextWrapperSvg>
                     <H3>Bakning</H3>
                     <P>
                         Jag kan baka till barnkalaset, baby showern eller bara till hemmakvällen
                     </P>
-                </TextWrapper>
+                </TextWrapperSvg>
                 
                 <Hangout />
-                <TextWrapper>
+                <TextWrapperSvg>
                     <H3>Konferenser</H3>
                     <P>
                         Jag fixar företagsfika till er konferens, after work eller andra trevligheter
                     </P>
-                </TextWrapper>
+                </TextWrapperSvg>
 
                 <Delivery />
-                <TextWrapper>
+                <TextWrapperSvg>
                     <H3>Leveranser</H3>
                     <P>
                         Gratis utkörning av bakverk och godis inom Umeå kommun!
                     </P>
-                </TextWrapper>
+                </TextWrapperSvg>
 
                 <Link to={'/om-bestallningar'} style={{ justifySelf: 'center', margin: '30px 0px 50px 0px' }}>
                     <Primary>Läs mer om beställningar</Primary>

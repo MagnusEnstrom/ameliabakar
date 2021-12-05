@@ -30,3 +30,33 @@ export type ReceptContent = {
       }[]
     }
 }
+
+export type ReceptPageQuery = {
+    id: string;
+    uri: string;
+    title: string;
+    date: string;
+    tags: {
+        nodes: {
+            name: 'string'
+        }[]
+    };
+    singlePaketAfc: {
+      tidFormat: "min" | "h";
+      tid: number;
+      svarighetsgrad: 'Lätt' | 'Medel' | 'Svår';
+      images: {
+        localFile: {
+          childrenImageSharp: {
+            original: {
+              src: string;
+            }
+            fixed: {
+              src: string;
+            }
+          }[]
+        }
+      }[]
+    }
+}[]
+  
