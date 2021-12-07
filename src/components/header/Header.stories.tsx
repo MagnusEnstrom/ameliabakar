@@ -4,7 +4,7 @@ import React from 'react'
 
 import { Meta, Story } from '@storybook/react';
 
-import Header from './Header';
+import Header from './header';
 
 export default {
   component: Header,

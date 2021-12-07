@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
 import Secondary from '../components/buttons/secondary/Secondary'
+import Chip from '../components/chips/regular/Chip'
 import Fab from '../components/fab/Fab'
 import SearchInput from '../components/Form.tsx/SearchInput'
 import Layout from '../components/layout'
@@ -22,6 +23,10 @@ const StyledSearch = styled(SearchInput)({
     width: '100%',
 })
 
+const FilterContainer = styled.div({
+
+});
+
 const SearchWrapper = styled.div({
     margin: '0px 10px 20px 0px',
     gap: '10px',
@@ -30,6 +35,7 @@ const SearchWrapper = styled.div({
 
 type Props = {pageContext: ReceptPageQuery}
 const recept = ({pageContext}: Props) => {
+    const [expanded, setExpanded] = useState(false);
     return (
         <Layout>
             <PageWrapper>
@@ -37,8 +43,13 @@ const recept = ({pageContext}: Props) => {
                 <H1 style={{ textAlign: 'center', margin: '20px' }}>Recept</H1>
                 <SearchWrapper>
                     <StyledSearch placeholder={'Sök recept'} />
-                    <Fab style={{padding: '0px'}} variant={'filter'} />
+                    <Fab onClick={() => setExpanded(true)} aria-label={'show filter'} style={{padding: '0px'}} variant={'filter'} />
                 </SearchWrapper>
+                {expanded && 
+                    <FilterContainer>
+                        <Chip text={'Choklad'} />
+                    </FilterContainer>
+                }
                 <RecipeWrapper>
                     <Latest loadMore={true} show={10} />
                 </RecipeWrapper>
