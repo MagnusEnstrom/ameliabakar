@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
-import React from 'react'
-import colors from '../../../lib/colors'
-import radius from '../../../lib/radius'
-import typography from '../../../lib/typography'
-import Close from '../../../assets/close-white.svg';
+import React, { useState } from 'react'
+import colors from '../../lib/colors'
+import radius from '../../lib/radius'
+import typography from '../../lib/typography'
+import Close from '../../assets/close-white.svg';
 
 const CloseIcon = styled(Close)({
     width: '14px',
@@ -21,14 +21,14 @@ const StyledChip = styled.button(() => {
         display: 'flex',
         gap: '6px',
         
-        '&:hover, &.selected:hover': {
+        '&:hover, &[aria-selected="true"]:hover': {
             backgroundColor: colors.silver,
             border: `2px solid ${colors.silver}`,
             color: colors.white,
             cursor: 'pointer',
         },
 
-        '&.selected': {
+        '&[aria-selected="true"]': {
             backgroundColor: colors.laruelGreen,
             border: `2px solid ${colors.laruelGreen}`,
             color: colors.white
@@ -48,7 +48,7 @@ type Props = {
 } & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 const Chip = ({text, selected, ...rest}: Props) => {
     return (
-        <StyledChip {...rest} className={(rest.className ? rest.className : '') + (selected ? ' selected' : '')}>
+        <StyledChip aria-selected={selected} {...rest}>
             {text}
             {selected && <CloseIcon />}
         </StyledChip>

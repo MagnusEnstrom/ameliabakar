@@ -147,6 +147,11 @@ const createReceptPage = async ({ actions, graphql, reporter}) => {
             id
             uri
             title
+            tags {
+                nodes {
+                  name
+                }
+            }
             singlePaketAfc {
               tidFormat
               tid
@@ -172,14 +177,18 @@ const createReceptPage = async ({ actions, graphql, reporter}) => {
         reporter.error("There was an error fetching posts", result.errors)
     }
   
-    const { allWpRecept } = result.data.allWpRecept.nodes
+    const { allWpRecept } = result.data
   
     // Define the template to use
     const recept = require.resolve(`./src/templates/recept.tsx`)
-  
-    actions.createPage({
-        path: '/recept',
-        component: recept,
-        context: allWpRecept,
-    })
+
+    // if (allWpRecept) {
+          actions.createPage({
+            // It's best practice to use the uri field from WPGraphQL nodes when
+            // building
+            path: '/recept',
+            component: recept,
+            context: allWpRecept,
+          })
+    // }
 }

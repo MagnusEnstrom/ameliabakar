@@ -95,7 +95,7 @@ const ResipeCard = ({tidFormat, rating, tid, title, url, uri}: Props) => {
     return (
         <StyledLink to={uri}>
 
-        <Card imgUrl={url}>
+        <Card aria-label={'recept'} imgUrl={url}>
             <HeartIcon />
             <Content>
                 <CardText>{title}</CardText>

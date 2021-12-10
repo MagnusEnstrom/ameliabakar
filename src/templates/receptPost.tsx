@@ -1,15 +1,4 @@
 import React, { useState } from "react"
-import { Link, graphql } from "gatsby"
-import Image from "gatsby-image"
-import parse from "html-react-parser"
-
-// We're using Gutenberg so we need the block styles
-// these are copied into this project due to a conflict in the postCSS
-// version used by the Gatsby and @wordpress packages that causes build
-// failures.
-// @todo update this once @wordpress upgrades their postcss version
-import "../css/@wordpress/block-library/build-style/style.css"
-import "../css/@wordpress/block-library/build-style/theme.css"
 
 import Layout from "../components/layout"
 import { ReceptContent } from "../graphql/types/ReceptContentType"
@@ -21,10 +10,8 @@ import ContentNavWrapper from "../components/navigation/contentNavWrapper/Conten
 import ContentNavItem from "../components/navigation/contentNavItem/ContentNavItem"
 import DoLikeThis from "../components/doLikeThis/DoLikeThis"
 import Ingredients from "../components/Ingredients/Ingredients"
-import Regular from "../components/chips/regular/regular"
 import Fab from "../components/fab/Fab"
-import ResipeCard from "../components/recipeCard/ResipeCard"
-import Footer from "../components/footer/Footer"
+import Chip from "../components/chips/Chip"
 
 
 const Title = styled(H2)({
@@ -73,7 +60,7 @@ const receptPost = ({pageContext}: Props) => {
         {activeNav === 'detail' && <DoLikeThis saHarGorDu={pageContext.singlePaketAfc.saHarGorDu} />}
         {activeNav === 'ingredienser' && <Ingredients content={pageContext.content} />}
         <ChipArea>
-            {pageContext.tags.nodes.map(tag => <Regular text={tag.name} />)}
+            {pageContext.tags.nodes.map(tag => <Chip text={tag.name} />)}
         </ChipArea>
         <FabArea>
             <Fab variant={'save'} />
