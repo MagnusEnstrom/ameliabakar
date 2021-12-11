@@ -34,21 +34,15 @@ describe('/recept', () => {
         cy.findByRole('button', { name: 'Choklad'}).should('not.exist');
 
     })
-    it('A user can filter recipes', () => {
-        cy.findAllByLabelText('recept').should('have.length', 10);
+    // it('A user can filter recipes', () => {
+    //     cy.findAllByLabelText('recept').should('have.length', 10);
         
-        const filterButton = cy.findByLabelText('show filter');
-        filterButton.click();
+    //     const filterButton = cy.findByLabelText('show filter');
+    //     filterButton.click();
         
-        const filterChip = cy.findByRole('button', { name: 'Choklad'});
-        filterChip.click();
-        const selectedFilterChip = cy.findByRole('button', { name: 'Choklad', selected: true });
+    //     const filterChip = cy.findByRole('button', { name: 'Choklad'});
+    //     filterChip.click();
         
-        cy.findAllByLabelText('recept').should('have.length.lessThan', 10);
-        
-        selectedFilterChip.click();
-        cy.findByRole('button', { name: 'Choklad', selected: true }).should('not.exist');
-        cy.findByRole('button', { name: 'Choklad', selected: false }).should('exist');
-        cy.findAllByLabelText('recept').should('have.length', 10);
-    })
+    //     cy.findAllByRole('button').s;
+    // })
   })
