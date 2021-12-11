@@ -53,6 +53,10 @@ const FilterContainer = styled.div({
     `,
 });
 
+const ChipContainer = styled.div({
+    overflowY: 'scroll',
+})
+
 const SearchWrapper = styled.div({
     margin: '0px 10px 20px 0px',
     gap: '10px',
@@ -76,9 +80,7 @@ const recept = ({pageContext}: Props) => {
     }
 
     useEffect(() => {
-        setFilteredRecipes(pageContext.nodes);
-
-        let afterFilter = filteredRecipes;
+        let afterFilter = pageContext.nodes;
         
         activeFilters.forEach(filterTag => {
             afterFilter = afterFilter.filter(recipe => {
@@ -103,7 +105,9 @@ const recept = ({pageContext}: Props) => {
                         <FilterContainer>
                             <Close onClick={() => setExpanded(false)} aria-label={'close filter'} style={{ gridArea: 'close', placeSelf: 'start end' }} />
                             <H2 style={{ gridArea: 'title', placeSelf: 'start', margin: '6px 0px 20px 0px'}} >Filtrera</H2>
-                            <RecipeFilter activeFilters={activeFilters} handleFilterClick={handleFilterClick} recipes={filteredRecipes} />
+                            <ChipContainer>
+                                <RecipeFilter activeFilters={activeFilters} handleFilterClick={handleFilterClick} recipes={filteredRecipes} />
+                            </ChipContainer>
                         </FilterContainer>
                     </Lightbox>
                 }
