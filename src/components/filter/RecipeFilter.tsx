@@ -4,7 +4,6 @@ import { ReceptPageQuery } from '../../graphql/types/ReceptContentType'
 import Chip from '../chips/Chip'
 
 const FilterList = styled.div({
-    overflowY: 'scroll',
     display: 'flex',
     gap: '10px 30px',
     flexWrap: 'wrap',
