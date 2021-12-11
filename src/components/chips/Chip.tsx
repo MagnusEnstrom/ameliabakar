@@ -20,15 +20,8 @@ const StyledChip = styled.button(() => {
         padding: '8px 15px',
         display: 'flex',
         gap: '6px',
-        
-        '&:hover, &[aria-selected="true"]:hover': {
-            backgroundColor: colors.silver,
-            border: `2px solid ${colors.silver}`,
-            color: colors.white,
-            cursor: 'pointer',
-        },
 
-        '&[aria-selected="true"]': {
+        '&[aria-label="selected"]': {
             backgroundColor: colors.laruelGreen,
             border: `2px solid ${colors.laruelGreen}`,
             color: colors.white
@@ -38,6 +31,15 @@ const StyledChip = styled.button(() => {
             border: `2px solid ${colors.cultured}`,
             color: colors.silver,
             backgroundColor: colors.white,
+        },
+
+        ['@media (hover: hover) and (pointer: fine)']: {
+            '&:hover': {
+                backgroundColor: colors.silver,
+                border: `2px solid ${colors.silver}`,
+                color: colors.white,
+                cursor: 'pointer',
+            },
         }
     }
 })
@@ -48,7 +50,7 @@ type Props = {
 } & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 const Chip = ({text, selected, ...rest}: Props) => {
     return (
-        <StyledChip aria-selected={selected} {...rest}>
+        <StyledChip aria-label={selected ? 'selected' : ''} {...rest}>
             {text}
             {selected && <CloseIcon />}
         </StyledChip>

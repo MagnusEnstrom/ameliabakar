@@ -60,6 +60,8 @@ const RecipeGrid = ({ show = 6, loadMore, data, ...rest}: Props & React.Detailed
         setstate(prev => prev + 4);
     }
 
+    console.log('tags', allRecipes.map(recipe => recipe.tags.nodes.map(tags => tags.name)).flatMap(tags => tags))
+
     return (
         <Wrapper>
             <StyledRecipeGrid {...rest}>

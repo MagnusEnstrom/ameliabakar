@@ -1,10 +1,11 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
 import Close from '../components/buttons/close/close'
 import Secondary from '../components/buttons/secondary/Secondary'
 import Chip from '../components/chips/Chip'
 import Fab from '../components/fab/Fab'
+import RecipeFilter from '../components/filter/RecipeFilter'
 import SearchInput from '../components/Form.tsx/SearchInput'
 import Layout from '../components/layout'
 import Latest from '../components/recipes/latest/Latest'
@@ -35,6 +36,7 @@ const Lightbox = styled.div({
     bottom: 0,
     left: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    zIndex: 100,
 
 });
 const FilterContainer = styled.div({
@@ -60,6 +62,33 @@ const SearchWrapper = styled.div({
 type Props = {pageContext: ReceptPageQuery}
 const recept = ({pageContext}: Props) => {
     const [expanded, setExpanded] = useState(false);
+
+    const [filteredRecipes, setFilteredRecipes] = useState(pageContext.nodes);
+    const [activeFilters, setActiveFilters] = useState<string[]>([]);
+
+    const handleFilterClick = (name: string) => {
+        const includesName = activeFilters.includes(name);
+
+        if(includesName) {
+            return setActiveFilters(prev => [...prev].filter(activeFilter => activeFilter !== name));
+        }
+        setActiveFilters(prev => [...prev, name]);
+    }
+
+    useEffect(() => {
+        setFilteredRecipes(pageContext.nodes);
+
+        let afterFilter = filteredRecipes;
+        
+        activeFilters.forEach(filterTag => {
+            afterFilter = afterFilter.filter(recipe => {
+                const tags = recipe.tags.nodes.map(tag => tag.name);
+                return tags.includes(filterTag)
+            })
+        })
+        setFilteredRecipes(afterFilter);
+    }, [activeFilters])
+
     return (
         <Layout>
             <PageWrapper>
@@ -74,12 +103,12 @@ const recept = ({pageContext}: Props) => {
                         <FilterContainer>
                             <Close onClick={() => setExpanded(false)} aria-label={'close filter'} style={{ gridArea: 'close', placeSelf: 'start end' }} />
                             <H2 style={{ gridArea: 'title', placeSelf: 'start', margin: '6px 0px 20px 0px'}} >Filtrera</H2>
-                            <Chip style={{ gridArea: 'filter', placeSelf: 'start'}} text={'Choklad'} />
+                            <RecipeFilter activeFilters={activeFilters} handleFilterClick={handleFilterClick} recipes={filteredRecipes} />
                         </FilterContainer>
                     </Lightbox>
                 }
                 <RecipeWrapper>
-                    <RecipeGrid data={pageContext.nodes} loadMore={true} show={10} />
+                    <RecipeGrid data={filteredRecipes} loadMore={true} show={10} />
                 </RecipeWrapper>
                 
             </PageWrapper>

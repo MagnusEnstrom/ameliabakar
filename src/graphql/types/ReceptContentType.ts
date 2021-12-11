@@ -39,7 +39,7 @@ export type ReceptPageQuery = {
         date: string;
         tags: {
             nodes: {
-                name: 'string'
+                name: string;
             }[]
         };
         singlePaketAfc: {
