@@ -55,7 +55,7 @@ const home = () => {
         <Layout isHomePage={true}>
             <AreaWrapper>
                 <TextWrapper>
-                    <HomePageImg src={HomeImg} />
+                    <HomePageImg style={{ marginTop: '50px' }} src={HomeImg} />
                     <H2 style={{ marginTop: '30px' }}>Recept för alla!</H2>
                     <P>
                         Det finns alltid en anledning att baka. Här hittar du mina egna recept för alla typer av svårighetsgrader och varianter. 
