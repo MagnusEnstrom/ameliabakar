@@ -28,14 +28,14 @@ const StyledHeader = styled.header(({transparent, navStatus}: {transparent?: boo
 }})
 
 
-const Logo = styled(LogoUrl)(({navStatus}: {navStatus: NavStatus}) => {
+const Logo = styled(LogoUrl)(({noImg}: { noImg?: boolean}) => {
     return {
         border: 'none',
         height: '24px',
         width: '97px',
         gridArea: 'logo',
         'header[aria-expanded="false"] &': {
-            filter: 'brightness(100)'
+            filter: noImg ? 'brightness(0)' : 'brightness(100)'
         }
     }
 })
@@ -68,12 +68,14 @@ const InvinsibleLink = styled(Link)({
     backgroundColor: 'inherit',
 });
 
-const HamburgerIcon = styled(Hamburger)({
-    border: 'none',
-    height: '24px',
-    width: '24px',
-    'header[aria-expanded="false"] &': {
-        filter: 'brightness(100)'
+const HamburgerIcon = styled(Hamburger)(({noImg}: { noImg?: boolean}) => {
+    return {
+        border: 'none',
+        height: '24px',
+        width: '24px',
+        'header[aria-expanded="false"] &': {
+            filter: noImg ? 'brightness(0)' : 'brightness(100)'
+        }
     }
 })
 const CloseIcon = styled(Close)({
@@ -81,24 +83,28 @@ const CloseIcon = styled(Close)({
     height: '24px',
     width: '24px',
 })
-const HeartIcon = styled(Heart)({
-    border: 'none',
-    height: '22.5px',
-    width: '25px',
-    marginRight: '31px',
+const HeartIcon = styled(Heart)(({noImg}: { noImg?: boolean}) => {
+   return {
+        border: 'none',
+        height: '22.5px',
+        width: '25px',
+        marginRight: '31px',
 
-    'header[aria-expanded="false"] &': {
-        filter: 'brightness(100)'
+        'header[aria-expanded="false"] &': {
+            filter: noImg ? 'brightness(0)' : 'brightness(100)'
+        }
     }
 })
-const SearchIcon = styled(Search)({
-    border: 'none',
-    height: '24px',
-    width: '24px',
-    marginRight: '24px',
+const SearchIcon = styled(Search)(({noImg}: { noImg?: boolean}) => {
+    return {
+        border: 'none',
+        height: '24px',
+        width: '24px',
+        marginRight: '24px',
 
-    'header[aria-expanded="false"] &': {
-        filter: 'brightness(100)'
+        'header[aria-expanded="false"] &': {
+            filter: noImg ? 'brightness(0)' : 'brightness(100)'
+        }
     }
 })
 
@@ -126,8 +132,9 @@ const SearchInput = styled(Input)({
 
 type Props = {
     transparent?: boolean;
+    noImg?: boolean;
 } & React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-const Header = ({transparent, ...rest}: Props) => {
+const Header = ({transparent, noImg, ...rest}: Props) => {
     const [ navStatus, setNavStatus] = useState<'closed' | 'search' | 'links'>('closed')
 
     const onSearchClick = () => {
@@ -142,19 +149,19 @@ const Header = ({transparent, ...rest}: Props) => {
     return (
         <StyledHeader aria-expanded={navStatus !== 'closed'} navStatus={navStatus} transparent={true} {...rest}>
             <InvinsibleLink to={'/'}>
-                <Logo />
+                <Logo noImg={noImg} />
             </InvinsibleLink>
             <IconWrapper>
                 {navStatus === 'closed' && (
                     <InvinsibleButton onClick={onSearchClick}>
-                        <SearchIcon />
+                        <SearchIcon noImg={noImg} />
                     </InvinsibleButton>
                 )}
                 <InvinsibleLink to={'/mina-recept'}>
-                    <HeartIcon />
+                    <HeartIcon noImg={noImg} />
                 </InvinsibleLink>
                 <InvinsibleButton onClick={onBurgerclick}>
-                    {navStatus !== 'closed' ? <CloseIcon /> : <HamburgerIcon />}
+                    {navStatus !== 'closed' ? <CloseIcon /> : <HamburgerIcon noImg={noImg} />}
                 </InvinsibleButton>
             </IconWrapper>
 
