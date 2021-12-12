@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
-import Close from '../components/buttons/close/close'
+import Close from '../components/buttons/close/Close'
 import Secondary from '../components/buttons/secondary/Secondary'
 import Chip from '../components/chips/Chip'
 import Fab from '../components/fab/Fab'
