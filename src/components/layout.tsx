@@ -3,13 +3,16 @@ import { Link, useStaticQuery, graphql } from "gatsby"
 import Header from './header/Header';
 import HeaderImgs from "./header/HeaderImgs";
 import Footer from "./footer/Footer";
+import HeaderHome from "./header/HeaderHome";
 
-const Layout: FC<{isHomePage: boolean, navImgs: string[]}> = ({ isHomePage, navImgs, children }) => {
+const Layout: FC<{isHomePage?: boolean, navImgs?: string[]}> = ({ isHomePage, navImgs, children }) => {
 
     return (
-        <div data-is-root-path={isHomePage}>
+        <div data-is-root-path={isHomePage} style={{ overflowY: 'hidden'}}>
             
-            {navImgs?.length ? <HeaderImgs images={navImgs} /> : <Header />}
+            {isHomePage ? 
+                <HeaderHome />
+            : navImgs?.length ? <HeaderImgs images={navImgs} /> : <Header />}
             <main>{children}</main>
 
             <Footer />

@@ -46,9 +46,9 @@ const SearchIcon = styled(Search)({
     marginRight: '24px',
 })
 
-const HeaderTransparent = () => {
+const HeaderTransparent = ({...rest}) => {
     return (
-        <StyledHeader>
+        <StyledHeader {...rest}>
             <Logo />
             <IconWrapper>
                 <SearchIcon />

@@ -1,6 +1,6 @@
-import styled from '@emotion/styled'
-import { Link } from 'gatsby'
 import React from 'react'
+import { Link } from 'gatsby'
+import styled from '@emotion/styled'
 import Secondary from '../components/buttons/secondary/Secondary'
 import H2Decoration from '../components/decoration/H2Decoration'
 import Layout from '../components/layout'
@@ -15,7 +15,7 @@ import Primary from '../components/buttons/primary/Primary'
 import Popular from '../components/recipes/popular/Popular'
 import Latest from '../components/recipes/latest/Latest'
 import Tips from '../components/tips/Tips'
-import HomeImg from './home.png'
+import HomeImg from './ameliabakar-home.jpeg'
 
 const TextWrapper = styled.div({
     textAlign: 'center',

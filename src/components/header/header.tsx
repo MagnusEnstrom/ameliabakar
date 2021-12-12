@@ -10,10 +10,12 @@ import Close from '../../assets/close.svg'
 import { Link } from 'gatsby'
 import Input from '../Form.tsx/SearchInput'
 
-const StyledHeader = styled.header(({transparent}: {transparent?: boolean}) => {
+type NavStatus = "closed" | "search" | "links";
+
+const StyledHeader = styled.header(({transparent, navStatus}: {transparent?: boolean, navStatus: NavStatus}) => {
     return {
     ...typography.nav,
-    backgroundColor: transparent ? 'rgba(0, 0 ,0 ,0)' : colors.white,
+    backgroundColor: navStatus === 'closed' ? transparent ? 'rgba(0, 0 ,0 ,0)' : colors.white : colors.white,
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gridTemplateAreas: `
@@ -26,11 +28,17 @@ const StyledHeader = styled.header(({transparent}: {transparent?: boolean}) => {
     color: transparent ? '#FFFFFF' : 'inherit',
 }})
 
-const Logo = styled(LogoUrl)({
-    border: 'none',
-    height: '24px',
-    width: '97px',
-    gridArea: 'logo',
+
+const Logo = styled(LogoUrl)(({navStatus}: {navStatus: NavStatus}) => {
+    return {
+        border: 'none',
+        height: '24px',
+        width: '97px',
+        gridArea: 'logo',
+        'header[aria-expanded="false"] &': {
+            filter: 'brightness(100)'
+        }
+    }
 })
 
 const IconWrapper = styled.div({
@@ -65,6 +73,9 @@ const HamburgerIcon = styled(Hamburger)({
     border: 'none',
     height: '18px',
     width: '24px',
+    'header[aria-expanded="false"] &': {
+        filter: 'brightness(100)'
+    }
 })
 const CloseIcon = styled(Close)({
     border: 'none',
@@ -75,13 +86,21 @@ const HeartIcon = styled(Heart)({
     border: 'none',
     height: '22.5px',
     width: '25px',
-    marginRight: '31px'
+    marginRight: '31px',
+
+    'header[aria-expanded="false"] &': {
+        filter: 'brightness(100)'
+    }
 })
 const SearchIcon = styled(Search)({
     border: 'none',
     height: '24px',
     width: '24px',
     marginRight: '24px',
+
+    'header[aria-expanded="false"] &': {
+        filter: 'brightness(100)'
+    }
 })
 
 const HeaderExpandedContent = styled.div({
@@ -108,8 +127,8 @@ const SearchInput = styled(Input)({
 
 type Props = {
     transparent?: boolean;
-}
-const Header = ({transparent}: Props) => {
+} & React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+const Header = ({transparent, ...rest}: Props) => {
     const [ navStatus, setNavStatus] = useState<'closed' | 'search' | 'links'>('closed')
 
     const onSearchClick = () => {
@@ -122,7 +141,7 @@ const Header = ({transparent}: Props) => {
         setNavStatus('links')
     }
     return (
-        <StyledHeader transparent={true}>
+        <StyledHeader aria-expanded={navStatus !== 'closed'} navStatus={navStatus} transparent={true} {...rest}>
             <InvinsibleLink to={'/'}>
                 <Logo />
             </InvinsibleLink>
