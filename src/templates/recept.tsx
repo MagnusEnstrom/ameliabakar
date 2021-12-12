@@ -92,7 +92,7 @@ const recept = ({pageContext}: Props) => {
     }, [activeFilters])
 
     return (
-        <Layout isHomePage={true}>
+        <Layout>
             <PageWrapper>
                 <Breadcrumbs style={{margin: '20px 10px 0px 10px'}} crumbs={[{name: 'Hem', to:'/'}, {name: 'Recept', to: '/recept'}]} />
                 <H1 style={{ textAlign: 'center', margin: '20px' }}>Recept</H1>

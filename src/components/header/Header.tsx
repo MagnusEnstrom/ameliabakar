@@ -9,7 +9,6 @@ import LogoUrl from '../../assets/logo.svg'
 import Close from '../../assets/close.svg'
 import { Link } from 'gatsby'
 import Input from '../Form.tsx/SearchInput'
-
 type NavStatus = "closed" | "search" | "links";
 
 const StyledHeader = styled.header(({transparent, navStatus}: {transparent?: boolean, navStatus: NavStatus}) => {
@@ -71,7 +70,7 @@ const InvinsibleLink = styled(Link)({
 
 const HamburgerIcon = styled(Hamburger)({
     border: 'none',
-    height: '18px',
+    height: '24px',
     width: '24px',
     'header[aria-expanded="false"] &': {
         filter: 'brightness(100)'
