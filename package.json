@@ -11,7 +11,7 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@svgr/webpack": "^5.5.0",
-    "gatsby": "^3.3.0",
+    "gatsby": "^3.14.6",
     "gatsby-image": "^3.3.0",
     "gatsby-plugin-google-fonts": "^1.0.1",
     "gatsby-plugin-image": "^2.3.0",
