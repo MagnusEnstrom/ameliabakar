@@ -60,7 +60,7 @@ const receptPost = ({pageContext}: Props) => {
         {activeNav === 'detail' && <DoLikeThis saHarGorDu={pageContext.singlePaketAfc.saHarGorDu} />}
         {activeNav === 'ingredienser' && <Ingredients content={pageContext.content} />}
         <ChipArea>
-            {pageContext.tags.nodes.map(tag => <Chip text={tag.name} />)}
+            {pageContext.tags.nodes.map(tag => <Chip key={tag.name} text={tag.name} />)}
         </ChipArea>
         <FabArea>
             <Fab variant={'save'} />

@@ -14,18 +14,21 @@ const StyledIngredientsContainer = styled.div({
 
 const StyledStrong = styled.strong({
     ...typography.h5,
+    p: {
+        margin: '0px',
+    }
 })
 const Ingredients = ({content = ''}: Props) => {
     const splitedContent = content.split("\n");
     return (
         <StyledIngredientsContainer>
-            {}
             {splitedContent.map((line, index) => {
                 if(!line) return;
                 if(line.includes('<strong>')) {
-                    return <StyledStrong key={index}>{line.replace(/<\/?[^>]+(>|$)/g, "")}</StyledStrong>
+                    console.log('line', line)
+                    return <StyledStrong key={index} dangerouslySetInnerHTML={{__html: line}} />
                 }
-                return <IngredientItem key={index} ingredient={line.replace(/<\/?[^>]+(>|$)/g, "")} />
+                return <IngredientItem key={index} ingredient={line} />
             })}
         </StyledIngredientsContainer>
     )
