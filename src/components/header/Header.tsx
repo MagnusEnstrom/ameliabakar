@@ -28,15 +28,18 @@ const StyledHeader = styled.header(({transparent, navStatus}: {transparent?: boo
 }})
 
 
-const Logo = styled(LogoUrl)(({noImg}: { noImg?: boolean}) => {
+const Logo = styled(LogoUrl)(() => {
     return {
         border: 'none',
         height: '24px',
         width: '97px',
         gridArea: 'logo',
         'header[aria-expanded="false"] &': {
-            filter: noImg ? 'brightness(0)' : 'brightness(100)'
-        }
+            filter: 'brightness(100)'
+        },
+        'header[aria-expanded="false"] &.noimg ': {
+            filter: 'brightness(0)'
+        },
     }
 })
 
@@ -68,14 +71,17 @@ const InvinsibleLink = styled(Link)({
     backgroundColor: 'inherit',
 });
 
-const HamburgerIcon = styled(Hamburger)(({noImg}: { noImg?: boolean}) => {
+const HamburgerIcon = styled(Hamburger)(() => {
     return {
         border: 'none',
         height: '24px',
         width: '24px',
         'header[aria-expanded="false"] &': {
-            filter: noImg ? 'brightness(0)' : 'brightness(100)'
-        }
+            filter: 'brightness(100)'
+        },
+        'header[aria-expanded="false"] &.noimg ': {
+            filter: 'brightness(0)'
+        },
     }
 })
 const CloseIcon = styled(Close)({
@@ -83,7 +89,7 @@ const CloseIcon = styled(Close)({
     height: '24px',
     width: '24px',
 })
-const HeartIcon = styled(Heart)(({noImg}: { noImg?: boolean}) => {
+const HeartIcon = styled(Heart)(() => {
    return {
         border: 'none',
         height: '22.5px',
@@ -91,11 +97,14 @@ const HeartIcon = styled(Heart)(({noImg}: { noImg?: boolean}) => {
         marginRight: '31px',
 
         'header[aria-expanded="false"] &': {
-            filter: noImg ? 'brightness(0)' : 'brightness(100)'
-        }
+            filter: 'brightness(100)'
+        },
+        'header[aria-expanded="false"] &.noimg ': {
+            filter: 'brightness(0)'
+        },
     }
 })
-const SearchIcon = styled(Search)(({noImg}: { noImg?: boolean}) => {
+const SearchIcon = styled(Search)(() => {
     return {
         border: 'none',
         height: '24px',
@@ -103,8 +112,11 @@ const SearchIcon = styled(Search)(({noImg}: { noImg?: boolean}) => {
         marginRight: '24px',
 
         'header[aria-expanded="false"] &': {
-            filter: noImg ? 'brightness(0)' : 'brightness(100)'
-        }
+            filter: 'brightness(100)'
+        },
+        'header[aria-expanded="false"] &.noimg ': {
+            filter: 'brightness(0)'
+        },
     }
 })
 
@@ -132,9 +144,9 @@ const SearchInput = styled(Input)({
 
 type Props = {
     transparent?: boolean;
-    noImg?: boolean;
+    onlynav?: boolean;
 } & React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-const Header = ({transparent, noImg, ...rest}: Props) => {
+const Header = ({transparent, onlynav, ...rest}: Props) => {
     const [ navStatus, setNavStatus] = useState<'closed' | 'search' | 'links'>('closed')
 
     const onSearchClick = () => {
@@ -149,19 +161,19 @@ const Header = ({transparent, noImg, ...rest}: Props) => {
     return (
         <StyledHeader aria-expanded={navStatus !== 'closed'} navStatus={navStatus} transparent={true} {...rest}>
             <InvinsibleLink to={'/'}>
-                <Logo noImg={noImg} />
+                <Logo className={onlynav ? 'noimg' : ''} />
             </InvinsibleLink>
             <IconWrapper>
                 {navStatus === 'closed' && (
                     <InvinsibleButton onClick={onSearchClick}>
-                        <SearchIcon noImg={noImg} />
+                        <SearchIcon className={onlynav ? 'noimg' : ''} />
                     </InvinsibleButton>
                 )}
                 <InvinsibleLink to={'/mina-recept'}>
-                    <HeartIcon noImg={noImg} />
+                    <HeartIcon className={onlynav ? 'noimg' : ''} />
                 </InvinsibleLink>
                 <InvinsibleButton onClick={onBurgerclick}>
-                    {navStatus !== 'closed' ? <CloseIcon /> : <HamburgerIcon noImg={noImg} />}
+                    {navStatus !== 'closed' ? <CloseIcon /> : <HamburgerIcon className={onlynav ? 'noimg' : ''} />}
                 </InvinsibleButton>
             </IconWrapper>
 

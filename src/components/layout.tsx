@@ -12,7 +12,7 @@ const Layout: FC<{isHomePage?: boolean, navImgs?: string[]}> = ({ isHomePage, na
             
             {isHomePage ? 
                 <HeaderHome />
-            : navImgs?.length ? <HeaderImgs images={navImgs} /> : <Header noImg={true} />}
+            : navImgs?.length ? <HeaderImgs images={navImgs} /> : <Header onlynav={true} />}
             <main>{children}</main>
 
             <Footer />
