@@ -44,7 +44,7 @@ const Logo = styled(LogoUrl)(() => {
 })
 
 const IconWrapper = styled.div({
-    justifyContent: 'end',
+    marginLeft: 'auto',
     display: 'flex',
     alignItems: 'center',
     gridArea: 'icons'
