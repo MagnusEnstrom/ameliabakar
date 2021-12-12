@@ -122,7 +122,7 @@ const HeaderHome = () => {
                                 {node.singlePaketAfc.kortBeskrivning}
                             </Description>
                             <InvisibleLink to={node.uri} style={{ justifySelf: 'center', gridArea: 'button' }}>
-                                <HomePage>Till Receopt</HomePage>
+                                <HomePage>Till Recept</HomePage>
                             </InvisibleLink>
                         </HeaderImg>
                     )
