@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import reactSlick from "react-slick";
+import reactSlick, { Settings } from "react-slick";
 import styled from '@emotion/styled';
 import colors from '../../lib/colors';
 
@@ -32,7 +32,11 @@ const Dots = styled.div({
     }
 })
 
-const Slider: FC = ({children, ...rest}) => {
+type Props = {
+    customSettings?: Settings;
+}
+
+const Slider: FC<Props> = ({children, customSettings, ...rest}) => {
     const settings = {
         dots: true,
         infinite: true,
@@ -50,7 +54,8 @@ const Slider: FC = ({children, ...rest}) => {
         ),
         customPaging: i => (
             <Dots />
-          )
+          ),
+        ...customSettings
       };
     return (
             <StyledSlider {...settings} {...rest}>
