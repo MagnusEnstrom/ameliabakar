@@ -101,7 +101,7 @@ const Footer = () => {
             <Logo />
             <ContactContainer style={{gridArea: 'instagram'}}>
                 <Instagram />
-                <StyledA href={'https://www.instagram.com/ameliabakar.se/'} target={'_blank'}>@ameliabakar.se</StyledA>
+                <StyledA href={'https://www.instagram.com/ameliabakar.se/'} rel="noopener" target={'_blank'}>@ameliabakar.se</StyledA>
             </ContactContainer>
             <ContactContainer style={{gridArea: 'email'}}>
                 <Email />
