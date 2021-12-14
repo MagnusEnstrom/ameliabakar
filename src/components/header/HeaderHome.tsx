@@ -117,7 +117,7 @@ const HeaderHome = () => {
             <Slider>
                 {recipies.map((node) => {
                     return (
-                        <HeaderImg style={{ height: window.innerHeight}} key={node.id} imgSrc={node.singlePaketAfc.images?.[0].localFile.childrenImageSharp?.[0].original.src}>
+                        <HeaderImg key={node.id} imgSrc={node.singlePaketAfc.images?.[0].localFile.childrenImageSharp?.[0].original.src}>
                             <H1 style={{ color: colors.white, gridArea: 'header', margin: '0px 0px 20px 0px' }} >{node.title}</H1>
                             <Description >
                                 {node.singlePaketAfc.kortBeskrivning}
