@@ -112,8 +112,10 @@ const HeaderHome = () => {
     const recipies = data.allWpRecept.nodes.filter(node => node.singlePaketAfc.images?.[0].localFile.childrenImageSharp?.[0].original).slice(0, 3)
 
     useEffect(() => {
-        let vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
+        if(typeof window !== "undefined") {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
     }, [])
     return (
         <FullScreenRecipe>
