@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { graphql, useStaticQuery } from 'gatsby'
-import React from 'react'
+import React, { useEffect } from 'react'
 import colors from '../../lib/colors'
 import HomePage from '../buttons/homepage/HomePage'
 import InvisibleLink from '../Links/InvisibleLink'
@@ -11,7 +11,7 @@ import Header from './Header'
 
 const HeaderImg = styled.div(({imgSrc}: {imgSrc: string}) => {
     return {
-        height: ['-webkit-fill-available', '100vh'],
+        height: ['100vh', '-webkit-fill-available', 'calc(var(--vh, 1vh) * 100)'],
         backgroundImage: `url(${imgSrc})`,
         padding: '20px 20px 30px 20px',
         backgroundPosition: 'center',
@@ -110,13 +110,18 @@ const HeaderHome = () => {
         }
       }`)
     const recipies = data.allWpRecept.nodes.filter(node => node.singlePaketAfc.images?.[0].localFile.childrenImageSharp?.[0].original).slice(0, 3)
+
+    useEffect(() => {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }, [])
     return (
         <FullScreenRecipe>
             <StyledTransparentHeader />
             <Slider>
                 {recipies.map((node) => {
                     return (
-                        <HeaderImg key={node.id} imgSrc={node.singlePaketAfc.images?.[0].localFile.childrenImageSharp?.[0].original.src}>
+                        <HeaderImg style={{ height: window.innerHeight}} key={node.id} imgSrc={node.singlePaketAfc.images?.[0].localFile.childrenImageSharp?.[0].original.src}>
                             <H1 style={{ color: colors.white, gridArea: 'header', margin: '0px 0px 20px 0px' }} >{node.title}</H1>
                             <Description >
                                 {node.singlePaketAfc.kortBeskrivning}

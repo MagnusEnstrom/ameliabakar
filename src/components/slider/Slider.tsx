@@ -6,7 +6,6 @@ import styled from '@emotion/styled';
 import colors from '../../lib/colors';
 
 const StyledSlider = styled(reactSlick)({
-    height: '100vh',
 })
 
 const StyledDotsContainer = styled.div({
