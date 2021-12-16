@@ -3,8 +3,8 @@ import React from 'react'
 import colors from '../../lib/colors'
 import radius from '../../lib/radius'
 
-const StyledInput = styled.input({
-    borderRadius: radius.button,
+const StyledTextArea = styled.textarea({
+    borderRadius: '10px',
     border: `2px solid ${colors.silver}`,
     fontWeight: 300,
     // width: '100%',
@@ -20,11 +20,10 @@ const StyledInput = styled.input({
         outline: 'none',
     }
 })
-
-const Input = ({...rest}: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) => {
+const TextArea = ({...rest}: React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>) => {
     return (
-        <StyledInput {...rest} />
+        <StyledTextArea {...rest} />
     )
 }
 
-export default Input
+export default TextArea;

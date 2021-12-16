@@ -15,6 +15,7 @@ const chunk = require(`lodash/chunk`)
 exports.createPages = async gatsbyUtilities => {
     const { actions, graphql, reporter} = gatsbyUtilities
 
+    await createAboutMePage(gatsbyUtilities);
     await createRecipeDetailPage(gatsbyUtilities);
     await createHomePage(gatsbyUtilities);
     await createReceptPage(gatsbyUtilities);
@@ -191,4 +192,15 @@ const createReceptPage = async ({ actions, graphql, reporter}) => {
             context: allWpRecept,
           })
     // }
+}
+const createAboutMePage = async ({ actions, graphql, reporter}) => {
+  
+    // Define the template to use
+    const aboutMe = require.resolve(`./src/templates/aboutMe.tsx`)
+
+    actions.createPage({
+        path: '/om-mig',
+        component: aboutMe,
+        context: {},
+    })
 }
