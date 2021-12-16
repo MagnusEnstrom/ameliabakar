@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import React from 'react'
 import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
 import Secondary from '../components/buttons/secondary/Secondary'
+import Contact from '../components/contact/Contact'
 import Layout from '../components/layout'
 import TertiaryButton from '../components/tertiary/TertiaryButton'
 import H1 from '../components/typography/h1/H1'
@@ -14,7 +15,8 @@ const StyledImg = styled.img({
 const StyledArticle = styled.article({
     display: 'grid',
     textAlign: 'center',
-    margin: '0px 10px'
+    padding: '0px 10px',
+    width: '100%',
 })
 const StyledMain = styled.main({
     display: 'grid',
@@ -68,6 +70,7 @@ const aboutMe = () => {
                 <P>Jag tar emot beställningar på bakverk såsom cupcakes, tårtor eller annat gott. Du väljer själv vad du behöver så hittar vi vägen framåt tillsammans!</P>
             </StyledArticle>
             </StyledMain>
+            <Contact />
         </Layout>
     )
 }
