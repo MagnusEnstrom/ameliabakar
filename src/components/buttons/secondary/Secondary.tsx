@@ -17,10 +17,14 @@ const StyledButton = styled.button({
         backgroundColor: colors.grey,
         color: colors.jet,
     },
-    '&:hover': {
-        backgroundColor: colors.silver,
-        color: colors.white,
+
+    ['@media (hover: hover)']: {
+        '&:hover': {
+            backgroundColor: colors.silver,
+            color: colors.white,
+        },
     },
+    
     '&:disabled': {
         backgroundColor: colors.silver,
         color: colors.jet,

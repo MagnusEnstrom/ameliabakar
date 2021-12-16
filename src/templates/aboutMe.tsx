@@ -4,6 +4,7 @@ import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
 import Secondary from '../components/buttons/secondary/Secondary'
 import Contact from '../components/contact/Contact'
 import Layout from '../components/layout'
+import InvisibleLink from '../components/Links/InvisibleLink'
 import TertiaryButton from '../components/tertiary/TertiaryButton'
 import H1 from '../components/typography/h1/H1'
 import H2 from '../components/typography/h2/H2'
@@ -32,6 +33,12 @@ const StyledH2 = styled(H2)({
     margin: '30px 0px 20px 0px'
 });
 
+const StyledInvisibleLink = styled(InvisibleLink)({
+    placeSelf: 'center',
+    marginBottom: '50px',
+    scrollBehavior: 'smooth',
+})
+
 const aboutMe = () => {
     return (
         <Layout>
@@ -40,14 +47,16 @@ const aboutMe = () => {
 
             <H1 style={{ textAlign: 'center', margin: '20px 0px' }}>Min Story</H1>
             <P style={{ textAlign: 'center', margin: '0px 0px 30px 0xp' }}>Ameliabakar.se är min egna plattform för att uttrycka det jag tycker är roligast i hela världen - bakning!</P>
-            <Secondary style={{ placeSelf: 'center', marginBottom: '50px' }}>Kontakta mig</Secondary>
+            <StyledInvisibleLink style={{ placeSelf: 'center', marginBottom: '50px' }} to={'#kontakt'}>
+                <Secondary>Kontakta mig</Secondary>
+            </StyledInvisibleLink>
 
             <StyledArticle>
                 <StyledImg src={'/img/amelia.png'} alt='Amelia Lindgren'/>
                 <StyledH2>Amelia Lindgren</StyledH2>
                 <P>Jag är en Umeåtjej med stort intresse för bakning, matlagning och inredning. Jag har drivit min receptblogg sedan 2016 där jag har samlat allt från de enklaste småkakorna till mer avancerade tårtor och bakverk.</P>
                 <P style={{ marginBottom: '30px' }}>Jag tycker att matlagning ska vara något för alla, där kreativitet och nyskapande får verka fritt! Jag brinner för nya uppfinningar och att skapa smakkombinationer, klassiska såväl som nya. Mitt mål är att du ska känna dig inspirerad när du läser mina recept!</P>
-                <StyledTeriaryButton name={'Kontakt'} to={'/kontakt'} />
+                <StyledTeriaryButton name={'Kontakt'} to={'#kontakt'} />
             </StyledArticle>
             <StyledArticle>
                 <StyledImg src={'/img/insperation.png'} alt={`Amelia's insperation`}/>
