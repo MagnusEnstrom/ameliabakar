@@ -60,6 +60,8 @@ const StyledContactArea = styled.aside({
 })
 const StyledForm = styled.form({
     maxWidth: '350px',
+    placeSelf: 'center',
+    width: '100%',
 })
 
 const Contact = ({...rest}) => {

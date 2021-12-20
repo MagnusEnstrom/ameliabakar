@@ -12,6 +12,7 @@ import P from '../components/typography/p/P'
 
 const StyledImg = styled.img({
     maxWidth: '100%',
+    placeSelf: 'center',
 })
 const StyledArticle = styled.article({
     display: 'grid',
