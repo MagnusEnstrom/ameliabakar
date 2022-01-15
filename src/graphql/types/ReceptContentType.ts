@@ -31,6 +31,7 @@ export type ReceptContent = {
     }
 }
 
+
 export type ReceptPageQuery = {
     nodes:{
         id: string;
@@ -60,5 +61,28 @@ export type ReceptPageQuery = {
         }[]
         }
     }[]
+}
+
+export type TipsPageQuery = {
+    nodes: {
+        id: string;
+        title: string;
+        content: string;
+        tips: {
+            image: {
+                localFile: {
+                    childImageSharp: {
+                        original: {
+                            src: string;
+                        }
+                        fixed: {
+                            src: string;
+                        }
+                    }
+                }
+            }
+        }
+    }[]
+
 }
   

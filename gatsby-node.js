@@ -19,6 +19,7 @@ exports.createPages = async gatsbyUtilities => {
     await createRecipeDetailPage(gatsbyUtilities);
     await createHomePage(gatsbyUtilities);
     await createReceptPage(gatsbyUtilities);
+    await createTipsPage(gatsbyUtilities);
   
 }
 
@@ -183,15 +184,13 @@ const createReceptPage = async ({ actions, graphql, reporter}) => {
     // Define the template to use
     const recept = require.resolve(`./src/templates/recept.tsx`)
 
-    // if (allWpRecept) {
-          actions.createPage({
-            // It's best practice to use the uri field from WPGraphQL nodes when
-            // building
-            path: '/recept',
-            component: recept,
-            context: allWpRecept,
-          })
-    // }
+    actions.createPage({
+        // It's best practice to use the uri field from WPGraphQL nodes when
+        // building
+        path: '/recept',
+        component: recept,
+        context: allWpRecept,
+    })
 }
 const createAboutMePage = async ({ actions, graphql, reporter}) => {
   
@@ -202,5 +201,49 @@ const createAboutMePage = async ({ actions, graphql, reporter}) => {
         path: '/om-mig',
         component: aboutMe,
         context: {},
+    })
+}
+
+const createTipsPage = async ({ actions, graphql, reporter}) => {
+
+    const result = await graphql(`
+    {
+        allWpTip {
+          nodes {
+            title
+            tips {
+              image {
+                localFile {
+                  childImageSharp {
+                    original {
+                      src
+                    }
+                    fixed {
+                      src
+                    }
+                  }
+                }
+              }
+            }
+            content
+          }
+        }
+      }
+      
+      
+    `)
+    if (result.errors) {
+        reporter.error("There was an error fetching posts", result.errors)
+    }
+  
+    const { allWpTip } = result.data
+  
+    // Define the template to use
+    const tips = require.resolve(`./src/templates/tips.tsx`)
+
+    actions.createPage({
+        path: '/tips',
+        component: tips,
+        context: allWpTip,
     })
 }

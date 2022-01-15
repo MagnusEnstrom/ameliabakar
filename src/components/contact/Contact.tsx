@@ -70,9 +70,8 @@ const Contact = ({...rest}) => {
     }
 
     return (
-        <StyledContactArea {...rest}>
-
-            <H1 id={'kontakt'} style={{ margin: '0px 0px 20px 0px'}}>Kontakt</H1>
+        <StyledContactArea id={'kontakt'} {...rest}>
+            <H1 style={{ margin: '0px 0px 20px 0px'}}>Kontakt</H1>
             <P>Undrar du över något? Hur gjorde jag den där kupolen av granatäpple-pannacotta? Eller vill du ha hjälp med något inom bakning eller samarbeta    med mig?</P>
             <P style={{ marginBottom: '30px'}}>Tveka inte att höra av dig!</P>
             <ContactContainer>
