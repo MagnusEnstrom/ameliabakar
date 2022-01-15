@@ -50,7 +50,7 @@ type Props = {
 } & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 const Chip = ({text, selected, ...rest}: Props) => {
     return (
-        <StyledChip aria-label={selected ? 'selected' : ''} {...rest}>
+        <StyledChip aria-label={selected ? 'selected' : undefined} {...rest}>
             {text}
             {selected && <CloseIcon />}
         </StyledChip>

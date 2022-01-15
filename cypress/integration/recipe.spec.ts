@@ -5,33 +5,30 @@ describe('/recept', () => {
         cy.visit('/recept')
     });
 
-    it('A user can see a list of 10 recipe cards', () => {
-        const recipeList = cy.findAllByLabelText('recept');
-        recipeList.should('have.length', 10);
-    })
-    it('A user can show more recipes by clicking load more button', () => {
+    it('A user can see a list of 10 recipe cards & load more', () => {
+        // shows recipes
         cy.findAllByLabelText('recept').should('have.length', 10);
-        const filterButton = cy.findByRole('button', { name: 'Ladda fler'} )
-        filterButton.click();
-        cy.findAllByLabelText('recept').should('have.length.greaterThan', 10);
+        // loads in more recipes
+        cy.get('[data-cy=loadmore]').click();
+        cy.findAllByLabelText('recept').should('have.length', 14);
     })
 
     it('shows filter & hide filter', () => {
         cy.contains('Recept')
         //Filter list is not shown
-        cy.findByRole('button', { name: 'Choklad'}).should('not.exist');
+        cy.get('[data-cy=filterButton]').should('not.exist');
         cy.findByLabelText('close filter').should('not.exist');
         const filterButton = cy.findByLabelText('show filter')
         filterButton.click();
         
         //Filter list is
-        cy.findByRole('button', { name: 'Choklad'}).should('exist');
+        cy.get('[data-cy=filterButton]').should('exist');
         const closeButton = cy.findByLabelText('close filter');
         closeButton.click();
         
         //Filter list is not shown
         cy.findByLabelText('close filter').should('not.exist');
-        cy.findByRole('button', { name: 'Choklad'}).should('not.exist');
+        cy.get('[data-cy=filterButton]').should('not.exist');
 
     })
     // it('A user can filter recipes', () => {

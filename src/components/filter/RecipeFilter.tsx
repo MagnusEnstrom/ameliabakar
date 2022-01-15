@@ -19,11 +19,12 @@ const RecipeFilter = ({recipes, handleFilterClick, activeFilters, ...rest}: Prop
     return (
         <FilterList {...rest}>
             {tags.map(tag => <Chip 
-            key={tag} 
+            key={tag}
             onClick={() => handleFilterClick(tag)} 
             selected={activeFilters.includes(tag)}
             style={{placeSelf: 'start'}} 
-            text={tag} 
+            text={tag}
+            data-cy={'filterButton'}
         />)}
         </FilterList>
     )

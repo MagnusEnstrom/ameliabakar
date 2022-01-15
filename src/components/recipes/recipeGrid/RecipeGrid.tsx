@@ -70,7 +70,7 @@ const RecipeGrid = ({ show = 6, loadMore, data, ...rest}: Props & React.Detailed
                     
                 })}
             </StyledRecipeGrid>
-            {loadMore && (amount < allRecipes.length) && <Secondary style={{ marginTop: '30px', placeSelf: 'center' }} onClick={onClick}>Ladda fler</Secondary>}
+            {loadMore && (amount < allRecipes.length) && <Secondary data-cy={'loadmore'} style={{ marginTop: '30px', placeSelf: 'center' }} onClick={onClick}>Ladda fler</Secondary>}
         </Wrapper>
     )
 }
