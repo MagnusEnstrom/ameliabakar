@@ -85,4 +85,14 @@ export type TipsPageQuery = {
     }[]
 
 }
-  
+
+
+export type LocalSearchRecepies = {
+    localSearchRecepies: {
+        index: string;
+        store: {
+            id: string,
+            slug: string,
+        }
+    }
+}

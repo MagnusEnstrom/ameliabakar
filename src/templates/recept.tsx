@@ -2,13 +2,11 @@ import styled from '@emotion/styled'
 import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
 import Close from '../components/buttons/close/Close'
-import Secondary from '../components/buttons/secondary/Secondary'
-import Chip from '../components/chips/Chip'
+import Primary from '../components/buttons/primary/Primary'
 import Fab from '../components/fab/Fab'
 import RecipeFilter from '../components/filter/RecipeFilter'
 import SearchInput from '../components/Form.tsx/SearchInput'
 import Layout from '../components/layout'
-import Latest from '../components/recipes/latest/Latest'
 import RecipeGrid from '../components/recipes/recipeGrid/RecipeGrid'
 import H1 from '../components/typography/h1/H1'
 import H2 from '../components/typography/h2/H2'
@@ -63,12 +61,27 @@ const SearchWrapper = styled.div({
     display: 'flex',
 })
 
+const filterRecipes = (pageContext: ReceptPageQuery, activeFilters: string[]) => {
+    let afterFilter = pageContext.nodes;
+
+    activeFilters.forEach(filterTag => {
+        afterFilter = afterFilter.filter(recipe => {
+            const tags = recipe.tags.nodes.map(tag => tag.name);
+            return tags.includes(filterTag)
+        })
+    })
+
+    return afterFilter;
+}
 type Props = {pageContext: ReceptPageQuery}
 const recept = ({pageContext}: Props) => {
     const [expanded, setExpanded] = useState(false);
 
     const [filteredRecipes, setFilteredRecipes] = useState(pageContext.nodes);
     const [activeFilters, setActiveFilters] = useState<string[]>([]);
+    const [searchData, setSearchData] = useState<string[]>([]);
+    const [value, setValue] = useState('')
+
 
     const handleFilterClick = (name: string) => {
         const includesName = activeFilters.includes(name);
@@ -80,24 +93,24 @@ const recept = ({pageContext}: Props) => {
     }
 
     useEffect(() => {
-        let afterFilter = pageContext.nodes;
-        
-        activeFilters.forEach(filterTag => {
-            afterFilter = afterFilter.filter(recipe => {
-                const tags = recipe.tags.nodes.map(tag => tag.name);
-                return tags.includes(filterTag)
-            })
-        })
+        const afterFilter = filterRecipes(pageContext, activeFilters)
         setFilteredRecipes(afterFilter);
-    }, [activeFilters])
+        if(!searchData.length && !value ) return setFilteredRecipes(afterFilter);
+        const found = afterFilter.filter(recipe => searchData.includes(recipe.id))
+        setFilteredRecipes(found);
+    }, [activeFilters, searchData])
 
+    const clearFilterAndSearch = () => {
+        setValue(''),
+        setActiveFilters([])
+    }
     return (
         <Layout>
             <PageWrapper>
                 <Breadcrumbs style={{margin: '20px 10px 0px 10px'}} crumbs={[{name: 'Hem', to:'/'}, {name: 'Recept', to: '/recept'}]} />
                 <H1 style={{ textAlign: 'center', margin: '20px' }}>Recept</H1>
                 <SearchWrapper>
-                    <StyledSearch placeholder={'Sök recept'} />
+                    <StyledSearch value={value} setValue={setValue} getSearch={(data) => setSearchData(data.map(data => data.id))} placeholder={'Sök recept'} />
                     <Fab onClick={() => setExpanded(true)} aria-label={'show filter'} style={{padding: '0px'}} variant={'filter'} />
                 </SearchWrapper>
                 {expanded && 
@@ -111,6 +124,11 @@ const recept = ({pageContext}: Props) => {
                         </FilterContainer>
                     </Lightbox>
                 }
+                {filteredRecipes.length === 0 && 
+                <>
+                    <H2 style={{ textAlign: 'center', margin: '10px' }}>Inga resultat hittades för din sökning "{value}"</H2>
+                    <Primary style={{ placeSelf: 'center' }} onClick={() => clearFilterAndSearch()}>Försök igen</Primary>
+                </>}
                 <RecipeWrapper>
                     <RecipeGrid data={filteredRecipes} loadMore={true} show={10} />
                 </RecipeWrapper>

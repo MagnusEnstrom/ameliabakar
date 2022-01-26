@@ -1,8 +1,11 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import colors from '../../lib/colors'
 import radius from '../../lib/radius'
 import SearchIcon from '../../assets/search.svg'
+import { useFlexSearch } from 'react-use-flexsearch'
+import { graphql, useStaticQuery } from 'gatsby'
+import { LocalSearchRecepies } from '../../graphql/types/ReceptContentType'
 
 
 const StyledSearchIcon = styled(SearchIcon)({
@@ -45,11 +48,37 @@ const SearchInput = styled.div({
         outline: 'none',
     }
 })
-const Input = ({className, ...rest}: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) => {
+
+type Props = {
+    getSearch: (data: {
+        id: string;
+        slug: string;
+    }[]) => void;
+    setValue: React.Dispatch<React.SetStateAction<string>>;
+    
+}
+
+const Input = ({className, getSearch, value, setValue, ...rest}: Props & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) => {
+    const data = useStaticQuery<LocalSearchRecepies>(graphql`
+        {
+            localSearchRecepies {
+            index
+            store
+        }
+     }
+    `)
+    
+    const searchData = useFlexSearch(value, data.localSearchRecepies.index, data.localSearchRecepies.store) as {id: string; slug: string}[];
+
+    useEffect(() => {
+        if(!getSearch) return;
+        getSearch(searchData);
+    }, [searchData])
+
     return (
         <SearchInput className={className} >
             <StyledSearchIcon />
-            <StyledInput {...rest} />
+            <StyledInput {...rest} value={value} onChange={(e) => setValue(e.target.value)} />
         </SearchInput>
     )
 }

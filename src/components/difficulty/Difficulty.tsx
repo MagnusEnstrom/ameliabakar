@@ -33,7 +33,6 @@ type Props = {
     diff: 'Svår' | 'Medel' | 'Lätt'
 }
 const Difficulty = ({diff}: Props) => {
-    console.log('diff', diff)
     return (
         <DifficultyWrapper>
             <DiffText>{diff}</DiffText>

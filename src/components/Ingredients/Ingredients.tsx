@@ -25,7 +25,6 @@ const Ingredients = ({content = ''}: Props) => {
             {splitedContent.map((line, index) => {
                 if(!line) return;
                 if(line.includes('<strong>')) {
-                    console.log('line', line)
                     return <StyledStrong key={index} dangerouslySetInnerHTML={{__html: line}} />
                 }
                 return <IngredientItem key={index} ingredient={line} />
