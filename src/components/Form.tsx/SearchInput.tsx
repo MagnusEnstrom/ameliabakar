@@ -54,9 +54,11 @@ type Props = {
         id: string;
         slug: string;
     }[]) => void;
+    setValue: React.Dispatch<React.SetStateAction<string>>;
+    
 }
 
-const Input = ({className, getSearch, ...rest}: Props & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) => {
+const Input = ({className, getSearch, value, setValue, ...rest}: Props & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) => {
     const data = useStaticQuery<LocalSearchRecepies>(graphql`
         {
             localSearchRecepies {
@@ -66,7 +68,6 @@ const Input = ({className, getSearch, ...rest}: Props & React.DetailedHTMLProps<
      }
     `)
     
-    const [value, setValue] = useState('')
     const searchData = useFlexSearch(value, data.localSearchRecepies.index, data.localSearchRecepies.store) as {id: string; slug: string}[];
 
     useEffect(() => {
