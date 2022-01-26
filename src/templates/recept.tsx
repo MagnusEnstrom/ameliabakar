@@ -63,12 +63,25 @@ const SearchWrapper = styled.div({
     display: 'flex',
 })
 
+const filterRecipes = (pageContext: ReceptPageQuery, activeFilters: string[]) => {
+    let afterFilter = pageContext.nodes;
+
+    activeFilters.forEach(filterTag => {
+        afterFilter = afterFilter.filter(recipe => {
+            const tags = recipe.tags.nodes.map(tag => tag.name);
+            return tags.includes(filterTag)
+        })
+    })
+
+    return afterFilter;
+}
 type Props = {pageContext: ReceptPageQuery}
 const recept = ({pageContext}: Props) => {
     const [expanded, setExpanded] = useState(false);
 
     const [filteredRecipes, setFilteredRecipes] = useState(pageContext.nodes);
     const [activeFilters, setActiveFilters] = useState<string[]>([]);
+    const [searchData, setSearchData] = useState<string[]>([]);
 
     const handleFilterClick = (name: string) => {
         const includesName = activeFilters.includes(name);
@@ -80,16 +93,12 @@ const recept = ({pageContext}: Props) => {
     }
 
     useEffect(() => {
-        let afterFilter = pageContext.nodes;
-        
-        activeFilters.forEach(filterTag => {
-            afterFilter = afterFilter.filter(recipe => {
-                const tags = recipe.tags.nodes.map(tag => tag.name);
-                return tags.includes(filterTag)
-            })
-        })
+        const afterFilter = filterRecipes(pageContext, activeFilters)
         setFilteredRecipes(afterFilter);
-    }, [activeFilters])
+        if(!searchData.length) return setFilteredRecipes(afterFilter);
+        const found = afterFilter.filter(recipe => searchData.includes(recipe.id))
+        setFilteredRecipes(found);
+    }, [activeFilters, searchData])
 
     return (
         <Layout>
@@ -97,7 +106,7 @@ const recept = ({pageContext}: Props) => {
                 <Breadcrumbs style={{margin: '20px 10px 0px 10px'}} crumbs={[{name: 'Hem', to:'/'}, {name: 'Recept', to: '/recept'}]} />
                 <H1 style={{ textAlign: 'center', margin: '20px' }}>Recept</H1>
                 <SearchWrapper>
-                    <StyledSearch placeholder={'Sök recept'} />
+                    <StyledSearch getSearch={(data) => setSearchData(data.map(data => data.id))} placeholder={'Sök recept'} />
                     <Fab onClick={() => setExpanded(true)} aria-label={'show filter'} style={{padding: '0px'}} variant={'filter'} />
                 </SearchWrapper>
                 {expanded && 

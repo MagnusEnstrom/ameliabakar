@@ -8567,7 +8567,7 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.4.tgz#28d9969ea90661b5134259f312ab6aa7929ac5e2"
   integrity sha512-8/sOawo8tJ4QOBX8YlQBMxL8+RLZfxMQOif9o0KUKTNTjMYElWPE0r/m5VNFxTRd0NSw8qSy8dajrwX4RYI1Hw==
 
-flexsearch@^0.6.32:
+flexsearch@^0.6.22, flexsearch@^0.6.32:
   version "0.6.32"
   resolved "https://registry.yarnpkg.com/flexsearch/-/flexsearch-0.6.32.tgz#1e20684d317af65baa445cdd9864a5f5b320f510"
   integrity sha512-EF1BWkhwoeLtbIlDbY/vDSLBen/E5l/f1Vg7iX5CDymQCamcx1vhlc3tIZxIDplPjgi0jhG37c67idFbjg+v+Q==
@@ -14818,6 +14818,13 @@ react-textarea-autosize@^8.3.0:
     "@babel/runtime" "^7.10.2"
     use-composed-ref "^1.0.0"
     use-latest "^1.0.0"
+
+react-use-flexsearch@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-use-flexsearch/-/react-use-flexsearch-0.1.1.tgz#2db48989a9197ee3d9776a6c2ae1ff6e65919ba2"
+  integrity sha512-UDRDB26HPcAo0gXNkUYYkcjoYCW4FSWr7Ich4adgVr7bqefJG7fnjlcqnwsKQkbZuteRLYzzox+1FKRTt3Z5vg==
+  dependencies:
+    flexsearch "^0.6.22"
 
 react@^17.0.1:
   version "17.0.2"

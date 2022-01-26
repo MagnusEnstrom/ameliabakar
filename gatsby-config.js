@@ -111,7 +111,9 @@ module.exports = {
           // for advanced users.
           //
           // Note: Only the flexsearch engine supports options.
-          engineOptions: 'speed',
+          engineOptions: {
+            tokenize: 'full'
+          },
   
           // GraphQL query used to fetch all data for the search index. This is
           // required.
@@ -145,12 +147,12 @@ module.exports = {
           // List of keys to index. The values of the keys are taken from the
           // normalizer function below.
           // Default: all fields
-          index: ['id', 'link', 'slug', 'title', 'kortBeskrivning', 'svarighetsgrad', 'content'],
+          index: ['id', 'slug', 'title', 'kortBeskrivning', 'svarighetsgrad'],
   
           // List of keys to store and make available in your UI. The values of
           // the keys are taken from the normalizer function below.
           // Default: all fields
-          store: ['id', 'link', 'slug', 'title', 'kortBeskrivning', 'svarighetsgrad', 'content'],
+          store: ['id', 'slug'],
   
           // Function used to map the result from the GraphQL query. This should
           // return an array of items to index in the form of flat objects
