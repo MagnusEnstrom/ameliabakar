@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 import colors from '../../lib/colors'
 import typography from '../../lib/typography'
 import Hamburger from '../../assets/hamburger-menu.svg'
@@ -7,8 +7,8 @@ import Heart from '../../assets/heart.svg'
 import Search from '../../assets/search.svg'
 import LogoUrl from '../../assets/logo.svg'
 import Close from '../../assets/close.svg'
-import { Link } from 'gatsby'
-import Input from '../Form.tsx/SearchInput'
+import { Link, navigate } from 'gatsby'
+import SearchInput from '../Form/SearchInput'
 type NavStatus = "closed" | "search" | "links";
 
 const StyledHeader = styled.header(({transparent, navStatus}: {transparent?: boolean, navStatus: NavStatus}) => {
@@ -136,8 +136,11 @@ const NavLink = styled(Link)({
 
 })
 
-const SearchInput = styled(Input)({
+const SearchForm = styled.form({
     gridArea: 'search',
+})
+
+const StyledSearchInput = styled(SearchInput)({
     margin: '30px 35px 0px 35px',
 
 })
@@ -148,6 +151,7 @@ type Props = {
 } & React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 const Header = ({transparent, onlynav, ...rest}: Props) => {
     const [ navStatus, setNavStatus] = useState<'closed' | 'search' | 'links'>('closed')
+    const [query, setQuery] = useState('');
 
     const onSearchClick = () => {
         setNavStatus('search')
@@ -158,6 +162,12 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
         }
         setNavStatus('links')
     }
+
+    const handleSearchSubmit = (e: FormEvent) => { 
+        e.preventDefault();
+        navigate(`/recept?q=${query}`)
+
+    }
     return (
         <StyledHeader aria-expanded={navStatus !== 'closed'} navStatus={navStatus} transparent={true} {...rest}>
             <InvinsibleLink to={'/'}>
@@ -165,7 +175,7 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
             </InvinsibleLink>
             <IconWrapper>
                 {navStatus === 'closed' && (
-                    <InvinsibleButton onClick={onSearchClick}>
+                    <InvinsibleButton data-cy={'searchIconHeader'} onClick={onSearchClick}>
                         <SearchIcon className={onlynav ? 'noimg' : ''} />
                     </InvinsibleButton>
                 )}
@@ -179,7 +189,9 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
 
             {navStatus === 'links' && (
                 <>
-                    <SearchInput placeholder={'sök...'} />
+                    <SearchForm onSubmit={handleSearchSubmit} role={'search'}>
+                        <StyledSearchInput value={query} onChange={(e) => setQuery(e.target.value)} aria-label='search' type={'search'} name={'search'} placeholder={'sök...'} />
+                    </SearchForm>
                     <HeaderExpandedContent>
                         <NavLink to={'/'}>Hem</NavLink>
                         <NavLink to={'/recept'}>Recept</NavLink>
@@ -191,7 +203,9 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
                 </>
             )}
             {navStatus === 'search' && (
-                <SearchInput placeholder={'sök...'} />
+                <SearchForm onSubmit={handleSearchSubmit} role={'search'} >
+                    <StyledSearchInput value={query} onChange={(e) => setQuery(e.target.value)} aria-label='search' type={'search'} name={'search'} placeholder={'sök...'} />
+                </SearchForm>
             )}
         </StyledHeader>
     )

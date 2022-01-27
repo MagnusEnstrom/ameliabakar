@@ -5,7 +5,7 @@ import Close from '../components/buttons/close/Close'
 import Primary from '../components/buttons/primary/Primary'
 import Fab from '../components/fab/Fab'
 import RecipeFilter from '../components/filter/RecipeFilter'
-import SearchInput from '../components/Form.tsx/SearchInput'
+import SearchInputFilter from '../components/Form/SearchInputFilter'
 import Layout from '../components/layout'
 import RecipeGrid from '../components/recipes/recipeGrid/RecipeGrid'
 import H1 from '../components/typography/h1/H1'
@@ -21,7 +21,7 @@ const PageWrapper = styled.div({
     display: 'grid',
 })
 
-const StyledSearch = styled(SearchInput)({
+const StyledSearch = styled(SearchInputFilter)({
     margin: '0px 20px 20px 10px',
     width: '100%',
 })
