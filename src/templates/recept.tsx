@@ -5,13 +5,15 @@ import Close from '../components/buttons/close/Close'
 import Primary from '../components/buttons/primary/Primary'
 import Fab from '../components/fab/Fab'
 import RecipeFilter from '../components/filter/RecipeFilter'
-import SearchInput from '../components/Form.tsx/SearchInput'
+import SearchInputFilter from '../components/Form/SearchInputFilter'
 import Layout from '../components/layout'
 import RecipeGrid from '../components/recipes/recipeGrid/RecipeGrid'
 import H1 from '../components/typography/h1/H1'
 import H2 from '../components/typography/h2/H2'
 import { ReceptPageQuery } from '../graphql/types/ReceptContentType'
 import colors from '../lib/colors'
+import queryString from 'query-string'
+import { PageProps } from 'gatsby'
 
 const RecipeWrapper = styled.div({
     margin: '10px 10px 30px 10px',
@@ -21,7 +23,7 @@ const PageWrapper = styled.div({
     display: 'grid',
 })
 
-const StyledSearch = styled(SearchInput)({
+const StyledSearch = styled(SearchInputFilter)({
     margin: '0px 20px 20px 10px',
     width: '100%',
 })
@@ -74,14 +76,13 @@ const filterRecipes = (pageContext: ReceptPageQuery, activeFilters: string[]) =>
     return afterFilter;
 }
 type Props = {pageContext: ReceptPageQuery}
-const recept = ({pageContext}: Props) => {
+const recept = ({pageContext, location}: Props & PageProps) => {
     const [expanded, setExpanded] = useState(false);
 
     const [filteredRecipes, setFilteredRecipes] = useState(pageContext.nodes);
     const [activeFilters, setActiveFilters] = useState<string[]>([]);
     const [searchData, setSearchData] = useState<string[]>([]);
-    const [value, setValue] = useState('')
-
+    const [value, setValue] = useState(queryString.parse(location.search).q ?? '')
 
     const handleFilterClick = (name: string) => {
         const includesName = activeFilters.includes(name);
@@ -99,6 +100,9 @@ const recept = ({pageContext}: Props) => {
         const found = afterFilter.filter(recipe => searchData.includes(recipe.id))
         setFilteredRecipes(found);
     }, [activeFilters, searchData])
+    useEffect(() => {
+        setValue(queryString.parse(location.search).q ?? value)
+    }, [location.search])
 
     const clearFilterAndSearch = () => {
         setValue(''),

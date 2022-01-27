@@ -29,7 +29,7 @@ const StyledInput = styled.input({
         outline: 'none',
     }
 })
-const SearchInput = styled.div({
+const SearchInputComponent = styled.div({
     display: 'flex',
     alignItems: 'center',
     borderRadius: radius.button,
@@ -49,38 +49,15 @@ const SearchInput = styled.div({
     }
 })
 
-type Props = {
-    getSearch: (data: {
-        id: string;
-        slug: string;
-    }[]) => void;
-    setValue: React.Dispatch<React.SetStateAction<string>>;
-    
-}
 
-const Input = ({className, getSearch, value, setValue, ...rest}: Props & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) => {
-    const data = useStaticQuery<LocalSearchRecepies>(graphql`
-        {
-            localSearchRecepies {
-            index
-            store
-        }
-     }
-    `)
-    
-    const searchData = useFlexSearch(value, data.localSearchRecepies.index, data.localSearchRecepies.store) as {id: string; slug: string}[];
 
-    useEffect(() => {
-        if(!getSearch) return;
-        getSearch(searchData);
-    }, [searchData])
-
+const SearchInput = ({className, ...rest}:  & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) => {
     return (
-        <SearchInput className={className} >
+        <SearchInputComponent className={className} >
             <StyledSearchIcon />
-            <StyledInput {...rest} value={value} onChange={(e) => setValue(e.target.value)} />
-        </SearchInput>
+            <StyledInput {...rest} />
+        </SearchInputComponent>
     )
 }
 
-export default Input
+export default SearchInput

@@ -29,6 +29,7 @@
     "lodash": "^4.17.20",
     "mitt": "^3.0.0",
     "postcss": "^8.2.10",
+    "query-string": "^7.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^5.2.1",

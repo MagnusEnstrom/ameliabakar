@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import colors from '../../../lib/colors';
 import Newsletter from '../../../assets/newsletter.svg'
 import H2 from '../../typography/h2/H2';
-import Input from '../../Form.tsx/Input';
+import Input from '../../Form/Input';
 import Primary from '../../buttons/primary/Primary';
 
 const SubContainer = styled.form({
