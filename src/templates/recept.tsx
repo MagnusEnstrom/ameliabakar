@@ -12,6 +12,7 @@ import H1 from '../components/typography/h1/H1'
 import H2 from '../components/typography/h2/H2'
 import { ReceptPageQuery } from '../graphql/types/ReceptContentType'
 import colors from '../lib/colors'
+import queryString from 'query-string'
 
 const RecipeWrapper = styled.div({
     margin: '10px 10px 30px 10px',
@@ -80,8 +81,7 @@ const recept = ({pageContext}: Props) => {
     const [filteredRecipes, setFilteredRecipes] = useState(pageContext.nodes);
     const [activeFilters, setActiveFilters] = useState<string[]>([]);
     const [searchData, setSearchData] = useState<string[]>([]);
-    const [value, setValue] = useState('')
-
+    const [value, setValue] = useState(queryString.parse(location.search).q ?? '')
 
     const handleFilterClick = (name: string) => {
         const includesName = activeFilters.includes(name);
@@ -99,6 +99,9 @@ const recept = ({pageContext}: Props) => {
         const found = afterFilter.filter(recipe => searchData.includes(recipe.id))
         setFilteredRecipes(found);
     }, [activeFilters, searchData])
+    useEffect(() => {
+        setValue(queryString.parse(location.search).q ?? value)
+    }, [location.search])
 
     const clearFilterAndSearch = () => {
         setValue(''),

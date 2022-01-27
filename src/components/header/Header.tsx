@@ -165,6 +165,7 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
 
     const handleSearchSubmit = (e: FormEvent) => { 
         e.preventDefault();
+        setNavStatus('closed')
         navigate(`/recept?q=${query}`)
 
     }
@@ -190,7 +191,7 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
             {navStatus === 'links' && (
                 <>
                     <SearchForm onSubmit={handleSearchSubmit} role={'search'}>
-                        <StyledSearchInput value={query} onChange={(e) => setQuery(e.target.value)} aria-label='search' type={'search'} name={'search'} placeholder={'sök...'} />
+                        <StyledSearchInput value={query} onChange={(e) => setQuery(e.target.value)} aria-label='search' name={'search'} placeholder={'sök...'} />
                     </SearchForm>
                     <HeaderExpandedContent>
                         <NavLink to={'/'}>Hem</NavLink>
@@ -204,7 +205,7 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
             )}
             {navStatus === 'search' && (
                 <SearchForm onSubmit={handleSearchSubmit} role={'search'} >
-                    <StyledSearchInput value={query} onChange={(e) => setQuery(e.target.value)} aria-label='search' type={'search'} name={'search'} placeholder={'sök...'} />
+                    <StyledSearchInput value={query} onChange={(e) => setQuery(e.target.value)} aria-label='search' name={'search'} placeholder={'sök...'} />
                 </SearchForm>
             )}
         </StyledHeader>
