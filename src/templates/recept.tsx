@@ -13,6 +13,7 @@ import H2 from '../components/typography/h2/H2'
 import { ReceptPageQuery } from '../graphql/types/ReceptContentType'
 import colors from '../lib/colors'
 import queryString from 'query-string'
+import { PageProps } from 'gatsby'
 
 const RecipeWrapper = styled.div({
     margin: '10px 10px 30px 10px',
@@ -75,13 +76,13 @@ const filterRecipes = (pageContext: ReceptPageQuery, activeFilters: string[]) =>
     return afterFilter;
 }
 type Props = {pageContext: ReceptPageQuery}
-const recept = ({pageContext}: Props) => {
+const recept = ({pageContext, location}: Props & PageProps) => {
     const [expanded, setExpanded] = useState(false);
 
     const [filteredRecipes, setFilteredRecipes] = useState(pageContext.nodes);
     const [activeFilters, setActiveFilters] = useState<string[]>([]);
     const [searchData, setSearchData] = useState<string[]>([]);
-    const [value, setValue] = useState(queryString.parse(typeof window === 'undefined' ? '' : window.location.search).q ?? '')
+    const [value, setValue] = useState(queryString.parse(location.search).q ?? '')
 
     const handleFilterClick = (name: string) => {
         const includesName = activeFilters.includes(name);
