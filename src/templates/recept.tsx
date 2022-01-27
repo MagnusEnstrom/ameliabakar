@@ -81,7 +81,7 @@ const recept = ({pageContext}: Props) => {
     const [filteredRecipes, setFilteredRecipes] = useState(pageContext.nodes);
     const [activeFilters, setActiveFilters] = useState<string[]>([]);
     const [searchData, setSearchData] = useState<string[]>([]);
-    const [value, setValue] = useState(queryString.parse(typeof location === 'undefined' ? '' : location.search).q ?? '')
+    const [value, setValue] = useState(queryString.parse(typeof window === 'undefined' ? '' : window.location.search).q ?? '')
 
     const handleFilterClick = (name: string) => {
         const includesName = activeFilters.includes(name);
