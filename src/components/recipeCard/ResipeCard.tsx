@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useState } from 'react'
 import { ReceptContent } from '../../graphql/types/ReceptContentType'
 import typography from '../../lib/typography';
 import Heart from '../../assets/heart-white.svg';
@@ -8,6 +8,8 @@ import colors from '../../lib/colors';
 import ClockIcon from '../../assets/clock.svg'
 import Rating from '../rating/Rating';
 import { Link } from 'gatsby';
+import useSaveRecipe from '../../hooks/useSaveRecipe';
+import useIsRecipeSaved from '../../hooks/useIsRecipeSaved';
 
 const Time = styled.div({
     display: 'flex',
@@ -67,10 +69,20 @@ const HeartIcon = styled(Heart)({
     border: 'none',
     height: '22.5px',
     width: '25px',
-    gridArea: 'Like',
-    justifySelf: 'end',
+})
+
+const HeartButton = styled.button({
     alignSelf: 'start',
-    margin: '13px 10px'
+    margin: '13px 10px',
+    justifySelf: 'end',
+    gridArea: 'Like',
+    backgroundColor: 'transparent',
+    border: 'none',
+
+    '&[aria-selected="true"] svg path': {
+        fill: colors.red,
+        stroke: colors.red
+    }
 })
 
 const CardText = styled.h2({
@@ -89,14 +101,26 @@ type Props = {
     tidFormat: string;
     rating: number;
     uri: string;
+    id: string
 }
 
-const ResipeCard = ({tidFormat, rating, tid, title, url, uri}: Props) => {
+const ResipeCard = ({tidFormat, rating, tid, title, url, uri, id}: Props) => {
+    const toggleRecipe = useSaveRecipe()
+    const [checked, setChecked] = useState<boolean>();
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setChecked(toggleRecipe(id))
+    }
+
+    const isSaved =  useIsRecipeSaved(id);
     return (
         <StyledLink to={uri}>
 
         <Card aria-label={'recept'} imgUrl={url}>
-            <HeartIcon />
+            <HeartButton data-cy="heartButton" onClick={(e) => handleClick(e)} aria-selected={typeof checked !== 'undefined' ? checked : isSaved} >
+                <HeartIcon />
+            </HeartButton>
             <Content>
                 <CardText>{title}</CardText>
                 <Time>
