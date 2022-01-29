@@ -12,12 +12,22 @@ const TipsImg = styled(Link)({
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     padding: 'clamp(2px, 3%, 10px)',
+    display: 'grid',
+    aspectRatio: '19/5'
 })
 
 const TipsText = styled(H2)({
     textAlign: 'center',
+    placeSelf: 'center',
     margin: '0px',
     padding: '20px 0px',
+});
+const TipsBackground = styled.div({
+    place: 'center',
+    display: 'grid',
+    height: '100%',
+    width: '100%',
+    margin: '0px',
     backgroundColor: 'rgba(255, 255, 255, 0.5)'
 });
 
@@ -25,7 +35,9 @@ const TipsText = styled(H2)({
 const Tips = () => {
     return (
         <TipsImg to={'/tips'}>
-            <TipsText>TIPS</TipsText>
+            <TipsBackground>
+                <TipsText>TIPS</TipsText>
+            </TipsBackground>
         </TipsImg>
     )
 }

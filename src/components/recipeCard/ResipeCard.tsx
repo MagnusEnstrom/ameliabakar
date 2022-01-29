@@ -5,11 +5,14 @@ import typography from '../../lib/typography';
 import Heart from '../../assets/heart-white.svg';
 import ReceptTime from '../time/ReceptTime';
 import colors from '../../lib/colors';
-import ClockIcon from '../../assets/clock.svg'
+import ClockIcon from '../../assets/clock-white.svg'
+import ClockIconBlack from '../../assets/clock.svg'
 import Rating from '../rating/Rating';
 import { Link } from 'gatsby';
 import useSaveRecipe from '../../hooks/useSaveRecipe';
 import useIsRecipeSaved from '../../hooks/useIsRecipeSaved';
+import Difficulty from '../difficulty/Difficulty';
+import P from '../typography/p/P';
 
 const Time = styled.div({
     display: 'flex',
@@ -17,26 +20,44 @@ const Time = styled.div({
     placeItems: 'center',
     gap: '7px',
     justifySelf: 'start',
-    alignSelf: 'end',
+    alignSelf: 'center',
 
 })
 
 const Clock = styled(ClockIcon)({
     display: 'none',
-    height: '13px',
-    width: '13px',
+    height: '16px',
+    width: '16px',
+    ['@media only screen and (min-width: 90ch)']: {
+        display: 'block',
+    }
+})
+const ClockBlack = styled(ClockIconBlack)({
+    display: 'none',
+    height: '16px',
+    width: '16px',
+    ['@media only screen and (min-width: 90ch)']: {
+        display: 'block',
+    }
 })
 
 const TimeText = styled.span({
     ...typography.note,
+    alignSelf: 'center',
 })
 
-const StyledLink = styled(Link)({
+const StyledLink = styled(Link)(({variant}: {variant?: Variant}) =>({
     textDecoration: 'none',
-})
-const Card = styled.div(({imgUrl}: {imgUrl: string}) => {
+    ['@media only screen and (min-width: 90ch)']: {
+        gridTemplateColumns: '6fr 7fr',
+        display: variant === 'vert' ? 'grid' : 'block',
+    }
+    
+}))
+const Card = styled.div(({imgUrl, variant}: {imgUrl: string, variant?: Variant}) => {
     // 29 / 44
     return {
+        aspectRatio: '2/3',
         minHeight: '220px',
         backgroundColor: colors.jet,
         backgroundImage: `url(${imgUrl})`,
@@ -48,12 +69,17 @@ const Card = styled.div(({imgUrl}: {imgUrl: string}) => {
         gridTemplateAreas: `
         "Like"
         "content"
-        `
+        `,
+
+        ['@media only screen and (min-width: 90ch)']: {
+            aspectRatio: variant === 'vert' ? '33/25' : '2/3',
+
+        }
     }
 })
 
-const Content = styled.div({
-    padding: '10px 20px',
+const Content = styled.div(({variant}: {variant?: Variant}) => ({
+    padding: '12px 20px',
     color: colors.white,
     display: 'grid',
     rowGap: '7px',
@@ -61,9 +87,18 @@ const Content = styled.div({
     "Text Text"
     "Time Rating"
     `,
+    background: 'linear-gradient(360deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 89.71%)',
+    
+    ['@media only screen and (min-width: 90ch)']: {
+        padding: '21px 20px',
+        gridTemplateAreas: `
+        "Text Text Text"
+        "Time Diff Rating"
+        `,
 
-    background: 'linear-gradient(360deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 89.71%)'
-})
+        display: variant === 'vert' ? 'none' : 'grid',
+    }
+}))
 
 const HeartIcon = styled(Heart)({
     border: 'none',
@@ -82,6 +117,11 @@ const HeartButton = styled.button({
     '&[aria-selected="true"] svg path': {
         fill: colors.red,
         stroke: colors.red
+    },
+
+    ['@media only screen and (min-width: 90ch)']: {
+        margin: '23px 19px',
+
     }
 })
 
@@ -92,7 +132,51 @@ const CardText = styled.h2({
     gridArea: 'Text',
     alignSelf: 'end',
     justifySelf: 'center',
+    
+    ['@media only screen and (min-width: 90ch)']: {
+        ...typography.card,
+    }
 })
+
+const StyledDifficulty = styled(Difficulty)(() => ({
+    display: 'none',
+    gridArea: 'Diff',
+    justifySelf: 'center',
+    ['@media only screen and (min-width: 90ch)']: {
+        display: 'grid',
+    }
+}))
+const VertContent = styled.div({
+    display: 'none',
+    padding: '12px 20px',
+    color: colors.jet,
+    rowGap: '7px',
+    
+    ['@media only screen and (min-width: 90ch)']: {
+        padding: '21px 20px',
+        gridTemplateAreas: `
+        "Text Text Text"
+        "Time Diff Rating"
+        `,
+        display: 'grid',
+
+    }
+})
+
+const Description = styled(P)({
+    gridArea: 'short',
+    textAlign: 'start',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    WebkitLineClamp: 3,
+    lineClamp: 3, 
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    margin: '0px',
+    alignSelf: 'end',
+})
+
+type Variant = 'card' | 'vert'
 
 type Props = {
     url: string;
@@ -101,10 +185,13 @@ type Props = {
     tidFormat: string;
     rating: number;
     uri: string;
-    id: string
+    id: string;
+    svarighetsgrad: 'Lätt' | 'Medel' | 'Svår';
+    variant?: Variant;
+    kortBeskrivning?: string;
 }
 
-const ResipeCard = ({tidFormat, rating, tid, title, url, uri, id}: Props) => {
+const ResipeCard = ({tidFormat, rating, tid, title, url, uri, id, svarighetsgrad, variant = 'card', kortBeskrivning}: Props) => {
     const toggleRecipe = useSaveRecipe()
     const [checked, setChecked] = useState<boolean>();
     const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -114,24 +201,60 @@ const ResipeCard = ({tidFormat, rating, tid, title, url, uri, id}: Props) => {
     }
 
     const isSaved =  useIsRecipeSaved(id);
-    return (
-        <StyledLink to={uri}>
 
-        <Card aria-label={'recept'} imgUrl={url}>
-            <HeartButton data-cy="heartButton" onClick={(e) => handleClick(e)} aria-selected={typeof checked !== 'undefined' ? checked : isSaved} >
-                <HeartIcon />
-            </HeartButton>
-            <Content>
-                <CardText>{title}</CardText>
+    if(variant === 'card') {
+        return (
+            <StyledLink to={uri}>
+    
+            <Card aria-label={'recept'} imgUrl={url}>
+                <HeartButton data-cy="heartButton" onClick={(e) => handleClick(e)} aria-selected={typeof checked !== 'undefined' ? checked : isSaved} >
+                    <HeartIcon />
+                </HeartButton>
+                <Content>
+                    <CardText>{title}</CardText>
+                    <Time>
+                        <Clock />
+                        <TimeText>{tid} {tidFormat === 'min' ? 'min' : 'h'}</TimeText>
+                    </Time>
+                    <StyledDifficulty diff={svarighetsgrad} />
+                    <Rating style={{ gridArea: 'Rating', justifySelf: 'end'}} rating={rating} />
+                </Content>
+            </Card>
+            </StyledLink>
+        )
+    }
+    if(variant === 'vert') {
+        return (
+        <StyledLink variant='vert' to={uri}>
+            <Card variant='vert' aria-label={'recept'} imgUrl={url}>
+                <HeartButton data-cy="heartButton" onClick={(e) => handleClick(e)} aria-selected={typeof checked !== 'undefined' ? checked : isSaved} >
+                    <HeartIcon />
+                </HeartButton>
+                <Content variant='vert'>
+                    <CardText>{title}</CardText>
+                    <Time>
+                        <Clock />
+                        <TimeText>{tid} {tidFormat === 'min' ? 'min' : 'h'}</TimeText>
+                    </Time>
+                    <StyledDifficulty diff={svarighetsgrad} />
+                    <Rating style={{ gridArea: 'Rating', justifySelf: 'end'}} rating={rating} />
+                </Content>
+            </Card>
+            <VertContent>
+                <div style={{ gridArea: 'Text', display:'flex', flexDirection: 'column', justifySelf: 'end', justifyContent: 'flex-end'}}>
+                    <CardText style={{ color: colors.jet, textAlign: 'start', width: '100%', marginBottom: '10px' }}>{title}</CardText>
+                    <Description>{kortBeskrivning}</Description>
+                </div>
                 <Time>
-                    <Clock />
+                    <ClockBlack />
                     <TimeText>{tid} {tidFormat === 'min' ? 'min' : 'h'}</TimeText>
                 </Time>
-                <Rating style={{ gridArea: 'Rating', justifySelf: 'end'}} rating={rating} />
-            </Content>
-        </Card>
+                <StyledDifficulty diff={svarighetsgrad} style={{ justifySelf: 'start',}} />
+                <Rating style={{ gridArea: 'Rating', justifySelf: 'start'}} rating={rating} />
+            </VertContent>
         </StyledLink>
-    )
+        )
+    }
 }
 
 export default ResipeCard

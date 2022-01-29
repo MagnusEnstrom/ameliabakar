@@ -12,6 +12,7 @@ const SubscribeWrapper = styled.div({
     display: 'grid',
     gridTemplateColumns: '1fr',
     gap: '10px',
+    maxWidth: '350px',
 })
 const IconWrapper = styled.div({
     ...typography.h2Mobile,

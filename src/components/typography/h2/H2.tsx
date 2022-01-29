@@ -3,7 +3,10 @@ import React, { FC } from 'react'
 import typography from '../../../lib/typography'
 
 const StyledH2 = styled.h2({
-    ...typography.h2Mobile
+    ...typography.h2Mobile,
+    ['@media only screen and (min-width: 70ch)']: {
+        ...typography.h2
+    }
 })
 
 const H2: FC<React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement>> = ({children, ...rest}) => {
