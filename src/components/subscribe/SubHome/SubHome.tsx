@@ -78,6 +78,7 @@ const StyledInput = styled.input({
 
 const StyledPrimary = styled(Primary)({
     display: 'block',
+    width: 'max-content',
     ['@media only screen and (min-width: 90ch)']: {
         display: 'none',
     }
