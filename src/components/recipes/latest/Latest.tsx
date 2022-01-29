@@ -8,6 +8,9 @@ const RecipeGrid = styled.div({
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '10px',
+    ['@media only screen and (min-width: 90ch)']: {
+        gridTemplateColumns: '1fr',
+    }
 })
 const Wrapper = styled.div({
     display: 'grid',
@@ -23,6 +26,8 @@ type LatestQuery = {
             singlePaketAfc: {
                 tidFormat: string,
                 tid: number,
+                svarighetsgrad: 'Lätt' | 'Medel' | 'Svår';
+                kortBeskrivning: string;
                 images: 
                     {
                         localFile: {
@@ -53,6 +58,8 @@ const Latest = ({ show = 6, loadMore, ...rest}: {show?: number, loadMore?: boole
             singlePaketAfc {
               tidFormat
               tid
+              svarighetsgrad
+              kortBeskrivning
               images {
                 localFile {
                   childrenImageSharp {
@@ -83,7 +90,7 @@ const Latest = ({ show = 6, loadMore, ...rest}: {show?: number, loadMore?: boole
         <Wrapper>
             <RecipeGrid {...rest}>
                 {recipies.map(recipe => {
-                    return <ResipeCard uri={recipe.uri} key={recipe.id} rating={4.2} id={recipe.id} tid={recipe.singlePaketAfc.tid} tidFormat={recipe.singlePaketAfc.tidFormat} title={recipe.title} url={recipe.singlePaketAfc.images?.[0]?.localFile.childrenImageSharp?.[0]?.original.src} />
+                    return <ResipeCard kortBeskrivning={recipe.singlePaketAfc.kortBeskrivning} variant='vert' svarighetsgrad={recipe.singlePaketAfc.svarighetsgrad} uri={recipe.uri} key={recipe.id} rating={4.2} id={recipe.id} tid={recipe.singlePaketAfc.tid} tidFormat={recipe.singlePaketAfc.tidFormat} title={recipe.title} url={recipe.singlePaketAfc.images?.[0]?.localFile.childrenImageSharp?.[0]?.original.src} />
                     
                 })}
             </RecipeGrid>

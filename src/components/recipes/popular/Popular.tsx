@@ -7,6 +7,13 @@ const RecipeGrid = styled.div({
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '10px',
+    
+    ['@media only screen and (min-width: 90ch)']: {
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        'a:last-of-type': {
+            display: 'none'
+        },
+    }
 })
 
 type PopularQuery = {
@@ -18,6 +25,7 @@ type PopularQuery = {
             singlePaketAfc: {
                 tidFormat: string,
                 tid: number,
+                svarighetsgrad: 'Lätt' | 'Medel' | 'Svår';
                 images: 
                     {
                         localFile: {
@@ -48,6 +56,7 @@ const Popular = ({...rest}: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
             singlePaketAfc {
               tidFormat
               tid
+              svarighetsgrad
               images {
                 localFile {
                   childrenImageSharp {
@@ -71,7 +80,7 @@ const Popular = ({...rest}: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
     return (
         <RecipeGrid {...rest}>
             {recipies.map(recipe => {
-                return <ResipeCard uri={recipe.uri} key={recipe.id} id={recipe.id} rating={4.2} tid={recipe.singlePaketAfc.tid} tidFormat={recipe.singlePaketAfc.tidFormat} title={recipe.title} url={recipe.singlePaketAfc.images?.[0]?.localFile.childrenImageSharp?.[0]?.original.src} />
+                return <ResipeCard svarighetsgrad={recipe.singlePaketAfc.svarighetsgrad} uri={recipe.uri} key={recipe.id} id={recipe.id} rating={4.2} tid={recipe.singlePaketAfc.tid} tidFormat={recipe.singlePaketAfc.tidFormat} title={recipe.title} url={recipe.singlePaketAfc.images?.[0]?.localFile.childrenImageSharp?.[0]?.original.src} />
                 
             })}
         </RecipeGrid>

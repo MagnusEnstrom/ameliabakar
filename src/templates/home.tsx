@@ -16,17 +16,21 @@ import Popular from '../components/recipes/popular/Popular'
 import Latest from '../components/recipes/latest/Latest'
 import Tips from '../components/tips/Tips'
 import HomeImg from './ameliabakar-home.jpeg'
+import Avatar from '../components/avatar/avatar'
+import InstagramLink from '../components/instagramLink/instagramLink'
 
 const TextWrapper = styled.div({
     textAlign: 'center',
     padding: '0px 10px',
+    display: 'grid',
 })
 
 const TextWrapperSvg = styled.div({
     justifySelf: 'center',
     textAlign: 'center',
     padding: '0px 10px',
-    maxWidth: '22ch'
+    maxWidth: '22ch',
+
 })
 
 const HomePageImg = styled.img({
@@ -50,6 +54,66 @@ const H3 = styled.h2({
     ...typography.h5
 })
 
+const StyledP = styled(P)({
+    ['@media only screen and (min-width: 70ch)']: {
+        maxWidth: '50ch',
+        textAlign: 'start',
+        justifySelf: 'center'
+    }
+})
+const StyledH2Decoration = styled(H2Decoration)({
+    margin: '0px 10px 30px 10px',
+    ['@media only screen and (min-width: 70ch)']: {
+        margin: '0px 10px 50px 10px',
+    }
+})
+const StyledMyRecipesLink = styled(Link)({
+    justifySelf: 'center', 
+    margin: '30px 0px 50px 0px',
+    ['@media only screen and (min-width: 70ch)']: {
+        margin: '30px 0px 70px 0px',
+    }
+})
+const HelloBakers = styled.div({
+    textAlign: 'center',
+    padding: '0px 10px',
+    display: 'grid',
+    marginTop: '50px',
+    marginBottom: '50px',
+    ['@media only screen and (min-width: 90ch)']: {
+        padding: '0px 35px',
+        marginTop: '120px',
+        justifySelf: 'center',
+        maxWidth: '75ch',
+        gap: '0px 100px',
+        gridTemplateAreas: `
+        "avatar title"
+        "avatar text"
+        "avatar text"
+        "insta about"
+        `
+    }
+})
+const StyledAvatar = styled(Avatar)({
+    justifySelf: 'center', 
+    marginBottom: '21px',
+    ['@media only screen and (min-width: 90ch)']: {
+        alignSelf: 'end',
+        gridArea: 'avatar'
+    }
+})
+const StyledInstagramLink = styled(InstagramLink)({
+    justifySelf: 'center', 
+    ['@media only screen and (min-width: 90ch)']: {
+        gridArea: 'insta'
+    }
+})
+const HelloBakersP = styled(P)({
+    ['@media only screen and (min-width: 90ch)']: {
+        textAlign: 'start',
+    }
+})
+
 const home = () => {
     return (
         <Layout isHomePage={true}>
@@ -57,34 +121,36 @@ const home = () => {
                 <TextWrapper>
                     <HomePageImg style={{ marginTop: '50px' }} src={HomeImg} />
                     <H2 style={{ marginTop: '30px' }}>Recept för alla!</H2>
-                    <P>
+                    <StyledP>
                         Det finns alltid en anledning att baka. Här hittar du mina egna recept för alla typer av svårighetsgrader och varianter. 
-                    </P>
-                    <P style={{ marginBottom: '0px' }}>
+                    </StyledP>
+                    <StyledP style={{ marginBottom: '0px' }}>
                         Jag är en  självlärd hobbybakare som älskar att testa mig fram med olika smakkombinationer. Jag hoppas kunna inspirera dig med mina recept!
-                    </P>
+                    </StyledP>
                 </TextWrapper>
-                <Link to={'/recept'} style={{ justifySelf: 'center', margin: '30px 0px 50px 0px' }}>
+                <StyledMyRecipesLink to={'/recept'}>
                     <Secondary>Här hittar du mina recept</Secondary>
-                </Link>
+                </StyledMyRecipesLink>
 
-                <H2Decoration style={{margin: '0px 10px 30px 10px'}} text={'Populära recept'} />
-                <Popular style={{ margin: '0px 10px'}} />
+                <StyledH2Decoration text={'Populära recept'} />
+                <Popular style={{ margin: '0px 10px 0px 10px'}} />
                 {/* render pick of amelia */}
 
-                <TextWrapper>
-                    <H2>Hej bakare!</H2>
-                    <P>
+                <HelloBakers>
+                    <StyledAvatar />
+                    <StyledInstagramLink />
+                    <H2 style={{ marginTop: '21px'}}>Hej bakare!</H2>
+                    <HelloBakersP>
                         Vad kul att du har hittat hit! Jag heter Amelia och jag är en hobbybakare från Umeå som brinner för kreativitet. Jag vill att köket ska vara en plats där nyfikenhet får verka fritt – en plats där man kan bli på bra humör! 
-                    </P>
-                    <P style={{ marginBottom: '0px' }} > 
+                    </HelloBakersP>
+                    <HelloBakersP style={{ marginBottom: '30px' }} > 
                         Jag bakar allt från de enklaste småkakorna till mer avancerade tårtor och bakverk. På min hemsida vill jag att det ska finnas något för alla
-                    </P>
-                </TextWrapper>
+                    </HelloBakersP>
+                    <Link to={'/om-mig'} style={{ justifySelf: 'center', margin: '0px'}}>
+                        <Secondary>Mer om mig</Secondary>
+                    </Link>
+                </HelloBakers>
 
-                <Link to={'/om-mig'} style={{ justifySelf: 'center', margin: '30px 0px 50px 0px' }}>
-                    <Secondary>Mer om mig</Secondary>
-                </Link>
                 
                 <SubHome />
 

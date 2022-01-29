@@ -1,0 +1,12 @@
+reviews
+
+Request URL: https://www.ameliabakar.se/wp-admin/admin-ajax.php
+
+payload
+action=postratings&pid=1883&rate=5&postratings_1883_nonce=7acdc9f4be
+
+parsed
+action: postratings
+pid: 1883
+rate: 5
+postratings_1883_nonce: 7acdc9f4be

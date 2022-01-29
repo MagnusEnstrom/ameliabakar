@@ -13,7 +13,7 @@ const DiffDot = styled.div(({lightUp}: {lightUp?: boolean}) => {
 })
 
 const DiffText = styled.span({
-
+    width: 'max-content',
 })
 
 const DifficultyWrapper = styled.div({
@@ -32,9 +32,9 @@ const DotWrapper = styled.div({
 type Props = {
     diff: 'Svår' | 'Medel' | 'Lätt'
 }
-const Difficulty = ({diff}: Props) => {
+const Difficulty = ({diff, ...rest}: Props & React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>) => {
     return (
-        <DifficultyWrapper>
+        <DifficultyWrapper {...rest}>
             <DiffText>{diff}</DiffText>
             <DotWrapper>
                 <DiffDot lightUp={true} />
