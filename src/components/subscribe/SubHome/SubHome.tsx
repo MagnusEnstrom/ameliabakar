@@ -79,7 +79,8 @@ const StyledInput = styled.input({
 const StyledPrimary = styled(Primary)({
     display: 'block',
     width: 'max-content',
-    justifySelf: 'center',
+    placeSelf: 'center', 
+    marginTop: '20px',
     ['@media only screen and (min-width: 90ch)']: {
         display: 'none',
     }
@@ -151,7 +152,7 @@ const SubHome = () => {
                     }
             </InputWrapper>
             <ErrorMessage>{error}</ErrorMessage>
-            <StyledPrimary type={'submit'} style={{ placeSelf: 'center', marginTop: '20px' }}>Prenumerera</StyledPrimary>
+            <StyledPrimary type={'submit'}>Prenumerera</StyledPrimary>
         </SubContainer>
     )
 }
