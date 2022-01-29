@@ -5,7 +5,7 @@ import Header from './Header'
 
 const HeaderImg = styled.div(({imgSrc}: {imgSrc: string}) => {
     return {
-        height: ['-webkit-fill-available', '100vh'],
+        height: '70vh',
         backgroundImage: `url(${imgSrc})`,
         padding: '20px 20px 30px 20px',
         backgroundPosition: 'center',
