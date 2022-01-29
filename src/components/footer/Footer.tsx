@@ -43,15 +43,28 @@ const StyledFooter = styled.div({
     padding: '50px 20px',
     display: 'grid',
     gridTemplateAreas: `
-    "logo logo"
-    "instagram instagram"
-    "email email"
-    "nyhetsbrev nyhetsbrev"
-    "links links"
-    "cookies cookies"
-    "settings settings"
-    "copyright copyright"
-    `
+        "logo logo"
+        "instagram instagram"
+        "email email"
+        "nyhetsbrev nyhetsbrev"
+        "links links"
+        "cookies cookies"
+        "settings settings"
+        "copyright copyright"
+    `,
+
+    ['@media only screen and (min-width: 70ch)']: {
+        gridTemplateColumns: '1fr 1fr',
+        gap: '0px 30px',
+        gridTemplateAreas: `
+            "logo logo"
+            "instagram nyhetsbrev"
+            "email nyhetsbrev"
+            "links links"
+            "settings cookies"
+            "copyright copyright"
+        `,
+    }
 });
 
 const StyledA = styled.a({
@@ -83,6 +96,13 @@ const Nav = styled.nav({
     '& a:hover': {
         color: colors.silver,
     },
+
+    ['@media only screen and (min-width: 70ch)']: {
+        display: 'flex',
+        placeSelf: 'center',
+        width: 'max-content',
+        marginBottom: '50px',
+    }
 })
 
 const Copyright = styled.p({
@@ -93,6 +113,38 @@ const Copyright = styled.p({
     marginBottom: '50px',
     textAlign: 'center',
 
+})
+
+const StyledCookie = styled(Link)({
+    marginTop: '40px',
+    gridArea: 'cookies',
+    ...typography.p,
+    textDecoration: 'none',
+    color: colors.silver,
+    placeSelf: 'center',
+    ['@media only screen and (min-width: 70ch)']: {
+        placeSelf: undefined,
+        justifySelf: 'start',
+        margin: '0px',
+    }
+})
+const StyledCookieSettings = styled(Link)({
+    marginTop: '20px',
+    ...typography.p,
+    gridArea: 'settings',
+    textDecoration: 'none',
+    color: colors.silver,
+    placeSelf: 'center',
+    
+    ['@media only screen and (min-width: 70ch)']: {
+        placeSelf: undefined,
+        justifySelf: 'end',
+        margin: '0px',
+    }
+})
+
+const StyledSubscribe = styled(Subscribe)({
+    justifySelf: 'end',
 })
 
 const Footer = () => {
@@ -108,7 +160,7 @@ const Footer = () => {
                 <StyledA href={'mailto:contact@ameliabakar.se'}>contact@ameliabakar.se</StyledA>
             </ContactContainer>
 
-            <Subscribe style={{gridArea: 'nyhetsbrev', marginTop: '20px', marginBottom: '30px'}} />
+            <StyledSubscribe style={{gridArea: 'nyhetsbrev', marginTop: '20px', marginBottom: '30px'}} />
             <Nav>
                 <Link to={'/'}>Hem</Link>
                 <Link to={'/tips'}>Tips</Link>
@@ -118,32 +170,12 @@ const Footer = () => {
                 <Link to={'/mina-sparade-recept'}>Mina sparade recept</Link>
             </Nav>
 
-            <Link to={'/cookies'} style={{
-                marginTop: '40px',
-                gridArea: 'cookies',
-                ...typography.p,
-                textDecoration: 'none',
-                color: colors.silver,
-                placeSelf: 'center',
-            }}>Cookies</Link>
-            <Link to={'/cookies-settings'} style={{
-                marginTop: '20px',
-                ...typography.p,
-                gridArea: 'settings',
-                textDecoration: 'none',
-                color: colors.silver,
-                placeSelf: 'center',
-            }}>Cookieinställningar</Link>
+            <StyledCookie to={'/cookies'}>Cookies</StyledCookie>
+            <StyledCookieSettings to={'/cookies-settings'}>Cookieinställningar</StyledCookieSettings>
 
             <Copyright>
-                Copyright © 2021 Amelia Bakar. All rights reserved
+                Copyright © {(new Date).getFullYear()} Amelia Bakar. All rights reserved
             </Copyright>
-
-            {/* nyhetsbrev */}
-            {/* links */}
-            {/* cookies */}
-            {/* inställningar */}
-            {/* copyright */}
         </StyledFooter>
     )
 }
