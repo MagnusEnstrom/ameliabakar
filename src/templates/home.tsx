@@ -94,6 +94,10 @@ const HelloBakers = styled.div({
         `
     }
 })
+
+const GridContainer = styled.div({
+    display: 'grid',
+})
 const StyledAvatar = styled(Avatar)({
     justifySelf: 'center', 
     marginBottom: '21px',
@@ -113,6 +117,17 @@ const HelloBakersP = styled(P)({
         textAlign: 'start',
     }
 })
+
+const UtbudWrapper = styled.section({
+    display: 'grid',
+    ['@media only screen and (min-width: 90ch)']: {
+        display: 'flex',
+        placeSelf: 'center',
+        justifyContent: 'space-between',
+        width: '100%',
+        padding: '20px 35px 0px 35px',
+    }
+});
 
 const home = () => {
     return (
@@ -163,31 +178,36 @@ const home = () => {
                     <Secondary>Visa alla recept</Secondary>
                 </Link>
 
-                <H2Decoration style={{margin: '0px 10px'}} text={'Utbudet'} />
-
-                <PartyDraw />
-                <TextWrapperSvg>
-                    <H3>Bakning</H3>
-                    <P>
-                        Jag kan baka till barnkalaset, baby showern eller bara till hemmakvällen
-                    </P>
-                </TextWrapperSvg>
-                
-                <Hangout />
-                <TextWrapperSvg>
-                    <H3>Konferenser</H3>
-                    <P>
-                        Jag fixar företagsfika till er konferens, after work eller andra trevligheter
-                    </P>
-                </TextWrapperSvg>
-
-                <Delivery />
-                <TextWrapperSvg>
-                    <H3>Leveranser</H3>
-                    <P>
-                        Gratis utkörning av bakverk och godis inom Umeå kommun!
-                    </P>
-                </TextWrapperSvg>
+                <H2Decoration style={{margin: '0px 10px 30px 10px'}} text={'Utbudet'} />
+                <UtbudWrapper>
+                    <GridContainer>
+                        <PartyDraw />
+                        <TextWrapperSvg>
+                            <H3>Bakning</H3>
+                            <P>
+                                Jag kan baka till barnkalaset, baby showern eller bara till hemmakvällen
+                            </P>
+                        </TextWrapperSvg>
+                    </GridContainer>
+                    <GridContainer>
+                        <Hangout />
+                        <TextWrapperSvg>
+                            <H3>Konferenser</H3>
+                            <P>
+                                Jag fixar företagsfika till er konferens, after work eller andra trevligheter
+                            </P>
+                        </TextWrapperSvg>
+                    </GridContainer>
+                    <GridContainer>
+                        <Delivery />
+                        <TextWrapperSvg>
+                            <H3>Leveranser</H3>
+                            <P>
+                                Gratis utkörning av bakverk och godis inom Umeå kommun!
+                            </P>
+                        </TextWrapperSvg>
+                    </GridContainer>
+                </UtbudWrapper>
 
                 <Link to={'/om-bestallningar'} style={{ justifySelf: 'center', margin: '30px 0px 50px 0px' }}>
                     <Primary>Läs mer om beställningar</Primary>
