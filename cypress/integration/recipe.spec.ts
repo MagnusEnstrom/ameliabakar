@@ -29,17 +29,24 @@ describe('/recept', () => {
         //Filter list is not shown
         cy.findByLabelText('close filter').should('not.exist');
         cy.get('[data-cy=filterButton]').should('not.exist');
-
+        
     })
-    // it('A user can filter recipes', () => {
-    //     cy.findAllByLabelText('recept').should('have.length', 10);
+    
+    it('can save & view saved recipes', () => {
+        cy.visit('/mina-recept')
+        cy.findByRole('heading', { name: /Dina sparade recept kommer att visas här/i})
+        cy.findByText(/Du har för närvarande inte några sparade recept/i)
+        cy.findByRole('button', { name: /Här hittar du mina recept/i}).click();
         
-    //     const filterButton = cy.findByLabelText('show filter');
-    //     filterButton.click();
+        cy.findAllByLabelText('recept').should('have.length', 10);
+        cy.get('[data-cy=heartButton]')
+        .should('not.have.attr', 'aria-selected', 'true')
+        .click({multiple: true})
+        .should('have.attr', 'aria-selected', 'true');
         
-    //     const filterChip = cy.findByRole('button', { name: 'Choklad'});
-    //     filterChip.click();
         
-    //     cy.findAllByRole('button').s;
-    // })
+        cy.visit('/mina-recept')
+        cy.findByRole('heading', { name: /Mina sparade recept/i});
+        cy.findAllByLabelText('recept').should('have.length', 10);
+    })
   })

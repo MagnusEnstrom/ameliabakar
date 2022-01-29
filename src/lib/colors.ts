@@ -7,6 +7,7 @@ const colors = {
     fireOpal: '#EF6461',
     honeyYellow: '#FBAF00',
     laruelGreen: '#B4CCA8',
+    red: '#EF6461'
 }
 
 export default colors;

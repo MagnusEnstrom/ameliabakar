@@ -83,7 +83,7 @@ const Latest = ({ show = 6, loadMore, ...rest}: {show?: number, loadMore?: boole
         <Wrapper>
             <RecipeGrid {...rest}>
                 {recipies.map(recipe => {
-                    return <ResipeCard uri={recipe.uri} key={recipe.id} rating={4.2} tid={recipe.singlePaketAfc.tid} tidFormat={recipe.singlePaketAfc.tidFormat} title={recipe.title} url={recipe.singlePaketAfc.images?.[0]?.localFile.childrenImageSharp?.[0]?.original.src} />
+                    return <ResipeCard uri={recipe.uri} key={recipe.id} rating={4.2} id={recipe.id} tid={recipe.singlePaketAfc.tid} tidFormat={recipe.singlePaketAfc.tidFormat} title={recipe.title} url={recipe.singlePaketAfc.images?.[0]?.localFile.childrenImageSharp?.[0]?.original.src} />
                     
                 })}
             </RecipeGrid>

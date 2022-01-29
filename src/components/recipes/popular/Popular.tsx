@@ -71,7 +71,7 @@ const Popular = ({...rest}: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDiv
     return (
         <RecipeGrid {...rest}>
             {recipies.map(recipe => {
-                return <ResipeCard uri={recipe.uri} key={recipe.id} rating={4.2} tid={recipe.singlePaketAfc.tid} tidFormat={recipe.singlePaketAfc.tidFormat} title={recipe.title} url={recipe.singlePaketAfc.images?.[0]?.localFile.childrenImageSharp?.[0]?.original.src} />
+                return <ResipeCard uri={recipe.uri} key={recipe.id} id={recipe.id} rating={4.2} tid={recipe.singlePaketAfc.tid} tidFormat={recipe.singlePaketAfc.tidFormat} title={recipe.title} url={recipe.singlePaketAfc.images?.[0]?.localFile.childrenImageSharp?.[0]?.original.src} />
                 
             })}
         </RecipeGrid>
