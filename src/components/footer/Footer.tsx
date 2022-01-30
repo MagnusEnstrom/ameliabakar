@@ -31,6 +31,13 @@ const ContactContainer = styled.div({
     alignItems: 'center',
     marginLeft: '32px',
 })
+const ContactContainerInsta = styled(ContactContainer)({
+    marginLeft: '30px',
+    ['@media only screen and (min-width: 70ch)']: {
+        marginBottom: '0px',
+        alignSelf: 'end',
+    }
+})
 
 const Email = styled(EmailIcon)({
     border: 'none',
@@ -151,10 +158,10 @@ const Footer = () => {
     return (
         <StyledFooter>
             <Logo />
-            <ContactContainer style={{gridArea: 'instagram'}}>
+            <ContactContainerInsta style={{gridArea: 'instagram'}}>
                 <Instagram />
                 <StyledA href={'https://www.instagram.com/ameliabakar.se/'} rel="noopener" target={'_blank'}>@ameliabakar.se</StyledA>
-            </ContactContainer>
+            </ContactContainerInsta>
             <ContactContainer style={{gridArea: 'email'}}>
                 <Email />
                 <StyledA href={'mailto:contact@ameliabakar.se'}>contact@ameliabakar.se</StyledA>
