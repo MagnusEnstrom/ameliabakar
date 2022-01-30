@@ -241,7 +241,7 @@ const ResipeCard = ({tidFormat, rating, tid, title, url, uri, id, svarighetsgrad
                 </Content>
             </Card>
             <VertContent>
-                <div style={{ gridArea: 'Text', display:'flex', flexDirection: 'column', justifySelf: 'end', justifyContent: 'flex-end'}}>
+                <div style={{ gridArea: 'Text', display:'flex', flexDirection: 'column', justifySelf: 'start', justifyContent: 'flex-end'}}>
                     <CardText style={{ color: colors.jet, textAlign: 'start', width: '100%', marginBottom: '10px' }}>{title}</CardText>
                     <Description>{kortBeskrivning}</Description>
                 </div>
