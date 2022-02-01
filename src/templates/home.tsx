@@ -18,11 +18,30 @@ import Tips from '../components/tips/Tips'
 import HomeImg from './ameliabakar-home.jpeg'
 import Avatar from '../components/avatar/avatar'
 import InstagramLink from '../components/instagramLink/instagramLink'
+import colors from '../lib/colors'
 
 const TextWrapper = styled.div({
     textAlign: 'center',
-    padding: '0px 10px',
     display: 'grid',
+    ['@media only screen and (min-width: 170ch)']: {
+        alignSelf: 'center',
+        justifySelf: 'start',
+        padding: '0px 20px',
+    }
+})
+const IntroWrapper = styled.div({
+    textAlign: 'center',
+    padding: '0px 0px 50px 0px',
+    display: 'grid',
+    ['@media only screen and (min-width: 70ch)']: {
+        padding: '0px 0px 70px 0px',
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        gridTemplateColumns: '2fr 1fr',
+        padding: '0px 0px 100px 0px',
+        gap: '100px',
+    }
+
 })
 
 const TextWrapperSvg = styled.div({
@@ -35,6 +54,9 @@ const TextWrapperSvg = styled.div({
 
 const HomePageImg = styled.img({
     width: '100%',
+    marginTop: '50px', 
+    maxHeight: '480px',
+    objectFit: 'cover',
 })
 
 const PartyDraw = styled(PartyDrawSvg)({
@@ -46,8 +68,16 @@ const Hangout = styled(HangoutDraw)({
 const Delivery = styled(DeliveryDraw)({
     placeSelf: 'center',
 })
-const AreaWrapper = styled.main({
+const AreaWrapper = styled.section({
     display: 'grid',
+    padding: '0px 10px',
+    maxWidth: '1360px',
+    ['@media only screen and (min-width: 70ch)']: {
+        padding: '0px 20px',
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        margin: '0 auto',
+    }
 });
 
 const H3 = styled.h2({
@@ -62,27 +92,24 @@ const StyledP = styled(P)({
     }
 })
 const StyledH2Decoration = styled(H2Decoration)({
-    margin: '0px 10px 30px 10px',
+    margin: '0px 0px 30px 0px',
     ['@media only screen and (min-width: 70ch)']: {
-        margin: '0px 10px 50px 10px',
+        margin: '0px 0px 50px 0px',
     }
 })
 const StyledMyRecipesLink = styled(Link)({
     justifySelf: 'center', 
-    margin: '30px 0px 50px 0px',
-    ['@media only screen and (min-width: 70ch)']: {
-        margin: '30px 0px 70px 0px',
-    }
+    margin: '30px 0px 0px 0px',
 })
 const HelloBakers = styled.div({
     textAlign: 'center',
-    padding: '0px 10px',
     display: 'grid',
-    marginTop: '50px',
-    marginBottom: '50px',
+    
+    padding: '50px 10px 50px 10px',
+    
     ['@media only screen and (min-width: 90ch)']: {
-        padding: '0px 35px',
-        marginTop: '120px',
+        margin: '0 auto',
+        padding: '120px 20px 50px 20px',
         justifySelf: 'center',
         maxWidth: '75ch',
         gap: '0px 100px',
@@ -92,6 +119,20 @@ const HelloBakers = styled.div({
         "avatar text"
         "insta about"
         `
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        padding: '50px 0px 30px 0px',
+        gap: '0px',
+        gridArea: 'hello',
+        gridTemplateAreas: `
+            "avatar"
+            "title"
+            "text"
+            "text"
+            "about"
+            "insta"
+        `
+        
     }
 })
 
@@ -110,9 +151,25 @@ const StyledInstagramLink = styled(InstagramLink)({
     justifySelf: 'center', 
     ['@media only screen and (min-width: 90ch)']: {
         gridArea: 'insta'
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        backgroundColor: colors.cultured,
+        width: '100%',
+        justifyContent: 'center',
+        padding: '45px 0px',
+        marginTop: '50px',
+        svg: {
+            height: '33px',
+            width: '33px',
+        },
+        a: {
+            fontSize: '28px',
+            fontWeight: 700,
+        },
     }
 })
 const HelloBakersP = styled(P)({
+
     ['@media only screen and (min-width: 90ch)']: {
         textAlign: 'start',
     }
@@ -129,27 +186,94 @@ const UtbudWrapper = styled.section({
     }
 });
 
+const MainArea = styled.section({
+    display: 'block',
+
+    ['@media only screen and (min-width: 170ch)']: {
+        margin: '0 auto',
+        maxWidth: '1360px',
+        display: 'grid',
+        gap: '110px',
+        gridTemplateColumns: '2fr 1fr',
+        gridTemplateAreas: `
+        "Latest Info"
+        `,
+        paddingTop: '50px',
+    }
+    
+})
+
+const InfoArea = styled.div({
+    ['@media only screen and (min-width: 170ch)']: {
+        display: 'grid',
+        gridArea: 'Info',
+        alignSelf: 'start',
+        gridTemplateAreas: `
+            "hello"
+            "tips"
+            "newsletter"
+        `
+    
+    }
+})
+const LatestArea = styled.div({
+    display: 'grid',
+    
+    ['@media only screen and (min-width: 170ch)']: {
+        gridArea: 'Latest',
+    
+    }
+})
+
+const LatestLink = styled(Link)({
+    justifySelf: 'center', 
+    margin: '30px 0px 50px 0px',
+    ['@media only screen and (min-width: 170ch)']: {
+        margin: '60px 0px 100px 0px',
+    
+    }
+})
+
+const StyledTips = styled(Tips)({
+    ['@media only screen and (min-width: 170ch)']: {
+        gridArea: 'tips',
+        marginBottom: '30px',
+    }
+})
+const StyledSubhome = styled(SubHome)({
+    ['@media only screen and (min-width: 170ch)']: {
+        gridArea: 'newsletter'
+    }
+})
+
 const home = () => {
     return (
         <Layout isHomePage={true}>
             <AreaWrapper>
-                <TextWrapper>
-                    <HomePageImg style={{ marginTop: '50px' }} src={HomeImg} />
-                    <H2 style={{ marginTop: '30px' }}>Recept för alla!</H2>
-                    <StyledP>
-                        Det finns alltid en anledning att baka. Här hittar du mina egna recept för alla typer av svårighetsgrader och varianter. 
-                    </StyledP>
-                    <StyledP style={{ marginBottom: '0px' }}>
-                        Jag är en  självlärd hobbybakare som älskar att testa mig fram med olika smakkombinationer. Jag hoppas kunna inspirera dig med mina recept!
-                    </StyledP>
-                </TextWrapper>
-                <StyledMyRecipesLink to={'/recept'}>
-                    <Secondary>Här hittar du mina recept</Secondary>
-                </StyledMyRecipesLink>
+                <IntroWrapper>
+                    <HomePageImg src={HomeImg} />
+                    <TextWrapper>
+                        <H2 style={{ marginTop: '30px' }}>Recept för alla!</H2>
+                        <StyledP>
+                            Det finns alltid en anledning att baka. Här hittar du mina egna recept för alla typer av svårighetsgrader och varianter. 
+                        </StyledP>
+                        <StyledP style={{ marginBottom: '0px' }}>
+                            Jag är en  självlärd hobbybakare som älskar att testa mig fram med olika smakkombinationer. Jag hoppas kunna inspirera dig med mina recept!
+                        </StyledP>
+                        <StyledMyRecipesLink to={'/recept'}>
+                            <Secondary>Här hittar du mina recept</Secondary>
+                        </StyledMyRecipesLink>
+                    </TextWrapper>
+                </IntroWrapper>
 
                 <StyledH2Decoration text={'Populära recept'} />
-                <Popular style={{ margin: '0px 10px 0px 10px'}} />
+                <Popular style={{ justifySelf: 'center', width: '100%' }} />
                 {/* render pick of amelia */}
+            </AreaWrapper>
+
+            <MainArea>
+
+            <InfoArea>
 
                 <HelloBakers>
                     <StyledAvatar />
@@ -165,20 +289,24 @@ const home = () => {
                         <Secondary>Mer om mig</Secondary>
                     </Link>
                 </HelloBakers>
+                <StyledSubhome />
 
-                
-                <SubHome />
+                <StyledTips />
+            </InfoArea>
+            <LatestArea>
+                <H2Decoration style={{margin: '50px 0px 30px 0px'}} text={'Senaste recepten'} />
 
-                <Tips />
-                
-                <H2Decoration style={{margin: '50px 10px 30px 10px'}} text={'Senaste recepten'} />
                 <Latest style={{ margin: '0px 10px'}} />
                 
-                <Link to={'/recept'} style={{ justifySelf: 'center', margin: '30px 0px 50px 0px' }}>
+                <LatestLink to={'/recept'}>
                     <Secondary>Visa alla recept</Secondary>
-                </Link>
+                </LatestLink>
+            </LatestArea>
 
-                <H2Decoration style={{margin: '0px 10px 30px 10px'}} text={'Utbudet'} />
+            </MainArea>
+            <AreaWrapper>
+                
+                <H2Decoration style={{margin: '0px 0px 30px 0px'}} text={'Utbudet'} />
                 <UtbudWrapper>
                     <GridContainer>
                         <PartyDraw />

@@ -15,6 +15,9 @@ const SubContainer = styled.form({
     padding: '50px 20px 100px 20px',
     ['@media only screen and (min-width: 90ch)']: {
         padding: '50px 20px 50px 20px',
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        padding: '100px 30px 100px 30px',
     }
 });
 
@@ -24,6 +27,10 @@ const StyledH2 = styled(H2)({
     ['@media only screen and (min-width: 90ch)']: {
         display: 'none',
         ...typography.h4
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        display: 'block',
+        ...typography.h3
     }
 })
 const TabletH2 = styled(H2)({
@@ -33,13 +40,24 @@ const TabletH2 = styled(H2)({
     ['@media only screen and (min-width: 90ch)']: {
         display: 'block',
         ...typography.h4
-    }
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        display: 'none',
+    },
 })
 const NewsletterIcon = styled(Newsletter)({
-    height: '24px',
+    height: '30px',
+    width: '30px',
     ['@media only screen and (min-width: 90ch)']: {
         display: 'block',
         marginRight: '20px',
+        alignSelf: 'center',
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        height: '42px',
+        width: '42px',
+        display: 'block',
+        marginRight: '0px',
         alignSelf: 'center',
     }
 })
@@ -55,7 +73,10 @@ const InputWrapper = styled.form({
     gridTemplateColumns: '1fr max-content',
     ['@media only screen and (min-width: 90ch)']: {
         display: 'grid',
-    }
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        display: 'none',
+    },
 });
 
 const StyledInput = styled.input({
@@ -83,20 +104,30 @@ const StyledPrimary = styled(Primary)({
     marginTop: '20px',
     ['@media only screen and (min-width: 90ch)']: {
         display: 'none',
-    }
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        display: 'block',
+    },
 })
 const StyledFormInput = styled(Input)({
     display: 'block',
     ['@media only screen and (min-width: 90ch)']: {
         display: 'none',
-    }
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        display: 'block',
+    },
 })
 const TabletContainer = styled.div({
     placeSelf: 'center',
     ['@media only screen and (min-width: 90ch)']: {
         display: 'flex',
         marginBottom: '40px'
-    }
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        display: 'block',
+        marginBottom: '0px'
+    },
 })
 
 const ErrorMessage = styled.span({
@@ -110,7 +141,7 @@ const ErrorMessage = styled.span({
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const SubHome = () => {
+const SubHome = ({...rest}) => {
 
     const [subscribeStatus, setSubscriobeStatus] = useState<'success' | 'idle'>('idle');
     const [error, setError] = useState<string | null>(null);
@@ -132,7 +163,7 @@ const SubHome = () => {
     }
     
     return (
-        <SubContainer onSubmit={e => handleSubmit(e)}>
+        <SubContainer {...rest} onSubmit={e => handleSubmit(e)}>
             <TabletContainer>
                 <NewsletterIcon />
                 <TabletH2>Nyhetsbrev! Missa inga uppdateringar, prenumerera på Amelias nyhetsbrev</TabletH2>

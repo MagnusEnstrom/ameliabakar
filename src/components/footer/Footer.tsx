@@ -27,9 +27,15 @@ const ContactContainer = styled.div({
     fontWeight: 600,
     display: 'flex',
     marginBottom: '20px',
-    justifyContent: 'start',
     alignItems: 'center',
-    marginLeft: '32px',
+    marginLeft: '4px',
+})
+const ContactContainerInsta = styled(ContactContainer)({
+    marginLeft: '2px',
+    ['@media only screen and (min-width: 90ch)']: {
+        marginBottom: '0px',
+        alignSelf: 'end',
+    }
 })
 
 const Email = styled(EmailIcon)({
@@ -38,32 +44,40 @@ const Email = styled(EmailIcon)({
     marginRight: '12px'
 })
 
-const StyledFooter = styled.div({
+const StyledFooter = styled.footer({
+    margin: '0 auto',
     backgroundColor: colors.cultured,
     padding: '50px 20px',
     display: 'grid',
     gridTemplateAreas: `
-        "logo logo"
-        "instagram instagram"
-        "email email"
-        "nyhetsbrev nyhetsbrev"
-        "links links"
-        "cookies cookies"
-        "settings settings"
-        "copyright copyright"
+    "logo logo"
+    "EmailAndSocial EmailAndSocial"
+    "links links"
+    "cookies cookies"
+    "copyright copyright"
     `,
-
-    ['@media only screen and (min-width: 70ch)']: {
+    
+    ['@media only screen and (min-width: 90ch)']: {
+        maxWidth: '1360px',
         gridTemplateColumns: '1fr 1fr',
         gap: '0px 30px',
         gridTemplateAreas: `
             "logo logo"
-            "instagram nyhetsbrev"
-            "email nyhetsbrev"
+            "EmailAndSocial EmailAndSocial"
             "links links"
-            "settings cookies"
+            "cookies cookies"
             "copyright copyright"
         `,
+    },
+    
+    ['@media only screen and (min-width: 170ch)']: {
+        gridTemplateAreas: `
+            "logo logo"
+            "EmailAndSocial EmailAndSocial"
+            "links links"
+            "copyright cookies"
+        `,
+        paddingBottom: '100px',
     }
 });
 
@@ -97,11 +111,13 @@ const Nav = styled.nav({
         color: colors.silver,
     },
 
-    ['@media only screen and (min-width: 70ch)']: {
+    ['@media only screen and (min-width: 90ch)']: {
         display: 'flex',
         placeSelf: 'center',
-        width: 'max-content',
+        width: '100%',
+        justifyContent: 'space-between',
         marginBottom: '50px',
+        maxWidth: '800px'
     }
 })
 
@@ -112,31 +128,35 @@ const Copyright = styled.p({
     marginTop: '50px',
     marginBottom: '50px',
     textAlign: 'center',
+    
+    ['@media only screen and (min-width: 170ch)']: {
+        margin: '0px',
+        justifySelf: 'start',
+    }
 
 })
 
 const StyledCookie = styled(Link)({
-    marginTop: '40px',
-    gridArea: 'cookies',
     ...typography.p,
+    margin: '0px',
     textDecoration: 'none',
     color: colors.silver,
     placeSelf: 'center',
-    ['@media only screen and (min-width: 70ch)']: {
+    ['@media only screen and (min-width: 90ch)']: {
         placeSelf: undefined,
         justifySelf: 'start',
         margin: '0px',
     }
 })
 const StyledCookieSettings = styled(Link)({
-    marginTop: '20px',
     ...typography.p,
+    margin: '0px',
     gridArea: 'settings',
     textDecoration: 'none',
     color: colors.silver,
     placeSelf: 'center',
     
-    ['@media only screen and (min-width: 70ch)']: {
+    ['@media only screen and (min-width: 90ch)']: {
         placeSelf: undefined,
         justifySelf: 'end',
         margin: '0px',
@@ -144,39 +164,86 @@ const StyledCookieSettings = styled(Link)({
 })
 
 const StyledSubscribe = styled(Subscribe)({
-    justifySelf: 'end',
+})
+
+const Container = styled.div({
+    backgroundColor: colors.cultured,
+    width: '100%',
+})
+
+const EmailAndSocialContainer = styled.div({
+    display: 'grid',
+    justifyContent: 'center',
+    justifySelf: 'center',
+    gridArea: 'EmailAndSocial',
+    gridTemplateAreas: `
+        "instagram"
+        "email"
+        "nyhetsbrev"
+    `,
+    ['@media only screen and (min-width: 90ch)']: {
+        gridTemplateAreas: `
+            "instagram nyhetsbrev"
+            "email nyhetsbrev"
+        `,
+        width: '100%',
+        justifyContent: 'space-between',
+        maxWidth: '800px'
+    }
+
+});
+
+const Cookies = styled.div({
+    display: 'flex',
+    flexDirection: 'column',
+    gridArea: 'cookies',
+    marginTop: '50px',
+    gap: '20px',
+    ['@media only screen and (min-width: 170ch)']: {
+        gap: '30px',
+        flexDirection: 'row',
+        margin: '0px',
+        justifySelf: 'end',
+    }
 })
 
 const Footer = () => {
     return (
-        <StyledFooter>
-            <Logo />
-            <ContactContainer style={{gridArea: 'instagram'}}>
-                <Instagram />
-                <StyledA href={'https://www.instagram.com/ameliabakar.se/'} rel="noopener" target={'_blank'}>@ameliabakar.se</StyledA>
-            </ContactContainer>
-            <ContactContainer style={{gridArea: 'email'}}>
-                <Email />
-                <StyledA href={'mailto:contact@ameliabakar.se'}>contact@ameliabakar.se</StyledA>
-            </ContactContainer>
+        <Container>
+            <StyledFooter>
+                <Logo />
 
-            <StyledSubscribe style={{gridArea: 'nyhetsbrev', marginTop: '20px', marginBottom: '30px'}} />
-            <Nav>
-                <Link to={'/'}>Hem</Link>
-                <Link to={'/tips'}>Tips</Link>
-                <Link to={'/recept'}>Recept</Link>
-                <Link to={'/bestallningar'}>Beställningar</Link>
-                <Link to={'/om-mig'}>Om mig</Link>
-                <Link to={'/mina-sparade-recept'}>Mina sparade recept</Link>
-            </Nav>
+                <EmailAndSocialContainer>
+                    <ContactContainerInsta style={{gridArea: 'instagram'}}>
+                        <Instagram />
+                        <StyledA href={'https://www.instagram.com/ameliabakar.se/'} rel="noopener" target={'_blank'}>@ameliabakar.se</StyledA>
+                    </ContactContainerInsta>
+                    <ContactContainer style={{gridArea: 'email'}}>
+                        <Email />
+                        <StyledA href={'mailto:contact@ameliabakar.se'}>contact@ameliabakar.se</StyledA>
+                    </ContactContainer>
 
-            <StyledCookie to={'/cookies'}>Cookies</StyledCookie>
-            <StyledCookieSettings to={'/cookies-settings'}>Cookieinställningar</StyledCookieSettings>
+                    <StyledSubscribe style={{gridArea: 'nyhetsbrev', marginTop: '20px', marginBottom: '30px'}} />
+                </EmailAndSocialContainer>
+                <Nav>
+                    <Link to={'/'}>Hem</Link>
+                    <Link to={'/tips'}>Tips</Link>
+                    <Link to={'/recept'}>Recept</Link>
+                    <Link to={'/bestallningar'}>Beställningar</Link>
+                    <Link to={'/om-mig'}>Om mig</Link>
+                    <Link to={'/mina-sparade-recept'}>Mina sparade recept</Link>
+                </Nav>
 
-            <Copyright>
-                Copyright © {(new Date).getFullYear()} Amelia Bakar. All rights reserved
-            </Copyright>
-        </StyledFooter>
+                <Cookies>
+                    <StyledCookie to={'/cookies'}>Cookies</StyledCookie>
+                    <StyledCookieSettings to={'/cookies-settings'}>Cookieinställningar</StyledCookieSettings>
+                </Cookies>
+
+                <Copyright>
+                    Copyright © {(new Date).getFullYear()} Amelia Bakar. All rights reserved
+                </Copyright>
+            </StyledFooter>
+        </Container>
     )
 }
 

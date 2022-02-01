@@ -32,9 +32,9 @@ const TipsBackground = styled.div({
 });
 
 
-const Tips = () => {
+const Tips = ({...rest}) => {
     return (
-        <TipsImg to={'/tips'}>
+        <TipsImg {...rest} to={'/tips'}>
             <TipsBackground>
                 <TipsText>TIPS</TipsText>
             </TipsBackground>
