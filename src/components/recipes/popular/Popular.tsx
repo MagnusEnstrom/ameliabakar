@@ -13,6 +13,12 @@ const RecipeGrid = styled.div({
         'a:last-of-type': {
             display: 'none'
         },
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        'a:last-of-type': {
+            display: 'block',
+        },
     }
 })
 
