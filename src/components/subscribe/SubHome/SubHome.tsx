@@ -97,7 +97,22 @@ const StyledInput = styled.input({
     }
 })
 
-const StyledPrimary = styled(Primary)({
+const StyledPrimary = styled.button({
+    ...typography.button,
+    padding: '14px 40px 14px 40px',
+
+    backgroundColor: colors.laruelGreen,
+    color: colors.white,
+    border: 'none',
+    borderRadius: radius.button,
+    
+    '&:hover': {
+        backgroundColor: colors.jet,
+    },
+    '&:disabled': {
+        backgroundColor: colors.grey,
+        color: colors.silver,
+    },
     display: 'block',
     width: 'max-content',
     placeSelf: 'center', 
