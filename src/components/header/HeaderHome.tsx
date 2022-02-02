@@ -25,6 +25,16 @@ const HeaderImg = styled.div(({imgSrc}: {imgSrc: string}) => {
             "description"
             "button"
         `,
+        ['@media only screen and (min-width: 90ch)']: {
+            placeItems: 'end start',
+            gridTemplateColumns: '1fr 1fr',
+            gridTemplateAreas: `
+                ".... ...."
+                "header header"
+                "description ...."
+                "button ...."
+            `,
+        },
     }
 })
 
@@ -46,9 +56,21 @@ const Description = styled(P)({
     lineClamp: 3, 
     WebkitBoxOrient: 'vertical',
     overflow: 'hidden',
+    ['@media only screen and (min-width: 90ch)']: {
+        WebkitLineClamp: 4,
+        lineClamp: 4, 
+        textAlign: 'start',
+    },
 })
 const FullScreenRecipe = styled.div({
     position: 'relative',
+})
+const StyledInvisibleLink = styled(InvisibleLink)({
+    justifySelf: 'center', 
+    gridArea: 'button',
+    ['@media only screen and (min-width: 90ch)']: {
+        justifySelf: 'start', 
+    },
 })
 
 type LatestQuery = {
@@ -122,9 +144,9 @@ const HeaderHome = () => {
                             <Description >
                                 {node.singlePaketAfc.kortBeskrivning}
                             </Description>
-                            <InvisibleLink to={node.uri} style={{ justifySelf: 'center', gridArea: 'button' }}>
+                            <StyledInvisibleLink to={node.uri}>
                                 <HomePage>Till Recept</HomePage>
-                            </InvisibleLink>
+                            </StyledInvisibleLink>
                         </HeaderImg>
                     )
                 })}
