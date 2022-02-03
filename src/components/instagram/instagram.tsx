@@ -5,8 +5,12 @@ import Secondary from '../buttons/secondary/Secondary';
 import WheatSmallLeft from '../../assets/wheat-decor-small-left.svg' 
 import WheatSmallRight from '../../assets/wheat-decor-small-right.svg'
 import WheatBigLeft from '../../assets/wheat-decor-big-left.svg' 
-import WheatBigRight from '../../assets/wheat-decor-big-right.svg' 
+import WheatBigRight from '../../assets/wheat-decor-big-right.svg'
+import InstagramIcon from '../../assets/instagram.svg'
+
 import InvisibleLink from '../Links/InvisibleLink';
+import typography from '../../lib/typography';
+import colors from '../../lib/colors';
 
 type InstagramData = {
     allInstagramContent: {
@@ -49,8 +53,7 @@ const Wrapper = styled.div({
     maxWidth: '1360px',
 
     margin: '0 auto',
-    padding: '0px 10px',
-    ['@media only screen and (min-width: 70ch)']: {
+    ['@media only screen and (min-width: 90ch)']: {
         padding: '0px 20px',
     },
 })
@@ -61,8 +64,10 @@ const LoadMoreWrapper = styled.div({
     alignItems: 'center',
     marginTop: '30px',
     marginBottom: '50px',
+    padding: '0px 10px',
     
     ['@media only screen and (min-width: 90ch)']: {
+        padding: '0px 20px',
         marginTop: '40px',
         marginBottom: '70px',
     },
@@ -107,6 +112,51 @@ const StyledInvisibleLink = styled(InvisibleLink)({
     width: '100%',
 })
 
+const FollowArea = styled.div({
+    marginBottom: '30px',
+    display: 'grid',
+    gridTemplateColumns: '30px 1fr 30px',
+    padding: '0px 10px',
+    maxWidth: '1000px',
+    justifySelf: 'center',
+    width: '100%',
+    
+    ['@media only screen and (min-width: 90ch)']: {
+        padding: '0px 20px',
+    },
+})
+const FollowMeOnInsta = styled.a({
+    ...typography.badge,
+    fontWeight: 700,
+    fontSize: '20px',
+    textAlign: 'center',
+    lineHeight: '150%',
+    textDecoration: 'none',
+    color: colors.jet,
+
+    ['@media (hover: hover)']: {
+        '&:hover': {
+            opacity: 0.5,
+        },
+    },
+
+    ['@media only screen and (min-width: 90ch)']: {
+        fontSize: '28px',
+    },
+    
+})
+
+const InstagramIco = styled(InstagramIcon)({
+    border: 'none',
+    height: '24px',
+    width: '24px',
+    placeSelf: 'center',
+    ['@media only screen and (min-width: 90ch)']: {
+        height: '32px',
+        width: '32px',
+    },
+})
+
 const Instagram = () => {
     const data = useStaticQuery<InstagramData>(graphql`{
         allInstagramContent(sort: { fields: [timestamp] order: DESC} limit: 100) {
@@ -133,7 +183,12 @@ const Instagram = () => {
     const instagramData = allInstagram.slice(0, amount);
     return (
         <Wrapper>
-
+            <FollowArea>
+                <InstagramIco />
+                <FollowMeOnInsta href='https://www.instagram.com/ameliabakar.se/' target={'_blank'}>
+                    Följ mig på instagram @ameliabakar.se
+                </FollowMeOnInsta>
+            </FollowArea>
             <InstagramGrid>
                 {instagramData.map(node => {
                     return <StyledInvisibleLink key={node.id} to={node.permalink}>
