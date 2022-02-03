@@ -1,3 +1,6 @@
+require("dotenv").config({
+    path: `.env.${process.env.NODE_ENV}`,
+  })
 /**
  * 👋 Hey there!
  * This file is the starting point for your new WordPress/Gatsby site! 🚀
@@ -170,5 +173,11 @@ module.exports = {
             })),
         },
     },
+    {
+        resolve: `gatsby-source-instagram-all`,
+        options: {
+          access_token: process.env.ACCESS_TOKEN,
+        }
+   },
   ],
 }

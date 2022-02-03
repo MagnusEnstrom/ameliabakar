@@ -4,6 +4,7 @@ import Header from './header/Header';
 import HeaderImgs from "./header/HeaderImgs";
 import Footer from "./footer/Footer";
 import HeaderHome from "./header/HeaderHome";
+import Instagram from "./instagram/instagram";
 
 const Layout: FC<{isHomePage?: boolean, navImgs?: string[]}> = ({ isHomePage, navImgs, children }) => {
 
@@ -14,7 +15,9 @@ const Layout: FC<{isHomePage?: boolean, navImgs?: string[]}> = ({ isHomePage, na
                 <HeaderHome />
             : navImgs?.length ? <HeaderImgs images={navImgs} /> : <Header onlynav={true} />}
             <main>{children}</main>
-
+            
+            {/* Render instagram */}
+            <Instagram />
             <Footer />
         </div>
   )
