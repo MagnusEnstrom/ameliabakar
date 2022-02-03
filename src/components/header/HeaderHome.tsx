@@ -35,6 +35,10 @@ const HeaderImg = styled.div(({imgSrc}: {imgSrc: string}) => {
                 "button ...."
             `,
         },
+        ['@media only screen and (min-width: 170ch)']: {
+            padding: '20px 20px 30px 70px',
+
+        },
     }
 })
 
