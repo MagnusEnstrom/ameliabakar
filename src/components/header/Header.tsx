@@ -76,6 +76,9 @@ const InvinsibleButton = styled.button({
     alignItems: 'center',
     border: 'none',
     backgroundColor: 'inherit',
+    ['@media only screen and (min-width: 90ch)']: {
+        padding: '0px 20px 0px 15px',
+    },
 });
 
 const SearchButton = styled(InvinsibleButton)({
