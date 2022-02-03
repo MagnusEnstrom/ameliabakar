@@ -19,6 +19,7 @@ import HomeImg from './ameliabakar-home.jpeg'
 import Avatar from '../components/avatar/avatar'
 import InstagramLink from '../components/instagramLink/instagramLink'
 import colors from '../lib/colors'
+import Instagram from '../components/instagram/instagram'
 
 const TextWrapper = styled.div({
     textAlign: 'center',
@@ -341,7 +342,6 @@ const home = () => {
                     <Primary>Läs mer om beställningar</Primary>
                 </Link>
 
-                {/* Render instagram */}
             </AreaWrapper>
         </Layout>
     )

@@ -23,6 +23,7 @@
     "gatsby-plugin-sharp": "^3.14.3",
     "gatsby-plugin-typegen": "^2.2.4",
     "gatsby-source-filesystem": "^4.3.0",
+    "gatsby-source-instagram-all": "^5.2.1",
     "gatsby-source-wordpress": "^6.3.0",
     "gatsby-transformer-sharp": "^4.3.0",
     "html-react-parser": "^1.1.1",
