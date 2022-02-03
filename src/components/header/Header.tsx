@@ -23,8 +23,18 @@ const StyledHeader = styled.header(({transparent, navStatus}: {transparent?: boo
     "links links"
     `,
     width: '100%',
-    padding: '20px 10px',
+    padding: '20px 0px 20px 10px',
     color: transparent ? '#FFFFFF' : 'inherit',
+    
+    ['@media only screen and (min-width: 90ch)']: {
+        padding: '20px 0px 20px 20px',
+
+        gridTemplateAreas: `
+            "logo search icons"
+            "logo  links links"
+            "logo links links"
+        `,
+    },
 }})
 
 
@@ -40,6 +50,13 @@ const Logo = styled(LogoUrl)(() => {
         'header[aria-expanded="false"] &.noimg ': {
             filter: 'brightness(0)'
         },
+        
+        ['@media only screen and (min-width: 90ch)']: {
+            height: '40px',
+            width: '161px',
+
+            alignSelf: 'center',
+        },
     }
 })
 
@@ -52,7 +69,7 @@ const IconWrapper = styled.div({
 
 const InvinsibleButton = styled.button({
     width: 'min-content',
-    padding: '0px',
+    padding: '0px 10px 0px 15px',
     margin: '0px',
     display: 'flex',
     justifyContent: 'center',
@@ -60,6 +77,11 @@ const InvinsibleButton = styled.button({
     border: 'none',
     backgroundColor: 'inherit',
 });
+
+const SearchButton = styled(InvinsibleButton)({
+    padding: '0px 10px 0px 10px',
+
+})
 const InvinsibleLink = styled(Link)({
     width: 'min-content',
     padding: '0px',
@@ -82,40 +104,59 @@ const HamburgerIcon = styled(Hamburger)(() => {
         'header[aria-expanded="false"] &.noimg ': {
             filter: 'brightness(0)'
         },
+
+        ['@media only screen and (min-width: 90ch)']: {
+            height: '30px',
+            width: '30px',
+        },
     }
 })
 const CloseIcon = styled(Close)({
     border: 'none',
     height: '24px',
     width: '24px',
+    ['@media only screen and (min-width: 90ch)']: {
+        height: '30px',
+        width: '30px',
+    },
 })
 const HeartIcon = styled(Heart)(() => {
    return {
         border: 'none',
         height: '22.5px',
         width: '25px',
-        marginRight: '31px',
-
         'header[aria-expanded="false"] &': {
             filter: 'brightness(100)'
         },
         'header[aria-expanded="false"] &.noimg ': {
             filter: 'brightness(0)'
         },
+        ['@media only screen and (min-width: 90ch)']: {
+            height: '30px',
+            width: '30px',
+        },
     }
-})
+});
+
+const HeartLink = styled(InvinsibleLink)({
+    padding: '0px 15px 0px 10px',
+});
+
 const SearchIcon = styled(Search)(() => {
     return {
         border: 'none',
         height: '24px',
         width: '24px',
-        marginRight: '24px',
-
         'header[aria-expanded="false"] &': {
             filter: 'brightness(100)'
         },
         'header[aria-expanded="false"] &.noimg ': {
             filter: 'brightness(0)'
+        },
+
+        ['@media only screen and (min-width: 90ch)']: {
+            height: '30px',
+            width: '30px',
         },
     }
 })
@@ -126,6 +167,15 @@ const HeaderExpandedContent = styled.div({
     gridArea: 'links',
     gap: '40px',
     marginBottom: '90px',
+    
+    ['@media only screen and (min-width: 90ch)']: {
+        // gridTemplateColumns: '1fr 1fr',
+        gridTemplateRows: '1fr 1fr 1fr',
+        gridAutoFlow: 'column',
+        marginTop: '22px',
+        marginBottom: '30px',
+
+    },
 })
 
 const NavLink = styled(Link)({
@@ -133,6 +183,10 @@ const NavLink = styled(Link)({
     placeSelf: 'center',
     color: colors.jet,
     textDecoration: 'none',
+
+    ['@media only screen and (min-width: 90ch)']: {
+        placeSelf: 'start',
+    },
 
 })
 
@@ -142,6 +196,13 @@ const SearchForm = styled.form({
 
 const StyledSearchInput = styled(SearchInput)({
     margin: '30px 35px 0px 35px',
+    svg: {
+        height: '30px',
+        width: '30px',
+    },
+    ['@media only screen and (min-width: 90ch)']: {
+        margin: '0px 15px 0px 0px',
+    },
 
 })
 
@@ -171,18 +232,18 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
     }
     return (
         <StyledHeader aria-expanded={navStatus !== 'closed'} navStatus={navStatus} transparent={true} {...rest}>
-            <InvinsibleLink to={'/'}>
+            <InvinsibleLink style={{ gridArea: 'logo' }} to={'/'}>
                 <Logo className={onlynav ? 'noimg' : ''} />
             </InvinsibleLink>
             <IconWrapper>
                 {navStatus === 'closed' && (
-                    <InvinsibleButton data-cy={'searchIconHeader'} onClick={onSearchClick}>
+                    <SearchButton data-cy={'searchIconHeader'} onClick={onSearchClick}>
                         <SearchIcon className={onlynav ? 'noimg' : ''} />
-                    </InvinsibleButton>
+                    </SearchButton>
                 )}
-                <InvinsibleLink to={'/mina-recept'}>
+                <HeartLink to={'/mina-recept'}>
                     <HeartIcon className={onlynav ? 'noimg' : ''} />
-                </InvinsibleLink>
+                </HeartLink>
                 <InvinsibleButton onClick={onBurgerclick}>
                     {navStatus !== 'closed' ? <CloseIcon /> : <HamburgerIcon className={onlynav ? 'noimg' : ''} />}
                 </InvinsibleButton>
