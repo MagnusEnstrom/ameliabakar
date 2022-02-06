@@ -13,27 +13,74 @@ import { ReceptPageQuery, TipsPageQuery } from '../graphql/types/ReceptContentTy
 
 const StyledImg = styled.img({
     maxWidth: '100%',
-    placeSelf: 'center',
+    width: '100%',
+    objectFit: 'cover',
+    objectPosition: 'center',
+    ['@media only screen and (min-width: 90ch)']: {
+        gridArea: 'img',
+    }
 })
 const StyledArticle = styled.article({
     display: 'grid',
     textAlign: 'center',
-    padding: '0px 10px',
     width: '100%',
+
+    ['@media only screen and (min-width: 90ch)']: {
+        gridTemplateColumns: '1fr 1fr',
+        gridTemplateAreas: `
+            "img text"
+        `
+    }
 })
 const StyledMain = styled.main({
     display: 'grid',
     justifyContent: 'center',
+    padding: '0px 10px',
+    ['@media only screen and (min-width: 90ch)']: {
+        padding: '0px 20px',
+        maxWidth: '820px',
+        margin: '0 auto 70px auto',
+        'article:nth-of-type(even)': {
+            gridTemplateAreas: `
+                "text img"
+            `,
+            'div:first-of-type': {
+                paddingRight: '50px',
+            }
+        },
+        'article:nth-of-type(odd)': {
+                'div:first-of-type': {
+                    paddingLeft: '50px',
+                }
+        }
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        margin: '0px auto 100px auto',
+    }
 })
-
-const StyledTeriaryButton = styled(TertiaryButton)({
-    placeSelf: 'center',
-    marginBottom: '50px',
-});
 
 const StyledH2 = styled(H2)({
     margin: '30px 0px 20px 0px'
 });
+
+const TipContainer = styled.div({
+    ['@media only screen and (min-width: 90ch)']: {
+        placeSelf: 'center',
+        gridArea: 'text',
+        textAlign: 'start',
+    }
+})
+
+const StyledP = styled(P)({
+    textAlign: 'center', 
+    marginBottom: '30px',
+    maxWidth: '650px', 
+    justifySelf: 'center',
+    ['@media only screen and (min-width: 90ch)']: {
+        marginBottom: '50px',
+    }
+
+})
 
 type Props = {pageContext: TipsPageQuery}
 
@@ -43,19 +90,23 @@ const tips = ({pageContext}: Props) => {
         return (
             <StyledArticle key={tip.id}>
                 <StyledImg src={tip.tips.image.localFile.childImageSharp.original.src} />
-                <StyledH2>{tip.title}</StyledH2>
-                <P dangerouslySetInnerHTML={{ __html: tip.content }} />
+                <TipContainer>
+                    <StyledH2>{tip.title}</StyledH2>
+                    <P dangerouslySetInnerHTML={{ __html: tip.content }} />
+                </TipContainer>
             </StyledArticle>
         );
     });
 
     return (
         <Layout>
-            <Breadcrumbs style={{margin: '20px 10px 0px 10px'}} crumbs={[{name: 'Hem', to:'/'}, {name: 'Tips', to: '/tips'}]} />
+            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                <Breadcrumbs style={{margin: '20px 10px 0px 10px'}} crumbs={[{name: 'Hem', to:'/'}, {name: 'Tips', to: '/tips'}]} />
+            </div>
             <StyledMain>
 
                 <H1 style={{ textAlign: 'center', margin: '20px 0px' }}>Tips</H1>
-                <P data-cy="description" style={{ textAlign: 'center', margin: '0px 10px 30px 10px' }}>Har du någon gång undrat hur den där ... blev till? Här samlar jag lite tips och trix som kan vara bra och kul att känna till!</P>
+                <StyledP data-cy="description">Har du någon gång undrat hur den där ... blev till? Här samlar jag lite tips och trix som kan vara bra och kul att känna till!</StyledP>
 
                 {tipsContent}            
             </StyledMain>
