@@ -1,15 +1,11 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
-import Secondary from '../components/buttons/secondary/Secondary'
-import Contact from '../components/contact/Contact'
 import Layout from '../components/layout'
-import InvisibleLink from '../components/Links/InvisibleLink'
-import TertiaryButton from '../components/tertiary/TertiaryButton'
 import H1 from '../components/typography/h1/H1'
 import H2 from '../components/typography/h2/H2'
 import P from '../components/typography/p/P'
-import { ReceptPageQuery, TipsPageQuery } from '../graphql/types/ReceptContentType'
+import { TipsPageQuery } from '../graphql/types/ReceptContentType'
 
 const StyledImg = styled.img({
     maxWidth: '100%',

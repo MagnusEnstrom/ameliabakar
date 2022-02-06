@@ -12,7 +12,7 @@ const Container = styled(Link)({
     textDecoration: 'none',
 })
 
-const Text = styled.div({
+const Text = styled.span({
     ...typography.p,
     textDecoration: 'none',
     color: colors.jet,
