@@ -231,7 +231,7 @@ const Footer = () => {
                     <Link to={'/recept'}>Recept</Link>
                     <Link to={'/bestallningar'}>Beställningar</Link>
                     <Link to={'/om-mig'}>Om mig</Link>
-                    <Link to={'/mina-sparade-recept'}>Mina sparade recept</Link>
+                    <Link to={'/mina-recept'}>Mina sparade recept</Link>
                 </Nav>
 
                 <Cookies>

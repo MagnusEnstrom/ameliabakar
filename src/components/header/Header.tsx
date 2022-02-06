@@ -349,7 +349,7 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
                         <NavLink to={'/om-mig'}>Om mig</NavLink>
                         <NavLink to={'/tips'}>Tips</NavLink>
                         <NavLink to={'/bestallningar'}>Beställningar</NavLink>
-                        <NavLink to={'/mina-sparade-recept'}>Mina sparade recept</NavLink>
+                        <NavLink to={'/mina-recept'}>Mina sparade recept</NavLink>
                     </HeaderExpandedContent>
                 </>
             )}
