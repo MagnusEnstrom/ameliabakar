@@ -9,6 +9,15 @@ const StyledRecipeGrid = styled.div({
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '10px',
+    
+    ['@media only screen and (min-width: 90ch)']: {
+        gridTemplateColumns: '1fr 1fr 1fr',
+        gap: '20px',
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: '30px',
+    }
 })
 const Wrapper = styled.div({
     display: 'grid',
