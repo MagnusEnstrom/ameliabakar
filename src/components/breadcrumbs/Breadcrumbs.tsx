@@ -9,6 +9,9 @@ const Container = styled.nav({
     display: 'flex',
     alignItems: 'center',
     gap: '20px',
+    maxWidth: '1320px',
+    justifySelf: 'center',
+    width: '100%',
 })
 
 const CrumbArrowWrapper = styled.div({
