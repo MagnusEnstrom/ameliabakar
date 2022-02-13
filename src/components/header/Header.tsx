@@ -9,6 +9,7 @@ import LogoUrl from '../../assets/logo.svg'
 import Close from '../../assets/close.svg'
 import { Link, navigate } from 'gatsby'
 import SearchInput from '../Form/SearchInput'
+import SavedCounter from '../savedCounter/savedCounter'
 type NavStatus = "closed" | "search" | "links";
 
 const StyledHeader = styled.header(({transparent, navStatus}: {transparent?: boolean, navStatus: NavStatus}) => {
@@ -179,6 +180,7 @@ const HeartIcon = styled(Heart)(() => {
 
 const HeartLink = styled(InvinsibleLink)({
     padding: '0px 15px 0px 10px',
+    position: 'relative',
 });
 
 const SearchIcon = styled(Search)(() => {
@@ -271,6 +273,11 @@ const HeaderExpandedContentDesk = styled(HeaderExpandedContent)({
     },
 })
 
+const StyledSavedCounter = styled(SavedCounter)({
+    top: '-7px',
+    right: '7px',
+})
+
 type Props = {
     transparent?: boolean;
     onlynav?: boolean;
@@ -331,6 +338,7 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
                     </SearchButton>
                 )}
                 <HeartLink to={'/mina-recept'}>
+                    <StyledSavedCounter />
                     <HeartIcon className={onlynav ? 'noimg' : ''} />
                 </HeartLink>
                 <InvinsibleButton onClick={onBurgerclick}>
