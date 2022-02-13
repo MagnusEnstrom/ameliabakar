@@ -43,18 +43,6 @@ const StyledP = styled(P)({
         marginBottom: '40px',
     },
 })
-const StyledBreadcrumbs = styled(Breadcrumbs)({
-    margin: '20px 0px',
-    padding: '0px 10px',
-    ['@media only screen and (min-width: 90ch)']: {
-        padding: '0px 20px',
-        margin: '20px 0px',
-    },
-    ['@media only screen and (min-width: 170ch)']: {
-        padding: '0px',
-        margin: '20px 0px',
-    },
-})
 type Props = {pageContext: ReceptPageQuery}
 const savedRecipes = ({pageContext, location}: Props & PageProps) => {
     const [filteredRecipes, setFilteredRecipes] = useState<ReceptPageQuery['nodes']>([]);
@@ -70,7 +58,7 @@ const savedRecipes = ({pageContext, location}: Props & PageProps) => {
     return (
         <Layout>
             <PageWrapper>
-                <StyledBreadcrumbs crumbs={[{name: 'Hem', to:'/'}, {name: 'Mina sparade recept', to: '/mina-recept'}]} />
+                <Breadcrumbs  crumbs={[{name: 'Hem', to:'/'}, {name: 'Mina sparade recept', to: '/mina-recept'}]} />
                 {filteredRecipes.length === 0 ? (
                     <>
                         <StyledH1>Dina sparade recept kommer att visas här</StyledH1>

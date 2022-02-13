@@ -10,8 +10,14 @@ const Container = styled.nav({
     alignItems: 'center',
     gap: '20px',
     maxWidth: '1320px',
-    justifySelf: 'center',
-    width: '100%',
+    justifySelf: 'start',
+    margin: '20px 10px',
+    ['@media only screen and (min-width: 90ch)']: {
+        margin: '20px 20px',
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        margin: '20px 0px',
+    },
 })
 
 const CrumbArrowWrapper = styled.div({

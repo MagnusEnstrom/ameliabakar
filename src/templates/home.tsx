@@ -219,6 +219,8 @@ const InfoArea = styled.div({
 })
 const LatestArea = styled.div({
     display: 'grid',
+    width: '100%',
+    overflow: 'hidden',
     
     ['@media only screen and (min-width: 170ch)']: {
         gridArea: 'Latest',
@@ -295,9 +297,14 @@ const home = () => {
                 <StyledTips />
             </InfoArea>
             <LatestArea>
-                <H2Decoration style={{margin: '50px 0px 30px 0px'}} text={'Senaste recepten'} />
+                <H2Decoration style={{
+                    padding: '50px 10px 30px 10px',
+                    display: 'flex',
+                   
+                    
+            }} text={'Senaste recepten'} />
 
-                <Latest style={{ margin: '0px 10px'}} />
+                <Latest style={{ padding: '0px 10px'}} />
                 
                 <LatestLink to={'/recept'}>
                     <Secondary>Visa alla recept</Secondary>

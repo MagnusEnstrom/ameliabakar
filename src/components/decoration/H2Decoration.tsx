@@ -8,7 +8,7 @@ import WheatBigRight from '../../assets/wheat-decor-big-right.svg'
 
 const Decoration = styled.div({
     display: 'grid',
-    gridTemplateColumns: 'min-content 1fr min-content'
+    gridTemplateColumns: 'min-content auto min-content'
 })
 
 const BigLeft = styled(WheatBigLeft)({
@@ -46,7 +46,7 @@ const H2Decoration= ({text, ...rest}: {text: string} & React.DetailedHTMLProps<R
         <Decoration {...rest}>
             <BigLeft />
             <SmallLeft />
-            <H2 style={{placeSelf: 'center', margin: '0px'}}>{text}</H2> 
+            <H2 style={{placeSelf: 'center', margin: '0px auto'}}>{text}</H2> 
             <SmallRight />
             <BigRight />
         </Decoration>
