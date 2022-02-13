@@ -27,7 +27,7 @@ const SavedCounter = ({...rest}: React.DetailedHTMLProps<React.HTMLAttributes<HT
     }, [])
     return amount ? (
         <StyledCounter {...rest}>
-            {88}
+            {amount}
         </StyledCounter>) 
         : null;
 };
