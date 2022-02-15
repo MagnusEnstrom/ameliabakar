@@ -30,6 +30,9 @@ const SaHarGorDu = styled.div({
     'p': {
         ...typography.p
     },
+    ['@media only screen and (min-width: 90ch)']: {
+        margin: '20px 20px',
+    },
 })
 
 type Props = {

@@ -12,6 +12,7 @@ const StyledIngredientsContainer = styled.div({
     margin: '0px 10px',
     flexDirection: 'column',
     ['@media only screen and (min-width: 90ch)']: {
+        margin: '0px 20px',
         gap: '100px',
         flexDirection: 'row',
         flexWrap: 'wrap',

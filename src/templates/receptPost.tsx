@@ -35,6 +35,9 @@ const ChipArea = styled.div({
     flexWrap: 'wrap',
     margin: '32px 10px 0px 10px',
     rowGap: '10px',
+    ['@media only screen and (min-width: 90ch)']: {
+        margin: '32px 20px 0px 20px',
+    },
 })
 const FabArea = styled.div({
     display: 'flex',
