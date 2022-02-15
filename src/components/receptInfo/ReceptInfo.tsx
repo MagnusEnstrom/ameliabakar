@@ -9,6 +9,8 @@ const ReceptInfoBar = styled.div({
     display: 'grid',
     gridTemplateColumns: '1fr 1fr 1fr',
     placeItems: 'center',
+    maxWidth: '600px',
+    margin: '0px auto',
 })
 
 type Props = Pick<ReceptContent['singlePaketAfc'], 'tid' | 'tidFormat' | 'svarighetsgrad'>

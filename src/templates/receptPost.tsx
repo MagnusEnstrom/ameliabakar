@@ -23,6 +23,11 @@ const Title = styled(H2)({
 const StyledP = styled(P)({
     textAlign: 'center',
     margin: '20px 10px',
+    ['@media only screen and (min-width: 90ch)']: {
+        textAlign: 'start',
+        maxWidth: '600px',
+        margin: '20px auto',
+    },
 })
 const ChipArea = styled.div({
     display: 'flex',

@@ -7,9 +7,15 @@ import IngredientItem from '../ingredientItem/IngredientItem'
 type Props = {content: ReceptContent['content']}
 
 const StyledIngredientsContainer = styled.div({
-    display: 'grid',
+    display: 'flex',
     gap: '15px',
-    margin: '0px 10px'
+    margin: '0px 10px',
+    flexDirection: 'column',
+    ['@media only screen and (min-width: 90ch)']: {
+        gap: '100px',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
 })
 
 const StyledStrong = styled.strong({
@@ -20,15 +26,36 @@ const StyledStrong = styled.strong({
 })
 const Ingredients = ({content = ''}: Props) => {
     const splitedContent = content.split("\n");
+    // const Ingredients = splitedContent.map((line, index) => {
+    //     if(!line) return;
+    //     if(line.includes('<strong>')) {
+        //         return <StyledStrong key={index} dangerouslySetInnerHTML={{__html: line}} />
+        //     }
+        //     return <IngredientItem key={index} ingredient={line} />
+        // })
+        
+    let IngredientGroups: {title: string, lines: string[]}[] = [];
+    
+    splitedContent.forEach((line) => {
+        if(!line) return;
+        if(line.includes('<strong>')) {
+            IngredientGroups.push({ title: line, lines: [] })
+        } else {
+            IngredientGroups[IngredientGroups.length - 1].lines.push(line);
+        }
+    });
+
+    const IngredientsElements = IngredientGroups.map((group, i) => {
+        return (
+            <div key={i}>
+                <StyledStrong dangerouslySetInnerHTML={{__html: group.title}} />
+                {group.lines.map((line, i) => <IngredientItem key={i} ingredient={line} />)}
+            </div>);
+    })
+
     return (
         <StyledIngredientsContainer>
-            {splitedContent.map((line, index) => {
-                if(!line) return;
-                if(line.includes('<strong>')) {
-                    return <StyledStrong key={index} dangerouslySetInnerHTML={{__html: line}} />
-                }
-                return <IngredientItem key={index} ingredient={line} />
-            })}
+            {IngredientsElements}
         </StyledIngredientsContainer>
     )
 }
