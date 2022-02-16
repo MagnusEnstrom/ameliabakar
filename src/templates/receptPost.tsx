@@ -43,6 +43,22 @@ const FabArea = styled.div({
     display: 'flex',
     justifyContent: 'space-around',
     marginTop: '20px',
+    ['@media only screen and (min-width: 90ch)']: {
+        gridArea: '1 / -1',
+        display: 'grid',
+        gridAutoFlow: 'column',
+        gap: '2rem',
+        justifySelf: 'end',
+        marginRight: '20px',
+    },
+});
+
+const ContentArea = styled.div({
+    ['@media only screen and (min-width: 90ch)']: {
+        display: 'grid',
+        maxWidth: '1360px',
+        margin: '0px auto',
+    },
 })
 type Props = {pageContext: ReceptContent}
 const receptPost = ({pageContext}: Props) => {
@@ -59,22 +75,23 @@ const receptPost = ({pageContext}: Props) => {
         <ReceptInfo svarighetsgrad={pageContext.singlePaketAfc.svarighetsgrad} tid={pageContext.singlePaketAfc.tid} tidFormat={pageContext.singlePaketAfc.tidFormat} />
         <StyledP>{pageContext.singlePaketAfc.kortBeskrivning}</StyledP>
         {/* Betygsätt */}
+        <ContentArea>
+            <ContentNavWrapper>
+                <ContentNavItem text={'Ingredienser'} onClick={() => setActiveNav('ingredienser')} active={activeNav === 'ingredienser'} />
+                <ContentNavItem text={'Gör såhär'} onClick={() => setActiveNav('detail')} active={activeNav === 'detail'} />
+            </ContentNavWrapper>
 
-        <ContentNavWrapper>
-            <ContentNavItem text={'Ingredienser'} onClick={() => setActiveNav('ingredienser')} active={activeNav === 'ingredienser'} />
-            <ContentNavItem text={'Gör såhär'} onClick={() => setActiveNav('detail')} active={activeNav === 'detail'} />
-        </ContentNavWrapper>
-
-        {activeNav === 'detail' && <DoLikeThis saHarGorDu={pageContext.singlePaketAfc.saHarGorDu} />}
-        {activeNav === 'ingredienser' && <Ingredients content={pageContext.content} />}
-        <ChipArea>
-            {pageContext.tags.nodes.map(tag => <Chip key={tag.name} text={tag.name} />)}
-        </ChipArea>
-        <FabArea>
-            <Fab variant={'save'} />
-            <Fab variant={'share'} />
-            <Fab variant={'print'} />
-        </FabArea>
+            {activeNav === 'detail' && <DoLikeThis saHarGorDu={pageContext.singlePaketAfc.saHarGorDu} />}
+            {activeNav === 'ingredienser' && <Ingredients content={pageContext.content} />}
+            <ChipArea>
+                {pageContext.tags.nodes.map(tag => <Chip key={tag.name} text={tag.name} />)}
+            </ChipArea>
+            <FabArea>
+                <Fab variant={'save'} />
+                <Fab variant={'share'} />
+                <Fab variant={'print'} />
+            </FabArea>
+        </ContentArea>
         <H2 style={{marginTop: '50px', textAlign: 'center'}}>Du kanske också gillar...</H2>
         {/* <ResipeCard pageContext={pageContext} /> */}
         {/* <pre >
