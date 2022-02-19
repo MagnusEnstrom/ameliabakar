@@ -3,7 +3,7 @@ import React from 'react'
 import Slider from '../slider/Slider'
 import Header from './Header'
 
-const HeaderImg = styled.div(({imgSrc}: {imgSrc: string}) => {
+const HeaderImg = styled.div(({ imgSrc }: { imgSrc: string }) => {
     return {
         height: '70vh',
         backgroundImage: `url(${imgSrc})`,
@@ -29,12 +29,12 @@ const StyledDotsContainer = styled.div({
 
     li: {
         display: 'grid',
-        placeItems:'center'
-    }
+        placeItems: 'center',
+    },
 })
 
 const StyledTransparentHeader = styled(Header)({
-    position:'absolute',
+    position: 'absolute',
     top: '0px',
     right: '0px',
     left: '0px',
@@ -43,46 +43,58 @@ const StyledTransparentHeader = styled(Header)({
 
 const FullScreenRecipe = styled.div({
     position: 'relative',
+
+    '@media print': {
+        display: 'none',
+    },
 })
 
 type LatestQuery = {
     allWpRecept: {
         nodes: {
-            id: string,
-            uri: string,
-            title:string,
+            id: string
+            uri: string
+            title: string
 
             singlePaketAfc: {
-                tidFormat: string,
-                tid: number,
-                kortBeskrivning: string;
-                images: 
-                    {
-                        localFile: {
-                            childrenImageSharp: [
-                                {
-                                    original: {
-                                        src: string
-                                    },
-                                    fixed: {
-                                        src: string
-                                    }
+                tidFormat: string
+                tid: number
+                kortBeskrivning: string
+                images: {
+                    localFile: {
+                        childrenImageSharp: [
+                            {
+                                original: {
+                                    src: string
                                 }
-                            ]
-                        }
-                    }[]
+                                fixed: {
+                                    src: string
+                                }
+                            }
+                        ]
+                    }
+                }[]
             }
         }[]
     }
 }
 
-const HeaderImgs = ({images}: {images: string[]}) => {
-
+const HeaderImgs = ({ images }: { images: string[] }) => {
     const settings = {
         appendDots: dots => (
-            <StyledDotsContainer
-            >
-              <ul style={{ display:'flex', width: '100%', justifyContent:'center', margin: "0px", padding: '10px' }}> {dots} </ul>
+            <StyledDotsContainer>
+                <ul
+                    style={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'center',
+                        margin: '0px',
+                        padding: '10px',
+                    }}
+                >
+                    {' '}
+                    {dots}{' '}
+                </ul>
             </StyledDotsContainer>
         ),
     }
@@ -92,10 +104,7 @@ const HeaderImgs = ({images}: {images: string[]}) => {
             <StyledTransparentHeader />
             <Slider customSettings={settings}>
                 {images.map((src, i) => {
-                    return (
-                        <HeaderImg key={src + i} imgSrc={src} />
-                           
-                    )
+                    return <HeaderImg key={src + i} imgSrc={src} />
                 })}
             </Slider>
         </FullScreenRecipe>

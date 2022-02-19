@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from '@emotion/styled';
+import React from 'react'
+import styled from '@emotion/styled'
 import LogoUrl from '../../assets/logo-oneline.svg'
 import InstagramIcon from '../../assets/instagram.svg'
 import EmailIcon from '../../assets/email.svg'
-import colors from '../../lib/colors';
-import typography from '../../lib/typography';
-import Subscribe from '../subscribe/Subscribe';
-import { Link } from 'gatsby';
+import colors from '../../lib/colors'
+import typography from '../../lib/typography'
+import Subscribe from '../subscribe/Subscribe'
+import { Link } from 'gatsby'
 
 const Logo = styled(LogoUrl)({
     border: 'none',
@@ -19,7 +19,7 @@ const Logo = styled(LogoUrl)({
 const Instagram = styled(InstagramIcon)({
     border: 'none',
     height: '24px',
-    marginRight: '12px'
+    marginRight: '12px',
 })
 
 const ContactContainer = styled.div({
@@ -35,13 +35,13 @@ const ContactContainerInsta = styled(ContactContainer)({
     ['@media only screen and (min-width: 90ch)']: {
         marginBottom: '0px',
         alignSelf: 'end',
-    }
+    },
 })
 
 const Email = styled(EmailIcon)({
     border: 'none',
     height: '24px',
-    marginRight: '12px'
+    marginRight: '12px',
 })
 
 const StyledFooter = styled.footer({
@@ -56,7 +56,7 @@ const StyledFooter = styled.footer({
     "cookies cookies"
     "copyright copyright"
     `,
-    
+
     ['@media only screen and (min-width: 90ch)']: {
         maxWidth: '1360px',
         gridTemplateColumns: '1fr 1fr',
@@ -69,7 +69,7 @@ const StyledFooter = styled.footer({
             "copyright copyright"
         `,
     },
-    
+
     ['@media only screen and (min-width: 170ch)']: {
         gridTemplateAreas: `
             "logo logo"
@@ -78,8 +78,8 @@ const StyledFooter = styled.footer({
             "copyright cookies"
         `,
         paddingBottom: '100px',
-    }
-});
+    },
+})
 
 const StyledA = styled.a({
     ...typography.p,
@@ -89,8 +89,8 @@ const StyledA = styled.a({
     textDecoration: 'none',
     '&:hover': {
         color: colors.silver,
-    }
-});
+    },
+})
 
 const Nav = styled.nav({
     display: 'grid',
@@ -117,8 +117,8 @@ const Nav = styled.nav({
         width: '100%',
         justifyContent: 'space-between',
         marginBottom: '50px',
-        maxWidth: '800px'
-    }
+        maxWidth: '800px',
+    },
 })
 
 const Copyright = styled.p({
@@ -128,12 +128,11 @@ const Copyright = styled.p({
     marginTop: '50px',
     marginBottom: '50px',
     textAlign: 'center',
-    
+
     ['@media only screen and (min-width: 170ch)']: {
         margin: '0px',
         justifySelf: 'start',
-    }
-
+    },
 })
 
 const StyledCookie = styled(Link)({
@@ -146,7 +145,7 @@ const StyledCookie = styled(Link)({
         placeSelf: undefined,
         justifySelf: 'start',
         margin: '0px',
-    }
+    },
 })
 const StyledCookieSettings = styled(Link)({
     ...typography.p,
@@ -155,20 +154,22 @@ const StyledCookieSettings = styled(Link)({
     textDecoration: 'none',
     color: colors.silver,
     placeSelf: 'center',
-    
+
     ['@media only screen and (min-width: 90ch)']: {
         placeSelf: undefined,
         justifySelf: 'end',
         margin: '0px',
-    }
+    },
 })
 
-const StyledSubscribe = styled(Subscribe)({
-})
+const StyledSubscribe = styled(Subscribe)({})
 
 const Container = styled.div({
     backgroundColor: colors.cultured,
     width: '100%',
+    '@media print': {
+        display: 'none',
+    },
 })
 
 const EmailAndSocialContainer = styled.div({
@@ -188,10 +189,9 @@ const EmailAndSocialContainer = styled.div({
         `,
         width: '100%',
         justifyContent: 'space-between',
-        maxWidth: '800px'
-    }
-
-});
+        maxWidth: '800px',
+    },
+})
 
 const Cookies = styled.div({
     display: 'flex',
@@ -204,7 +204,7 @@ const Cookies = styled.div({
         flexDirection: 'row',
         margin: '0px',
         justifySelf: 'end',
-    }
+    },
 })
 
 const Footer = () => {
@@ -214,16 +214,30 @@ const Footer = () => {
                 <Logo />
 
                 <EmailAndSocialContainer>
-                    <ContactContainerInsta style={{gridArea: 'instagram'}}>
+                    <ContactContainerInsta style={{ gridArea: 'instagram' }}>
                         <Instagram />
-                        <StyledA href={'https://www.instagram.com/ameliabakar.se/'} rel="noopener" target={'_blank'}>@ameliabakar.se</StyledA>
+                        <StyledA
+                            href={'https://www.instagram.com/ameliabakar.se/'}
+                            rel="noopener"
+                            target={'_blank'}
+                        >
+                            @ameliabakar.se
+                        </StyledA>
                     </ContactContainerInsta>
-                    <ContactContainer style={{gridArea: 'email'}}>
+                    <ContactContainer style={{ gridArea: 'email' }}>
                         <Email />
-                        <StyledA href={'mailto:contact@ameliabakar.se'}>contact@ameliabakar.se</StyledA>
+                        <StyledA href={'mailto:contact@ameliabakar.se'}>
+                            contact@ameliabakar.se
+                        </StyledA>
                     </ContactContainer>
 
-                    <StyledSubscribe style={{gridArea: 'nyhetsbrev', marginTop: '20px', marginBottom: '30px'}} />
+                    <StyledSubscribe
+                        style={{
+                            gridArea: 'nyhetsbrev',
+                            marginTop: '20px',
+                            marginBottom: '30px',
+                        }}
+                    />
                 </EmailAndSocialContainer>
                 <Nav>
                     <Link to={'/'}>Hem</Link>
@@ -236,11 +250,14 @@ const Footer = () => {
 
                 <Cookies>
                     <StyledCookie to={'/cookies'}>Cookies</StyledCookie>
-                    <StyledCookieSettings to={'/cookies-settings'}>Cookieinställningar</StyledCookieSettings>
+                    <StyledCookieSettings to={'/cookies-settings'}>
+                        Cookieinställningar
+                    </StyledCookieSettings>
                 </Cookies>
 
                 <Copyright>
-                    Copyright © {(new Date).getFullYear()} Amelia Bakar. All rights reserved
+                    Copyright © {new Date().getFullYear()} Amelia Bakar. All
+                    rights reserved
                 </Copyright>
             </StyledFooter>
         </Container>

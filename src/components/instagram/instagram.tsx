@@ -1,32 +1,32 @@
-import styled from '@emotion/styled';
-import { graphql, useStaticQuery } from 'gatsby';
-import React, { useState } from 'react';
-import Secondary from '../buttons/secondary/Secondary';
-import WheatSmallLeft from '../../assets/wheat-decor-small-left.svg' 
+import styled from '@emotion/styled'
+import { graphql, useStaticQuery } from 'gatsby'
+import React, { useState } from 'react'
+import Secondary from '../buttons/secondary/Secondary'
+import WheatSmallLeft from '../../assets/wheat-decor-small-left.svg'
 import WheatSmallRight from '../../assets/wheat-decor-small-right.svg'
-import WheatBigLeft from '../../assets/wheat-decor-big-left.svg' 
+import WheatBigLeft from '../../assets/wheat-decor-big-left.svg'
 import WheatBigRight from '../../assets/wheat-decor-big-right.svg'
 import InstagramIcon from '../../assets/instagram.svg'
 
-import InvisibleLink from '../Links/InvisibleLink';
-import typography from '../../lib/typography';
-import colors from '../../lib/colors';
+import InvisibleLink from '../Links/InvisibleLink'
+import typography from '../../lib/typography'
+import colors from '../../lib/colors'
 
 type InstagramData = {
     allInstagramContent: {
-        nodes:{
-            id: string;
-            permalink: string;
+        nodes: {
+            id: string
+            permalink: string
             localFile: {
                 childImageSharp: {
                     fixed: {
-                        src: string;
+                        src: string
                     }
                 }
             }
         }[]
     }
-};
+}
 
 const InstagramGrid = styled.section({
     display: 'grid',
@@ -45,7 +45,7 @@ const InstagramGrid = styled.section({
 const InstagramImage = styled.img({
     width: '100%',
     maxWidth: '300px',
-    maxHeight: '300px'
+    maxHeight: '300px',
 })
 
 const Wrapper = styled.div({
@@ -56,6 +56,9 @@ const Wrapper = styled.div({
     ['@media only screen and (min-width: 90ch)']: {
         padding: '0px 20px',
     },
+    '@media print': {
+        display: 'none',
+    },
 })
 
 const LoadMoreWrapper = styled.div({
@@ -65,7 +68,7 @@ const LoadMoreWrapper = styled.div({
     marginTop: '30px',
     marginBottom: '50px',
     padding: '0px 10px',
-    
+
     ['@media only screen and (min-width: 90ch)']: {
         padding: '0px 20px',
         marginTop: '40px',
@@ -83,7 +86,7 @@ const BigLeft = styled(WheatBigLeft)({
     alignSelf: 'center',
     ['@media only screen and (min-width: 70ch)']: {
         display: 'block',
-    }
+    },
 })
 const BigRight = styled(WheatBigRight)({
     display: 'none',
@@ -91,21 +94,21 @@ const BigRight = styled(WheatBigRight)({
     alignSelf: 'center',
     ['@media only screen and (min-width: 70ch)']: {
         display: 'block',
-    }
+    },
 })
 const SmallLeft = styled(WheatSmallLeft)({
     justifySelf: 'start',
     alignSelf: 'center',
     ['@media only screen and (min-width: 70ch)']: {
         display: 'none',
-    }
+    },
 })
 const SmallRight = styled(WheatSmallRight)({
     justifySelf: 'end',
     alignSelf: 'center',
     ['@media only screen and (min-width: 70ch)']: {
         display: 'none',
-    }
+    },
 })
 
 const StyledInvisibleLink = styled(InvisibleLink)({
@@ -120,7 +123,7 @@ const FollowArea = styled.div({
     maxWidth: '1000px',
     justifySelf: 'center',
     width: '100%',
-    
+
     ['@media only screen and (min-width: 90ch)']: {
         padding: '0px 20px',
     },
@@ -143,7 +146,6 @@ const FollowMeOnInsta = styled.a({
     ['@media only screen and (min-width: 90ch)']: {
         fontSize: '28px',
     },
-    
 })
 
 const InstagramIco = styled(InstagramIcon)({
@@ -158,12 +160,16 @@ const InstagramIco = styled(InstagramIcon)({
 })
 
 const Instagram = () => {
-    const data = useStaticQuery<InstagramData>(graphql`{
-        allInstagramContent(sort: { fields: [timestamp] order: DESC} limit: 100) {
-            nodes {
-                id
-                permalink
-                localFile {
+    const data = useStaticQuery<InstagramData>(graphql`
+        {
+            allInstagramContent(
+                sort: { fields: [timestamp], order: DESC }
+                limit: 100
+            ) {
+                nodes {
+                    id
+                    permalink
+                    localFile {
                         childImageSharp {
                             fixed(width: 300, height: 300) {
                                 src
@@ -172,45 +178,55 @@ const Instagram = () => {
                     }
                 }
             }
-        }`)
+        }
+    `)
 
-    const [amount, setAmount] = useState(9);
+    const [amount, setAmount] = useState(9)
 
     const onClick = () => {
-        setAmount(prev => prev + 3);
+        setAmount(prev => prev + 3)
     }
     const allInstagram = data.allInstagramContent.nodes
-    const instagramData = allInstagram.slice(0, amount);
+    const instagramData = allInstagram.slice(0, amount)
     return (
         <Wrapper>
             <FollowArea>
                 <InstagramIco />
-                <FollowMeOnInsta href='https://www.instagram.com/ameliabakar.se/' target={'_blank'}>
+                <FollowMeOnInsta
+                    href="https://www.instagram.com/ameliabakar.se/"
+                    target={'_blank'}
+                >
                     Följ mig på instagram @ameliabakar.se
                 </FollowMeOnInsta>
             </FollowArea>
             <InstagramGrid>
                 {instagramData.map(node => {
-                    return <StyledInvisibleLink key={node.id} to={node.permalink}>
-                        <InstagramImage src={node.localFile.childImageSharp.fixed.src} />
-                    </StyledInvisibleLink> 
-                    
+                    return (
+                        <StyledInvisibleLink key={node.id} to={node.permalink}>
+                            <InstagramImage
+                                src={node.localFile.childImageSharp.fixed.src}
+                            />
+                        </StyledInvisibleLink>
+                    )
                 })}
             </InstagramGrid>
 
-            
             {amount < allInstagram.length && (
-            <LoadMoreWrapper>
-                <BigLeft />
-                <SmallLeft />
-                <Secondary style={{ placeSelf: 'center' }} onClick={onClick}>Ladda fler</Secondary>
-                <SmallRight />
-                <BigRight />
-            </LoadMoreWrapper>
+                <LoadMoreWrapper>
+                    <BigLeft />
+                    <SmallLeft />
+                    <Secondary
+                        style={{ placeSelf: 'center' }}
+                        onClick={onClick}
+                    >
+                        Ladda fler
+                    </Secondary>
+                    <SmallRight />
+                    <BigRight />
+                </LoadMoreWrapper>
             )}
-
         </Wrapper>
-    );
-};
+    )
+}
 
-export default Instagram;
+export default Instagram

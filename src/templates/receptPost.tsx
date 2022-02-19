@@ -37,6 +37,9 @@ const ChipArea = styled.div({
     ['@media only screen and (min-width: 90ch)']: {
         margin: '32px 20px 0px 20px',
     },
+    '@media print': {
+        display: 'none',
+    },
 })
 const FabArea = styled.div({
     display: 'flex',
@@ -49,6 +52,10 @@ const FabArea = styled.div({
         gap: '2rem',
         justifySelf: 'end',
         marginRight: '20px',
+    },
+
+    '@media print': {
+        display: 'none',
     },
 })
 
@@ -75,6 +82,13 @@ const FabText = styled.span({
     },
 })
 
+const StyledH2 = styled(H2)({
+    marginTop: '50px',
+    textAlign: 'center',
+    '@media print': {
+        display: 'none',
+    },
+})
 type Props = { pageContext: ReceptContent }
 const receptPost = ({ pageContext }: Props) => {
     pageContext
@@ -132,15 +146,13 @@ const receptPost = ({ pageContext }: Props) => {
                         <Fab variant={'share'} />
                         <FabText>Dela</FabText>
                     </FabWrapper>
-                    <FabWrapper>
+                    <FabWrapper onClick={() => window.print()}>
                         <Fab variant={'print'} />
                         <FabText>Skriv ut</FabText>
                     </FabWrapper>
                 </FabArea>
             </ContentArea>
-            <H2 style={{ marginTop: '50px', textAlign: 'center' }}>
-                Du kanske också gillar...
-            </H2>
+            <StyledH2>Du kanske också gillar...</StyledH2>
             {/* <ResipeCard pageContext={pageContext} /> */}
             {/* <pre >
             <code style={{ maxWidth: '100vw', overflow: 'scroll'}}>
