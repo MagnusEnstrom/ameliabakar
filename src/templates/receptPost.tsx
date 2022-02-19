@@ -12,6 +12,7 @@ import Ingredients from '../components/Ingredients/Ingredients'
 import Fab from '../components/fab/Fab'
 import Chip from '../components/chips/Chip'
 import typography from '../lib/typography'
+import InvisibleLink from '../components/Links/InvisibleLink'
 
 const Title = styled(H2)({
     marginTop: '20px',
@@ -134,7 +135,12 @@ const receptPost = ({ pageContext }: Props) => {
                 )}
                 <ChipArea>
                     {pageContext.tags.nodes.map(tag => (
-                        <Chip key={tag.name} text={tag.name} />
+                        <InvisibleLink
+                            key={tag.name}
+                            to={`/recept?q=${tag.name}`}
+                        >
+                            <Chip key={tag.name} text={tag.name} />
+                        </InvisibleLink>
                     ))}
                 </ChipArea>
                 <FabArea>
