@@ -13,6 +13,9 @@ import Fab from '../components/fab/Fab'
 import Chip from '../components/chips/Chip'
 import typography from '../lib/typography'
 import InvisibleLink from '../components/Links/InvisibleLink'
+import H3 from '../components/typography/h3/H3'
+import Spoon from '../assets/spoon.svg'
+import Glove from '../assets/glove.svg'
 
 const Title = styled(H2)({
     marginTop: '20px',
@@ -38,6 +41,9 @@ const ChipArea = styled.div({
     ['@media only screen and (min-width: 90ch)']: {
         margin: '32px 20px 0px 20px',
     },
+    ['@media only screen and (min-width: 170ch)']: {
+        gridArea: '1 / 3 / 2 / 4',
+    },
     '@media print': {
         display: 'none',
     },
@@ -55,6 +61,11 @@ const FabArea = styled.div({
         marginRight: '20px',
     },
 
+    ['@media only screen and (min-width: 170ch)']: {
+        gridArea: '1 / 2 / 2 / 3',
+        justifySelf: 'start',
+    },
+
     '@media print': {
         display: 'none',
     },
@@ -65,6 +76,9 @@ const ContentArea = styled.div({
         display: 'grid',
         maxWidth: '1360px',
         margin: '0px auto',
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        gridTemplateColumns: 'repeat(3, 1fr)',
     },
 })
 
@@ -90,6 +104,67 @@ const StyledH2 = styled(H2)({
         display: 'none',
     },
 })
+
+const StyledDoLikeThis = styled(DoLikeThis)(
+    ({ activeNav }: { activeNav: ActiveNav }) => ({
+        display: activeNav === 'detail' ? 'block' : 'none',
+        ['@media only screen and (min-width: 170ch)']: {
+            display: 'block',
+            margin: '0px',
+            gridArea: '3 / 2 / 5 / 4',
+            maxWidth: '70ch',
+        },
+    })
+)
+const StyledIngredients = styled(Ingredients)(
+    ({ activeNav }: { activeNav: ActiveNav }) => ({
+        display: activeNav === 'ingredienser' ? 'flex' : 'none',
+        ['@media only screen and (min-width: 170ch)']: {
+            display: 'flex',
+            margin: '0px',
+            gridArea: '3 / 1 / 4 / 2',
+        },
+    })
+)
+
+const StyledContentNavWrapper = styled(ContentNavWrapper)({
+    ['@media only screen and (min-width: 170ch)']: {
+        display: 'none',
+    },
+})
+
+const StyledH3Recipe = styled(H3)({
+    display: 'none',
+    ['@media only screen and (min-width: 170ch)']: {
+        display: 'flex',
+        gridArea: '2 / 1 / 3 / 2',
+        gap: '14px',
+    },
+})
+const StyledH3DoLikeTHis = styled(H3)({
+    display: 'none',
+    ['@media only screen and (min-width: 170ch)']: {
+        gridArea: '2 / 2 / 3 / 4',
+        display: 'flex',
+        gap: '14px',
+    },
+})
+
+const StyledSpoon = styled(Spoon)({
+    maxHeight: '31.5px',
+    maxWidth: '33px',
+})
+const StyledGlove = styled(Glove)({
+    maxHeight: '27px',
+    maxWidth: '37px',
+})
+
+const IconSpan = styled.span({
+    display: 'grid',
+    placeItems: 'center',
+    width: 'max-content',
+})
+type ActiveNav = 'ingredienser' | 'detail'
 type Props = { pageContext: ReceptContent }
 const receptPost = ({ pageContext }: Props) => {
     pageContext
@@ -98,9 +173,7 @@ const receptPost = ({ pageContext }: Props) => {
         return img.localFile.childrenImageSharp[0].original.src
     })
 
-    const [activeNav, setActiveNav] = useState<'ingredienser' | 'detail'>(
-        'ingredienser'
-    )
+    const [activeNav, setActiveNav] = useState<ActiveNav>('ingredienser')
     return (
         <Layout navImgs={images}>
             <Title>{pageContext.title}</Title>
@@ -112,7 +185,7 @@ const receptPost = ({ pageContext }: Props) => {
             <StyledP>{pageContext.singlePaketAfc.kortBeskrivning}</StyledP>
             {/* Betygsätt */}
             <ContentArea>
-                <ContentNavWrapper>
+                <StyledContentNavWrapper>
                     <ContentNavItem
                         text={'Ingredienser'}
                         onClick={() => setActiveNav('ingredienser')}
@@ -123,16 +196,28 @@ const receptPost = ({ pageContext }: Props) => {
                         onClick={() => setActiveNav('detail')}
                         active={activeNav === 'detail'}
                     />
-                </ContentNavWrapper>
+                </StyledContentNavWrapper>
 
-                {activeNav === 'detail' && (
-                    <DoLikeThis
-                        saHarGorDu={pageContext.singlePaketAfc.saHarGorDu}
-                    />
-                )}
-                {activeNav === 'ingredienser' && (
-                    <Ingredients content={pageContext.content} />
-                )}
+                <StyledH3Recipe>
+                    <IconSpan>
+                        <StyledSpoon />
+                    </IconSpan>
+                    Ingredienser
+                </StyledH3Recipe>
+                <StyledIngredients
+                    activeNav={activeNav}
+                    content={pageContext.content}
+                />
+                <StyledH3DoLikeTHis>
+                    <IconSpan>
+                        <StyledGlove />
+                    </IconSpan>
+                    Gör så här
+                </StyledH3DoLikeTHis>
+                <StyledDoLikeThis
+                    activeNav={activeNav}
+                    saHarGorDu={pageContext.singlePaketAfc.saHarGorDu}
+                />
                 <ChipArea>
                     {pageContext.tags.nodes.map(tag => (
                         <InvisibleLink
