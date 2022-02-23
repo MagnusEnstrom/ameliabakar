@@ -51,6 +51,9 @@ module.exports = {
           process.env.WPGRAPHQL_URL ||
           `http://localhost:8000/graphql`,
         useACF: true,
+        schema: {
+            timeout: 6000000
+        }
       },
     },
 
