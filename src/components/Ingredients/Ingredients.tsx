@@ -42,7 +42,12 @@ const Ingredients = ({ content = '', ...rest }: Props) => {
         if (line.includes('<strong>')) {
             IngredientGroups.push({ title: line, lines: [] })
         } else {
-            IngredientGroups[IngredientGroups.length - 1].lines.push(line)
+            const group = IngredientGroups[IngredientGroups.length - 1]
+            if (!group) {
+                IngredientGroups.push({ title: line, lines: [] })
+            } else {
+                group.lines.push(line)
+            }
         }
     })
 
