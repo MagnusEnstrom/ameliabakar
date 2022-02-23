@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import styled from '@emotion/styled';
-import colors from '../../../lib/colors';
+import React, { useState } from 'react'
+import styled from '@emotion/styled'
+import colors from '../../../lib/colors'
 import Newsletter from '../../../assets/newsletter.svg'
-import H2 from '../../typography/h2/H2';
-import Primary from '../../buttons/primary/Primary';
-import typography from '../../../lib/typography';
-import Toast from '../../toast/Toast';
-import radius from '../../../lib/radius';
-import Input from '../../Form/Input';
+import H2 from '../../typography/h2/H2'
+import Primary from '../../buttons/primary/Primary'
+import typography from '../../../lib/typography'
+import Toast from '../../toast/Toast'
+import radius from '../../../lib/radius'
+import Input from '../../Form/Input'
 
 const SubContainer = styled.form({
     backgroundColor: colors.cultured,
@@ -18,20 +18,20 @@ const SubContainer = styled.form({
     },
     ['@media only screen and (min-width: 170ch)']: {
         padding: '100px 30px 100px 30px',
-    }
-});
+    },
+})
 
 const StyledH2 = styled(H2)({
-    textAlign: 'center', 
+    textAlign: 'center',
     placeSelf: 'center',
     ['@media only screen and (min-width: 90ch)']: {
         display: 'none',
-        ...typography.h4
+        ...typography.h4,
     },
     ['@media only screen and (min-width: 170ch)']: {
         display: 'block',
-        ...typography.h3
-    }
+        ...typography.h3,
+    },
 })
 const TabletH2 = styled(H2)({
     display: 'none',
@@ -39,7 +39,7 @@ const TabletH2 = styled(H2)({
     margin: '0px',
     ['@media only screen and (min-width: 90ch)']: {
         display: 'block',
-        ...typography.h4
+        ...typography.h4,
     },
     ['@media only screen and (min-width: 170ch)']: {
         display: 'none',
@@ -59,7 +59,7 @@ const NewsletterIcon = styled(Newsletter)({
         display: 'block',
         marginRight: '0px',
         alignSelf: 'center',
-    }
+    },
 })
 
 const InputWrapper = styled.form({
@@ -77,7 +77,7 @@ const InputWrapper = styled.form({
     ['@media only screen and (min-width: 170ch)']: {
         display: 'none',
     },
-});
+})
 
 const StyledInput = styled.input({
     borderRadius: radius.button,
@@ -94,7 +94,7 @@ const StyledInput = styled.input({
     },
     ':focus-visible': {
         outline: 'none',
-    }
+    },
 })
 
 const StyledPrimary = styled.button({
@@ -105,7 +105,7 @@ const StyledPrimary = styled.button({
     color: colors.white,
     border: 'none',
     borderRadius: radius.button,
-    
+
     '&:hover': {
         backgroundColor: colors.jet,
     },
@@ -115,7 +115,7 @@ const StyledPrimary = styled.button({
     },
     display: 'block',
     width: 'max-content',
-    placeSelf: 'center', 
+    placeSelf: 'center',
     marginTop: '20px',
     ['@media only screen and (min-width: 90ch)']: {
         display: 'none',
@@ -137,11 +137,11 @@ const TabletContainer = styled.div({
     placeSelf: 'center',
     ['@media only screen and (min-width: 90ch)']: {
         display: 'flex',
-        marginBottom: '40px'
+        marginBottom: '40px',
     },
     ['@media only screen and (min-width: 170ch)']: {
         display: 'block',
-        marginBottom: '0px'
+        marginBottom: '0px',
     },
 })
 
@@ -154,48 +154,71 @@ const ErrorMessage = styled.span({
     justifySelf: 'center',
 })
 
-const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const EMAIL_REGEX =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-const SubHome = ({...rest}) => {
-
-    const [subscribeStatus, setSubscriobeStatus] = useState<'success' | 'idle'>('idle');
-    const [error, setError] = useState<string | null>(null);
-    const [value, setValue] = useState('');
+const SubHome = ({ ...rest }) => {
+    const [subscribeStatus, setSubscriobeStatus] = useState<'success' | 'idle'>(
+        'idle'
+    )
+    const [error, setError] = useState<string | null>(null)
+    const [value, setValue] = useState('')
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+        e.preventDefault()
         setError('')
-        const emailMatch = value.match(EMAIL_REGEX);
-        if(!emailMatch) {
+        const emailMatch = value.match(EMAIL_REGEX)
+        if (!emailMatch) {
             return setError('Fel. Ange data i rätt format example@mail.com')
         }
 
-        if(subscribeStatus !== 'success') {
+        if (subscribeStatus !== 'success') {
             setValue('')
             return setSubscriobeStatus('success')
         }
 
         return setSubscriobeStatus('idle')
     }
-    
+
     return (
         <SubContainer {...rest} onSubmit={e => handleSubmit(e)}>
             <TabletContainer>
                 <NewsletterIcon />
-                <TabletH2>Nyhetsbrev! Missa inga uppdateringar, prenumerera på Amelias nyhetsbrev</TabletH2>
+                <TabletH2>
+                    Nyhetsbrev! Missa inga uppdateringar, prenumerera på Amelias
+                    nyhetsbrev
+                </TabletH2>
             </TabletContainer>
-            <StyledH2 style={{margin: '30px 0px 0px 0px'}}>Nyhetsbrev!</StyledH2>
-            <StyledH2 style={{ margin: '0px 0px 30px 0px', }}>Missa inga uppdateringar, prenumerera på Amelias nyhetsbrev</StyledH2>
+            <StyledH2 style={{ margin: '30px 0px 0px 0px' }}>
+                Nyhetsbrev!
+            </StyledH2>
+            <StyledH2 style={{ margin: '0px 0px 30px 0px' }}>
+                Missa inga uppdateringar, prenumerera på Amelias nyhetsbrev
+            </StyledH2>
             <StyledFormInput placeholder={'E-mail adress'} />
             <InputWrapper>
-                    <StyledInput value={value} onChange={(e) => setValue(e.target.value)} type={'email'} placeholder={'E-mail adress'}  />
-                    {subscribeStatus !== 'success' && 
-                        <>
-                            <Primary type={'submit'} style={{padding: '14px 25px'}}>Prenumerera</Primary>
-                        </>
-                    }
-                    {subscribeStatus === 'success' && 
-                        <Toast onClick={() => setSubscriobeStatus('idle')} style={{padding: '9.5px 25px'}} variant={'subscribed'} />
-                    }
+                <StyledInput
+                    value={value}
+                    onChange={e => setValue(e.target.value)}
+                    type={'email'}
+                    placeholder={'E-mail adress'}
+                />
+                {subscribeStatus !== 'success' && (
+                    <>
+                        <Primary
+                            type={'submit'}
+                            style={{ padding: '14px 25px' }}
+                        >
+                            Prenumerera
+                        </Primary>
+                    </>
+                )}
+                {subscribeStatus === 'success' && (
+                    <Toast
+                        onClick={() => setSubscriobeStatus('idle')}
+                        style={{ padding: '9.5px 25px' }}
+                        variant={'subscribed'}
+                    />
+                )}
             </InputWrapper>
             <ErrorMessage>{error}</ErrorMessage>
             <StyledPrimary type={'submit'}>Prenumerera</StyledPrimary>
