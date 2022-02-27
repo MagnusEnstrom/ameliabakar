@@ -23,10 +23,15 @@ const RecipeWrapper = styled.div({
     ['@media only screen and (min-width: 90ch)']: {
         paddingTop: '50px',
     },
+    ['@media only screen and (min-width: 170ch)']: {
+        margin: '0px 0px 30px 0px',
+    },
 })
 
 const PageWrapper = styled.div({
     display: 'grid',
+    maxWidth: '1360px',
+    margin: '0px auto',
 })
 
 const StyledSearch = styled(SearchInputFilter)({
@@ -41,6 +46,11 @@ const StyledSearch = styled(SearchInputFilter)({
 
 const StyledH1 = styled(H1)({
     ...typography.h1,
+    textAlign: 'center',
+    margin: '20px',
+    ['@media only screen and (min-width: 170ch)']: {
+        margin: '20px 0px',
+    },
 })
 
 const Lightbox = styled.div({
@@ -105,6 +115,9 @@ const DesktopFilterArea = styled.div({
     ['@media only screen and (min-width: 90ch)']: {
         display: 'flex',
     },
+    ['@media only screen and (min-width: 170ch)']: {
+        padding: '0px',
+    },
 })
 
 const TitleWrapper = styled.div({
@@ -112,6 +125,10 @@ const TitleWrapper = styled.div({
         display: 'flex',
         justifyContent: 'space-between',
         marginRight: '20px',
+    },
+
+    ['@media only screen and (min-width: 170ch)']: {
+        margin: '0px',
     },
 })
 
@@ -192,9 +209,7 @@ const recept = ({ pageContext, location }: Props & PageProps) => {
                     }}
                 />
                 <TitleWrapper>
-                    <StyledH1 style={{ textAlign: 'center', margin: '20px' }}>
-                        Recept
-                    </StyledH1>
+                    <StyledH1>Recept</StyledH1>
                     <SearchWrapper>
                         <StyledSearch
                             value={value}
