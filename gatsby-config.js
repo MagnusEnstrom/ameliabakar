@@ -52,7 +52,7 @@ module.exports = {
           `http://localhost:8000/graphql`,
         useACF: true,
         schema: {
-            timeout: 6000000
+            timeout: 9000000
         }
       },
     },

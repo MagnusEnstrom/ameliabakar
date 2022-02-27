@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
-import Layout from '../components/layout'
 import { ReceptContent } from '../graphql/types/ReceptContentType'
 import H2 from '../components/typography/h2/H2'
 import styled from '@emotion/styled'
-import ReceptInfo from '../components/receptInfo/ReceptInfo'
-import P from '../components/typography/p/P'
 import ContentNavWrapper from '../components/navigation/contentNavWrapper/ContentNavWrapper'
 import ContentNavItem from '../components/navigation/contentNavItem/ContentNavItem'
 import DoLikeThis from '../components/doLikeThis/DoLikeThis'
@@ -16,22 +13,13 @@ import InvisibleLink from '../components/Links/InvisibleLink'
 import H3 from '../components/typography/h3/H3'
 import Spoon from '../assets/spoon.svg'
 import Glove from '../assets/glove.svg'
+import Instagram from '../components/instagram/instagram'
+import Footer from '../components/footer/Footer'
+import HeaderImgs from '../components/header/HeaderImgs'
+import Header from '../components/header/Header'
+import RecipeCardHeader from '../components/header/RecipeCardHeader'
+import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
 
-const Title = styled(H2)({
-    marginTop: '20px',
-
-    textAlign: 'center',
-})
-
-const StyledP = styled(P)({
-    textAlign: 'center',
-    margin: '20px 10px',
-    ['@media only screen and (min-width: 90ch)']: {
-        textAlign: 'start',
-        maxWidth: '600px',
-        margin: '20px auto',
-    },
-})
 const ChipArea = styled.div({
     display: 'flex',
     columnGap: '17.5px',
@@ -79,6 +67,7 @@ const ContentArea = styled.div({
     },
     ['@media only screen and (min-width: 170ch)']: {
         gridTemplateColumns: 'repeat(3, 1fr)',
+        columnGap: '30px',
     },
 })
 
@@ -164,6 +153,7 @@ const IconSpan = styled.span({
     placeItems: 'center',
     width: 'max-content',
 })
+
 type ActiveNav = 'ingredienser' | 'detail'
 type Props = { pageContext: ReceptContent }
 const receptPost = ({ pageContext }: Props) => {
@@ -175,14 +165,25 @@ const receptPost = ({ pageContext }: Props) => {
 
     const [activeNav, setActiveNav] = useState<ActiveNav>('ingredienser')
     return (
-        <Layout navImgs={images}>
-            <Title>{pageContext.title}</Title>
-            <ReceptInfo
+        <div>
+            <RecipeCardHeader
+                rating={4.2}
                 svarighetsgrad={pageContext.singlePaketAfc.svarighetsgrad}
                 tid={pageContext.singlePaketAfc.tid}
                 tidFormat={pageContext.singlePaketAfc.tidFormat}
+                kortBeskrivning={pageContext.singlePaketAfc.kortBeskrivning}
+                title={pageContext.title}
+                imgUrl={
+                    pageContext.singlePaketAfc?.images?.[0]?.localFile
+                        ?.childrenImageSharp?.[0]?.original?.src
+                }
+                images={images}
+                style={{
+                    maxWidth: '1360px',
+                    margin: '0px auto',
+                }}
             />
-            <StyledP>{pageContext.singlePaketAfc.kortBeskrivning}</StyledP>
+
             {/* Betygsätt */}
             <ContentArea>
                 <StyledContentNavWrapper>
@@ -244,13 +245,9 @@ const receptPost = ({ pageContext }: Props) => {
                 </FabArea>
             </ContentArea>
             <StyledH2>Du kanske också gillar...</StyledH2>
-            {/* <ResipeCard pageContext={pageContext} /> */}
-            {/* <pre >
-            <code style={{ maxWidth: '100vw', overflow: 'scroll'}}>
-                {JSON.stringify(pageContext, null, 4)}
-            </code>
-        </pre> */}
-        </Layout>
+            <Instagram />
+            <Footer />
+        </div>
     )
 }
 

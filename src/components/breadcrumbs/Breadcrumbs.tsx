@@ -9,21 +9,21 @@ const Container = styled.nav({
     display: 'flex',
     alignItems: 'center',
     gap: '20px',
-    maxWidth: '1320px',
+    maxWidth: '1360px',
     justifySelf: 'start',
     margin: '20px 10px',
     ['@media only screen and (min-width: 90ch)']: {
         margin: '20px 20px',
     },
     ['@media only screen and (min-width: 170ch)']: {
-        margin: '20px 0px',
+        margin: '20px auto',
     },
 })
 
 const CrumbArrowWrapper = styled.div({
     display: 'flex',
     gap: '20px',
-    alignItems: 'center'
+    alignItems: 'center',
 })
 const Crumb = styled(Link)({
     ...typography.p,
@@ -31,7 +31,7 @@ const Crumb = styled(Link)({
     color: colors.jet,
     '&:hover': {
         cursor: 'pointer',
-    }
+    },
 })
 const CurrentCrumb = styled.span({
     ...typography.p,
@@ -40,25 +40,25 @@ const CurrentCrumb = styled.span({
     color: colors.silver,
     '&:hover': {
         cursor: 'default',
-    }
+    },
 })
 const Arrow = styled(ArrowRight)({
     height: '16px',
 })
 
 export type Props = {
-  crumbs?: {
-      name: string;
-      to: string;
-  }[]
-} & React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    crumbs?: {
+        name: string
+        to: string
+    }[]
+} & React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>
 
-const Breadcrumbs = ({crumbs = [], ...rest}: Props) => {
-    if(!crumbs.length) return null;
+const Breadcrumbs = ({ crumbs = [], ...rest }: Props) => {
+    if (!crumbs.length) return null
     return (
         <Container {...rest}>
             {crumbs.map((crumb, i, array) => {
-                if(array.length === i + 1) {
+                if (array.length === i + 1) {
                     return <CurrentCrumb key={i}>{crumb.name}</CurrentCrumb>
                 }
                 return (
@@ -66,7 +66,7 @@ const Breadcrumbs = ({crumbs = [], ...rest}: Props) => {
                         <Crumb to={crumb.to}>{crumb.name}</Crumb>
                         <Arrow />
                     </CrumbArrowWrapper>
-                );
+                )
             })}
         </Container>
     )

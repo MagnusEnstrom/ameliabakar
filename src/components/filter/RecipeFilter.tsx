@@ -12,10 +12,11 @@ type Props = {
     recipes: ReceptPageQuery['nodes'];
     handleFilterClick: (name: string) => void;
     activeFilters: string[];
+    amount?: number;
 } & React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
-const RecipeFilter = ({recipes, handleFilterClick, activeFilters, ...rest}: Props) => {
+const RecipeFilter = ({recipes, handleFilterClick, activeFilters, amount, ...rest}: Props) => {
     // unique tags
-    const tags = [...new Set(recipes.map(recipe => recipe.tags.nodes.map(tag => tag.name)).flatMap(tags => tags))].sort();
+    const tags = [...new Set(recipes.map(recipe => recipe.tags.nodes.map(tag => tag.name)).flatMap(tags => tags))].sort().slice(0, amount ? amount : -1 );
     return (
         <FilterList {...rest}>
             {tags.map(tag => <Chip 
