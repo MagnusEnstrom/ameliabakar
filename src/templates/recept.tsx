@@ -265,7 +265,7 @@ const recept = ({ pageContext, location }: Props & PageProps) => {
                         </FilterContainer>
                     </Lightbox>
                 )}
-                <DesktopFilterArea onBlur={() => setDeskExpanded(false)}>
+                <DesktopFilterArea>
                     <DesktopChipContainer
                         expanded={activeFilters.length > 0 || deskExpanded}
                     >
