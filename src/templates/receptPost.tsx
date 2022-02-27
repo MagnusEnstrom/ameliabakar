@@ -202,8 +202,8 @@ const receptPost = ({ pageContext }: Props) => {
                 kortBeskrivning={pageContext.singlePaketAfc.kortBeskrivning}
                 title={pageContext.title}
                 imgUrl={
-                    pageContext.singlePaketAfc.images[0].localFile
-                        .childrenImageSharp[0].original.src
+                    pageContext.singlePaketAfc?.images?.[0]?.localFile
+                        ?.childrenImageSharp?.[0]?.original?.src
                 }
                 style={{
                     maxWidth: '1360px',
