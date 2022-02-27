@@ -13,7 +13,7 @@ describe('/recept', () => {
         cy.findAllByLabelText('recept').should('have.length', 14)
     })
 
-    it.only('shows filter & hide filter', () => {
+    it('shows filter & hide filter', () => {
         cy.contains('Recept')
         //Filter list is not shown
         cy.get('[data-cy=filterButton]').should('not.be.visible')
