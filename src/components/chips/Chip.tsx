@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import colors from '../../lib/colors'
 import radius from '../../lib/radius'
 import typography from '../../lib/typography'
-import Close from '../../assets/close-white.svg';
+import Close from '../../assets/close-white.svg'
 
 const CloseIcon = styled(Close)({
     width: '14px',
@@ -24,9 +24,9 @@ const StyledChip = styled.button(() => {
         '&[aria-label="selected"]': {
             backgroundColor: colors.laruelGreen,
             border: `2px solid ${colors.laruelGreen}`,
-            color: colors.white
+            color: colors.white,
         },
-        
+
         '&:disabled': {
             border: `2px solid ${colors.cultured}`,
             color: colors.silver,
@@ -40,18 +40,19 @@ const StyledChip = styled.button(() => {
                 color: colors.white,
                 cursor: 'pointer',
             },
-        }
+        },
     }
 })
 
 type Props = {
-    text: string;
-    selected?: boolean;
-} & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
-const Chip = ({text, selected, ...rest}: Props) => {
+    text?: string
+    selected?: boolean
+} & React.ButtonHTMLAttributes<HTMLButtonElement>
+const Chip: FC<Props> = ({ text, selected, children, ...rest }) => {
     return (
         <StyledChip aria-label={selected ? 'selected' : undefined} {...rest}>
             {text}
+            {children}
             {selected && <CloseIcon />}
         </StyledChip>
     )

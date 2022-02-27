@@ -15,6 +15,8 @@ import colors from '../lib/colors'
 import queryString from 'query-string'
 import { PageProps } from 'gatsby'
 import typography from '../lib/typography'
+import Chip from '../components/chips/Chip'
+import Vector from '../assets/Vector.svg'
 
 const RecipeWrapper = styled.div({
     margin: '10px 10px 30px 10px',
@@ -84,14 +86,21 @@ const MobileFilter = styled(Fab)({
         display: 'none',
     },
 })
-const DesktopChipContainer = styled.div({
-    display: 'none',
-    ['@media only screen and (min-width: 90ch)']: {
-        display: 'block',
-        padding: '0px 20px 0px 20px',
-        maxHeight: '85px',
-        overflow: 'hidden',
-    },
+const DesktopChipContainer = styled.div(
+    ({ expanded }: { expanded: boolean }) => ({
+        display: 'none',
+        ['@media only screen and (min-width: 90ch)']: {
+            width: '100%',
+            display: 'block',
+            maxHeight: expanded ? 'auto' : '100px',
+            overflow: 'hidden',
+        },
+    })
+)
+const DesktopFilterArea = styled.div({
+    padding: '0px 20px 0px 20px',
+    display: 'flex',
+    flexDirection: 'column',
 })
 
 const TitleWrapper = styled.div({
@@ -102,8 +111,14 @@ const TitleWrapper = styled.div({
     },
 })
 
+// const ClearAll = styled.span({
+//     color: colors.silver,
+//     textDecorationLine: 'underline',
+//     alignSelf: 'center',
+// })
+
 const StyledRecipeFilter = styled(RecipeFilter)({
-    display: 'flex',
+    rowGap: '20px',
 })
 
 const filterRecipes = (
@@ -124,6 +139,7 @@ const filterRecipes = (
 type Props = { pageContext: ReceptPageQuery }
 const recept = ({ pageContext, location }: Props & PageProps) => {
     const [expanded, setExpanded] = useState(false)
+    const [deskExpanded, setDeskExpanded] = useState(false)
 
     const [filteredRecipes, setFilteredRecipes] = useState(pageContext.nodes)
     const [activeFilters, setActiveFilters] = useState<string[]>([])
@@ -167,6 +183,9 @@ const recept = ({ pageContext, location }: Props & PageProps) => {
                         { name: 'Hem', to: '/' },
                         { name: 'Recept', to: '/recept' },
                     ]}
+                    style={{
+                        width: '100%',
+                    }}
                 />
                 <TitleWrapper>
                     <StyledH1 style={{ textAlign: 'center', margin: '20px' }}>
@@ -218,13 +237,53 @@ const recept = ({ pageContext, location }: Props & PageProps) => {
                         </FilterContainer>
                     </Lightbox>
                 )}
-                <DesktopChipContainer>
-                    <StyledRecipeFilter
-                        activeFilters={activeFilters}
-                        handleFilterClick={handleFilterClick}
-                        recipes={filteredRecipes}
-                    />
-                </DesktopChipContainer>
+                <DesktopFilterArea>
+                    <DesktopChipContainer
+                        expanded={activeFilters.length > 0 || deskExpanded}
+                    >
+                        <StyledRecipeFilter
+                            activeFilters={activeFilters}
+                            handleFilterClick={handleFilterClick}
+                            recipes={filteredRecipes}
+                        />
+                    </DesktopChipContainer>
+                    <div
+                        style={{
+                            display: 'flex',
+                            gap: '30px',
+                            marginTop: deskExpanded ? '20px' : '11px',
+                        }}
+                    >
+                        {activeFilters.length === 0 && (
+                            <Chip
+                                style={{
+                                    alignSelf: 'flex-start',
+                                }}
+                                onClick={() => setDeskExpanded(prev => !prev)}
+                            >
+                                {deskExpanded ? (
+                                    <>
+                                        <span>Visa mindre</span>{' '}
+                                        <Vector
+                                            style={{
+                                                alignSelf: 'center',
+                                                transform: 'rotate(180deg)',
+                                            }}
+                                        />
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>Visa alla kategorier</span>{' '}
+                                        <Vector
+                                            style={{ alignSelf: 'center' }}
+                                        />
+                                    </>
+                                )}
+                            </Chip>
+                        )}
+                        {/* <ClearAll>Rensa filter</ClearAll> */}
+                    </div>
+                </DesktopFilterArea>
                 {filteredRecipes.length === 0 && (
                     <>
                         <H2 style={{ textAlign: 'center', margin: '10px' }}>
