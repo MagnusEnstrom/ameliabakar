@@ -99,8 +99,12 @@ const DesktopChipContainer = styled.div(
 )
 const DesktopFilterArea = styled.div({
     padding: '0px 20px 0px 20px',
-    display: 'flex',
     flexDirection: 'column',
+
+    display: 'none',
+    ['@media only screen and (min-width: 90ch)']: {
+        display: 'flex',
+    },
 })
 
 const TitleWrapper = styled.div({
