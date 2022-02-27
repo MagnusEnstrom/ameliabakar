@@ -6,6 +6,9 @@ import ClockIconBlack from '../../assets/clock.svg'
 import Rating from '../rating/Rating'
 import Difficulty from '../difficulty/Difficulty'
 import P from '../typography/p/P'
+import Header from './Header'
+import HeaderImgs from './HeaderImgs'
+import Breadcrumbs from '../breadcrumbs/Breadcrumbs'
 
 const TimeText = styled.span({
     ...typography.note,
@@ -110,6 +113,27 @@ const StyledTextArea = styled.div({
         gap: '32px',
     },
 })
+
+const StyledHeader = styled(Header)(
+    ({ alwaysShow }: { alwaysShow?: boolean }) => ({
+        display: alwaysShow ? 'grid' : 'none',
+        ['@media only screen and (min-width: 170ch)']: {
+            display: 'grid',
+        },
+    })
+)
+const StyledHeaderImgs = styled(HeaderImgs)({
+    display: 'block',
+    ['@media only screen and (min-width: 170ch)']: {
+        display: 'none',
+    },
+})
+const StyledBreadcrumbs = styled(Breadcrumbs)({
+    display: 'none',
+    ['@media only screen and (min-width: 170ch)']: {
+        display: 'flex',
+    },
+})
 type Props = {
     title: string
     tid: number
@@ -118,6 +142,7 @@ type Props = {
     svarighetsgrad: 'Lätt' | 'Medel' | 'Svår'
     kortBeskrivning?: string
     imgUrl: string
+    images?: string[]
 } & React.HTMLAttributes<HTMLDivElement>
 
 const RecipeCardHeader = ({
@@ -128,32 +153,44 @@ const RecipeCardHeader = ({
     svarighetsgrad,
     kortBeskrivning,
     imgUrl,
+    images,
     ...rest
 }: Props) => {
     return (
-        <Wrapper {...rest}>
-            <StyledTextArea>
-                <CardText>{title}</CardText>
-                <OverveiwWrapper>
-                    <Time>
-                        <ClockBlack />
-                        <TimeText>
-                            {tid} {tidFormat === 'min' ? 'min' : 'h'}
-                        </TimeText>
-                    </Time>
-                    <StyledDifficulty
-                        diff={svarighetsgrad}
-                        style={{ justifySelf: 'start' }}
-                    />
-                    <Rating
-                        style={{ gridArea: 'Rating', justifySelf: 'start' }}
-                        rating={rating}
-                    />
-                </OverveiwWrapper>
-                <Description>{kortBeskrivning}</Description>
-            </StyledTextArea>
-            <Card imgUrl={imgUrl} aria-label={'recept'} />
-        </Wrapper>
+        <div>
+            <StyledHeader onlynav={true} alwaysShow={!images} />
+            {images && <StyledHeaderImgs images={images} />}
+            <StyledBreadcrumbs
+                crumbs={[
+                    { name: 'Hem', to: '/' },
+                    { name: 'Recept', to: '/recept' },
+                    { name: `${title}`, to: '/' },
+                ]}
+            />
+            <Wrapper {...rest}>
+                <StyledTextArea>
+                    <CardText>{title}</CardText>
+                    <OverveiwWrapper>
+                        <Time>
+                            <ClockBlack />
+                            <TimeText>
+                                {tid} {tidFormat === 'min' ? 'min' : 'h'}
+                            </TimeText>
+                        </Time>
+                        <StyledDifficulty
+                            diff={svarighetsgrad}
+                            style={{ justifySelf: 'start' }}
+                        />
+                        <Rating
+                            style={{ gridArea: 'Rating', justifySelf: 'start' }}
+                            rating={rating}
+                        />
+                    </OverveiwWrapper>
+                    <Description>{kortBeskrivning}</Description>
+                </StyledTextArea>
+                <Card imgUrl={imgUrl} aria-label={'recept'} />
+            </Wrapper>
+        </div>
     )
 }
 

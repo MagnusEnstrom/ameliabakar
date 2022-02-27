@@ -154,25 +154,6 @@ const IconSpan = styled.span({
     width: 'max-content',
 })
 
-const StyledHeader = styled(Header)({
-    display: 'none',
-    ['@media only screen and (min-width: 170ch)']: {
-        display: 'grid',
-    },
-})
-const StyledHeaderImgs = styled(HeaderImgs)({
-    display: 'block',
-    ['@media only screen and (min-width: 170ch)']: {
-        display: 'none',
-    },
-})
-
-const StyledBreadcrumbs = styled(Breadcrumbs)({
-    display: 'none',
-    ['@media only screen and (min-width: 170ch)']: {
-        display: 'flex',
-    },
-})
 type ActiveNav = 'ingredienser' | 'detail'
 type Props = { pageContext: ReceptContent }
 const receptPost = ({ pageContext }: Props) => {
@@ -185,15 +166,6 @@ const receptPost = ({ pageContext }: Props) => {
     const [activeNav, setActiveNav] = useState<ActiveNav>('ingredienser')
     return (
         <div>
-            <StyledHeader onlynav={true} />
-            <StyledHeaderImgs images={images} />
-            <StyledBreadcrumbs
-                crumbs={[
-                    { name: 'Hem', to: '/' },
-                    { name: 'Recept', to: '/recept' },
-                    { name: `${pageContext.title}`, to: '/' },
-                ]}
-            />
             <RecipeCardHeader
                 rating={4.2}
                 svarighetsgrad={pageContext.singlePaketAfc.svarighetsgrad}
@@ -205,6 +177,7 @@ const receptPost = ({ pageContext }: Props) => {
                     pageContext.singlePaketAfc?.images?.[0]?.localFile
                         ?.childrenImageSharp?.[0]?.original?.src
                 }
+                images={images}
                 style={{
                     maxWidth: '1360px',
                     margin: '0px auto',
