@@ -300,7 +300,6 @@ const Header = ({ transparent, onlynav, ...rest }: Props) => {
     const navRef = useRef<HTMLElement>()
 
     const handleClick = e => {
-        console.log('click', navRef)
         if (navRef?.current?.contains(e.target)) {
             return
         }

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
 import Close from '../components/buttons/close/Close'
 import Primary from '../components/buttons/primary/Primary'
@@ -61,18 +61,14 @@ const Lightbox = styled.div({
     left: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     zIndex: 100,
+    paddingLeft: '10%',
 })
 const FilterContainer = styled.div({
-    marginLeft: '10%',
     height: '100%',
     padding: '25px 20px 0px 20px',
     backgroundColor: colors.white,
-    display: 'grid',
-    gridTemplateAreas: `
-    "close"
-    "title"
-    "filter"
-    `,
+    display: 'flex',
+    flexDirection: 'column',
 })
 
 const ChipContainer = styled.div({
@@ -169,6 +165,8 @@ const recept = ({ pageContext, location }: Props & PageProps) => {
         queryString.parse(location.search).q ?? ''
     )
 
+    const filterRef = useRef<HTMLDivElement>(null)
+
     const handleFilterClick = (name: string) => {
         const includesName = activeFilters.includes(name)
 
@@ -189,6 +187,7 @@ const recept = ({ pageContext, location }: Props & PageProps) => {
         )
         setFilteredRecipes(found)
     }, [activeFilters, searchData])
+
     useEffect(() => {
         setValue(queryString.parse(location.search).q ?? value)
     }, [location.search])
@@ -227,14 +226,24 @@ const recept = ({ pageContext, location }: Props & PageProps) => {
                     </SearchWrapper>
                 </TitleWrapper>
                 {expanded && (
-                    <Lightbox>
-                        <FilterContainer>
+                    <Lightbox
+                        onClick={() => {
+                            setExpanded(false)
+                        }}
+                    >
+                        <FilterContainer
+                            ref={filterRef}
+                            onClick={e => {
+                                e.preventDefault()
+                                e.stopPropagation()
+                            }}
+                        >
                             <Close
                                 onClick={() => setExpanded(false)}
                                 aria-label={'close filter'}
                                 style={{
-                                    gridArea: 'close',
-                                    placeSelf: 'start end',
+                                    width: 'max-content',
+                                    alignSelf: 'flex-end',
                                 }}
                             />
                             <H2
@@ -256,7 +265,7 @@ const recept = ({ pageContext, location }: Props & PageProps) => {
                         </FilterContainer>
                     </Lightbox>
                 )}
-                <DesktopFilterArea>
+                <DesktopFilterArea onBlur={() => setDeskExpanded(false)}>
                     <DesktopChipContainer
                         expanded={activeFilters.length > 0 || deskExpanded}
                     >

@@ -27,59 +27,77 @@ const PageWrapper = styled.div({
     margin: '0px auto',
 })
 
-
 const StyledH1 = styled(H1)({
-    textAlign: 'center', 
+    textAlign: 'center',
     margin: '20px',
     ['@media only screen and (min-width: 90ch)']: {
         margin: '30px 20px',
-        ...typography.h1
+        ...typography.h1,
     },
 })
 const StyledP = styled(P)({
-    textAlign: 'center', 
+    textAlign: 'center',
     marginBottom: '30px',
     ['@media only screen and (min-width: 90ch)']: {
         marginBottom: '40px',
     },
 })
-type Props = {pageContext: ReceptPageQuery}
-const savedRecipes = ({pageContext, location}: Props & PageProps) => {
-    const [filteredRecipes, setFilteredRecipes] = useState<ReceptPageQuery['nodes']>([]);
+type Props = { pageContext: ReceptPageQuery }
+const savedRecipes = ({ pageContext, location }: Props & PageProps) => {
+    const [filteredRecipes, setFilteredRecipes] = useState<
+        ReceptPageQuery['nodes']
+    >([])
     useEffect(() => {
-        const storageString = localStorage.getItem('savedRecipes');
-        console.log('storageString', storageString)
-        if(!storageString) return;
-        const savedRecipes = JSON.parse(storageString) as string[];
-        console.log('saved', savedRecipes)
-        setFilteredRecipes(pageContext.nodes.filter(node => savedRecipes.includes(node.id)))
+        const storageString = localStorage.getItem('savedRecipes')
+        if (!storageString) return
+        const savedRecipes = JSON.parse(storageString) as string[]
+        setFilteredRecipes(
+            pageContext.nodes.filter(node => savedRecipes.includes(node.id))
+        )
     }, [])
 
     return (
         <Layout>
             <PageWrapper>
-                <Breadcrumbs  crumbs={[{name: 'Hem', to:'/'}, {name: 'Mina sparade recept', to: '/mina-recept'}]} />
+                <Breadcrumbs
+                    crumbs={[
+                        { name: 'Hem', to: '/' },
+                        { name: 'Mina sparade recept', to: '/mina-recept' },
+                    ]}
+                />
                 {filteredRecipes.length === 0 ? (
                     <>
-                        <StyledH1>Dina sparade recept kommer att visas här</StyledH1>
-                        <StyledP>Du har för närvarande inte några sparade recept</StyledP>
-                        <InvisibleLink style={{ justifySelf: 'center', marginBottom: '50px' }} to={'/recept'}>
+                        <StyledH1>
+                            Dina sparade recept kommer att visas här
+                        </StyledH1>
+                        <StyledP>
+                            Du har för närvarande inte några sparade recept
+                        </StyledP>
+                        <InvisibleLink
+                            style={{
+                                justifySelf: 'center',
+                                marginBottom: '50px',
+                            }}
+                            to={'/recept'}
+                        >
                             <Primary>Här hittar du mina recept</Primary>
                         </InvisibleLink>
                     </>
-
                 ) : (
                     <>
                         <StyledH1>Mina sparade recept</StyledH1>
                         <RecipeWrapper>
-                            <RecipeGrid data={filteredRecipes} show={10} loadMore={true} />
+                            <RecipeGrid
+                                data={filteredRecipes}
+                                show={10}
+                                loadMore={true}
+                            />
                         </RecipeWrapper>
                     </>
                 )}
             </PageWrapper>
         </Layout>
     )
-    
 }
 
 export default savedRecipes
