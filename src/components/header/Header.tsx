@@ -10,46 +10,59 @@ import Close from '../../assets/close.svg'
 import { Link, navigate } from 'gatsby'
 import SearchInput from '../Form/SearchInput'
 import SavedCounter from '../savedCounter/savedCounter'
-type NavStatus = "closed" | "search" | "links";
+type NavStatus = 'closed' | 'search' | 'links'
 
-const StyledHeader = styled.header(({transparent, navStatus}: {transparent?: boolean, navStatus: NavStatus}) => {
-    return {
-    ...typography.nav,
-    backgroundColor: navStatus === 'closed' ? transparent ? 'rgba(0, 0 ,0 ,0)' : colors.white : colors.white,
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gridTemplateAreas: `
+const StyledHeader = styled.header(
+    ({
+        transparent,
+        navStatus,
+    }: {
+        transparent?: boolean
+        navStatus: NavStatus
+    }) => {
+        return {
+            ...typography.nav,
+            backgroundColor:
+                navStatus === 'closed'
+                    ? transparent
+                        ? 'rgba(0, 0 ,0 ,0)'
+                        : colors.white
+                    : colors.white,
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gridTemplateAreas: `
     "logo icons"
     "search search"
     "links links"
     `,
-    width: '100%',
-    padding: '20px 0px 20px 10px',
-    color: transparent ? '#FFFFFF' : 'inherit',
-    
-    ['@media only screen and (min-width: 90ch)']: {
-        padding: '20px 0px 20px 20px',
+            width: '100%',
+            padding: '20px 0px 20px 10px',
+            color: transparent ? '#FFFFFF' : 'inherit',
 
-        gridTemplateAreas: `
+            ['@media only screen and (min-width: 90ch)']: {
+                padding: '20px 0px 20px 20px',
+
+                gridTemplateAreas: `
             "logo search icons"
             "logo  links links"
             "logo links links"
         `,
-    },
-    ['@media only screen and (min-width: 170ch)']: {
-        padding: '20px 50px 20px 70px',
-        gridTemplateColumns: '1fr min-content 1fr',
-        gridTemplateAreas: navStatus !== 'search' ? 
-            `
+            },
+            ['@media only screen and (min-width: 170ch)']: {
+                padding: '20px 50px 20px 70px',
+                gridTemplateColumns: '1fr min-content 1fr',
+                gridTemplateAreas:
+                    navStatus !== 'search'
+                        ? `
                 "links logo icons"
             `
-        :
-            `
+                        : `
                 "links logo search icons"
             `,
-    },
-}})
-
+            },
+        }
+    }
+)
 
 const Logo = styled(LogoUrl)(() => {
     return {
@@ -58,10 +71,10 @@ const Logo = styled(LogoUrl)(() => {
         width: '97px',
         gridArea: 'logo',
         'header[aria-expanded="false"] &': {
-            filter: 'brightness(100)'
+            filter: 'brightness(100)',
         },
         'header[aria-expanded="false"] &.noimg ': {
-            filter: 'brightness(0)'
+            filter: 'brightness(0)',
         },
         '@media (hover: hover)': {
             '&:hover': {
@@ -76,7 +89,7 @@ const Logo = styled(LogoUrl)(() => {
         },
 
         ['@media only screen and (min-width: 170ch)']: {
-            marginRight: '20px'
+            marginRight: '20px',
         },
     }
 })
@@ -85,7 +98,7 @@ const IconWrapper = styled.div({
     marginLeft: 'auto',
     display: 'flex',
     alignItems: 'center',
-    gridArea: 'icons'
+    gridArea: 'icons',
 })
 
 const InvinsibleButton = styled.button({
@@ -108,14 +121,13 @@ const InvinsibleButton = styled.button({
             opacity: 0.5,
         },
     },
-});
+})
 
 const SearchButton = styled(InvinsibleButton)({
     padding: '0px 10px 0px 10px',
     ['@media only screen and (min-width: 170ch)']: {
         display: 'block',
     },
-
 })
 const InvinsibleLink = styled(Link)({
     width: 'min-content',
@@ -131,7 +143,7 @@ const InvinsibleLink = styled(Link)({
             opacity: 0.5,
         },
     },
-});
+})
 
 const HamburgerIcon = styled(Hamburger)(() => {
     return {
@@ -139,10 +151,10 @@ const HamburgerIcon = styled(Hamburger)(() => {
         height: '24px',
         width: '24px',
         'header[aria-expanded="false"] &': {
-            filter: 'brightness(100)'
+            filter: 'brightness(100)',
         },
         'header[aria-expanded="false"] &.noimg ': {
-            filter: 'brightness(0)'
+            filter: 'brightness(0)',
         },
 
         ['@media only screen and (min-width: 90ch)']: {
@@ -161,27 +173,27 @@ const CloseIcon = styled(Close)({
     },
 })
 const HeartIcon = styled(Heart)(() => {
-   return {
+    return {
         border: 'none',
         height: '22.5px',
         width: '25px',
         'header[aria-expanded="false"] &': {
-            filter: 'brightness(100)'
+            filter: 'brightness(100)',
         },
         'header[aria-expanded="false"] &.noimg ': {
-            filter: 'brightness(0)'
+            filter: 'brightness(0)',
         },
         ['@media only screen and (min-width: 90ch)']: {
             height: '30px',
             width: '30px',
         },
     }
-});
+})
 
 const HeartLink = styled(InvinsibleLink)({
     padding: '0px 15px 0px 10px',
     position: 'relative',
-});
+})
 
 const SearchIcon = styled(Search)(() => {
     return {
@@ -189,10 +201,10 @@ const SearchIcon = styled(Search)(() => {
         height: '24px',
         width: '24px',
         'header[aria-expanded="false"] &': {
-            filter: 'brightness(100)'
+            filter: 'brightness(100)',
         },
         'header[aria-expanded="false"] &.noimg ': {
-            filter: 'brightness(0)'
+            filter: 'brightness(0)',
         },
 
         ['@media only screen and (min-width: 90ch)']: {
@@ -208,14 +220,13 @@ const HeaderExpandedContent = styled.div({
     gridArea: 'links',
     gap: '40px',
     marginBottom: '90px',
-    
+
     ['@media only screen and (min-width: 90ch)']: {
         // gridTemplateColumns: '1fr 1fr',
         gridTemplateRows: '1fr 1fr 1fr',
         gridAutoFlow: 'column',
         marginTop: '22px',
         marginBottom: '30px',
-
     },
 })
 
@@ -229,7 +240,7 @@ const NavLink = styled(Link)({
             opacity: 0.5,
         },
     },
-    
+
     ['@media only screen and (min-width: 90ch)']: {
         placeSelf: 'start',
     },
@@ -256,7 +267,6 @@ const StyledSearchInput = styled(SearchInput)({
     ['@media only screen and (min-width: 90ch)']: {
         margin: '0px 15px 0px 0px',
     },
-
 })
 
 const HeaderExpandedContentDesk = styled(HeaderExpandedContent)({
@@ -269,7 +279,7 @@ const HeaderExpandedContentDesk = styled(HeaderExpandedContent)({
         },
         '&.search a': {
             color: colors.jet,
-        }
+        },
     },
 })
 
@@ -279,50 +289,60 @@ const StyledSavedCounter = styled(SavedCounter)({
 })
 
 type Props = {
-    transparent?: boolean;
-    onlynav?: boolean;
-} & React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-const Header = ({transparent, onlynav, ...rest}: Props) => {
-    const [ navStatus, setNavStatus] = useState<'closed' | 'search' | 'links'>('closed')
-    const [query, setQuery] = useState('');
-    const navRef = useRef<HTMLElement>();
+    transparent?: boolean
+    onlynav?: boolean
+} & React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>
+const Header = ({ transparent, onlynav, ...rest }: Props) => {
+    const [navStatus, setNavStatus] = useState<'closed' | 'search' | 'links'>(
+        'closed'
+    )
+    const [query, setQuery] = useState('')
+    const navRef = useRef<HTMLElement>()
 
-    const handleClick = (e) => {
-        console.log('click', navRef);
+    const handleClick = e => {
+        console.log('click', navRef)
         if (navRef?.current?.contains(e.target)) {
-            return;
+            return
         }
-        setNavStatus('closed');
-      };
+        setNavStatus('closed')
+    }
 
     useEffect(() => {
         // add when mounted
-        document.addEventListener("mousedown", handleClick);
+        document.addEventListener('mousedown', handleClick)
         // return function to be called when unmounted
         return () => {
-          document.removeEventListener("mousedown", handleClick);
-        };
-      }, []);
+            document.removeEventListener('mousedown', handleClick)
+        }
+    }, [])
 
     const onSearchClick = () => {
         setNavStatus('search')
     }
     const onBurgerclick = () => {
-        if(navStatus !== 'closed') {
+        if (navStatus !== 'closed') {
             return setNavStatus('closed')
         }
         setNavStatus('links')
     }
 
-    const handleSearchSubmit = (e: FormEvent) => { 
-        e.preventDefault();
+    const handleSearchSubmit = (e: FormEvent) => {
+        e.preventDefault()
         setNavStatus('closed')
         navigate(`/recept?q=${query}`)
     }
 
     return (
-        <StyledHeader ref={navRef} aria-expanded={navStatus !== 'closed'} navStatus={navStatus} transparent={true} {...rest}>
-            <HeaderExpandedContentDesk className={navStatus + ` ${onlynav ? 'noimg' : ''}`}>
+        <StyledHeader
+            ref={navRef}
+            aria-expanded={navStatus !== 'closed'}
+            navStatus={navStatus}
+            transparent={true}
+            {...rest}
+        >
+            <HeaderExpandedContentDesk
+                className={navStatus + ` ${onlynav ? 'noimg' : ''}`}
+            >
                 <NavLink to={'/recept'}>Recept</NavLink>
                 <NavLink to={'/om-mig'}>Om mig</NavLink>
                 <NavLink to={'/tips'}>Tips</NavLink>
@@ -333,7 +353,10 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
             </InvinsibleLink>
             <IconWrapper>
                 {navStatus === 'closed' && (
-                    <SearchButton data-cy={'searchIconHeader'} onClick={onSearchClick}>
+                    <SearchButton
+                        data-cy={'searchIconHeader'}
+                        onClick={onSearchClick}
+                    >
                         <SearchIcon className={onlynav ? 'noimg' : ''} />
                     </SearchButton>
                 )}
@@ -342,14 +365,24 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
                     <HeartIcon className={onlynav ? 'noimg' : ''} />
                 </HeartLink>
                 <InvinsibleButton onClick={onBurgerclick}>
-                    {navStatus !== 'closed' ? <CloseIcon /> : <HamburgerIcon className={onlynav ? 'noimg' : ''} />}
+                    {navStatus !== 'closed' ? (
+                        <CloseIcon />
+                    ) : (
+                        <HamburgerIcon className={onlynav ? 'noimg' : ''} />
+                    )}
                 </InvinsibleButton>
             </IconWrapper>
 
             {navStatus === 'links' && (
                 <>
                     <SearchForm onSubmit={handleSearchSubmit} role={'search'}>
-                        <StyledSearchInput value={query} onChange={(e) => setQuery(e.target.value)} aria-label='search' name={'search'} placeholder={'sök...'} />
+                        <StyledSearchInput
+                            value={query}
+                            onChange={e => setQuery(e.target.value)}
+                            aria-label="search"
+                            name={'search'}
+                            placeholder={'sök...'}
+                        />
                     </SearchForm>
                     <HeaderExpandedContent>
                         <NavLink to={'/'}>Hem</NavLink>
@@ -357,13 +390,21 @@ const Header = ({transparent, onlynav, ...rest}: Props) => {
                         <NavLink to={'/om-mig'}>Om mig</NavLink>
                         <NavLink to={'/tips'}>Tips</NavLink>
                         <NavLink to={'/bestallningar'}>Beställningar</NavLink>
-                        <NavLink to={'/mina-recept'}>Mina sparade recept</NavLink>
+                        <NavLink to={'/mina-recept'}>
+                            Mina sparade recept
+                        </NavLink>
                     </HeaderExpandedContent>
                 </>
             )}
             {navStatus === 'search' && (
-                <SearchForm onSubmit={handleSearchSubmit} role={'search'} >
-                    <StyledSearchInput value={query} onChange={(e) => setQuery(e.target.value)} aria-label='search' name={'search'} placeholder={'sök...'} />
+                <SearchForm onSubmit={handleSearchSubmit} role={'search'}>
+                    <StyledSearchInput
+                        value={query}
+                        onChange={e => setQuery(e.target.value)}
+                        aria-label="search"
+                        name={'search'}
+                        placeholder={'sök...'}
+                    />
                 </SearchForm>
             )}
         </StyledHeader>

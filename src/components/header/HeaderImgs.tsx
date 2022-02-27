@@ -79,7 +79,7 @@ type LatestQuery = {
     }
 }
 
-const HeaderImgs = ({ images }: { images: string[] }) => {
+const HeaderImgs = ({ images, ...rest }: { images: string[] }) => {
     const settings = {
         appendDots: dots => (
             <StyledDotsContainer>
@@ -100,7 +100,7 @@ const HeaderImgs = ({ images }: { images: string[] }) => {
     }
 
     return (
-        <FullScreenRecipe>
+        <FullScreenRecipe {...rest}>
             <StyledTransparentHeader />
             <Slider customSettings={settings}>
                 {images.map((src, i) => {
