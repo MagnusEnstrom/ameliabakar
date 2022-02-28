@@ -21,10 +21,11 @@ import Vector from '../assets/Vector.svg'
 const RecipeWrapper = styled.div({
     margin: '10px 10px 30px 10px',
     ['@media only screen and (min-width: 90ch)']: {
+        margin: '10px 20px 50px 20px',
         paddingTop: '50px',
     },
     ['@media only screen and (min-width: 170ch)']: {
-        margin: '0px 0px 30px 0px',
+        margin: '0px 0px 100px 0px',
     },
 })
 
