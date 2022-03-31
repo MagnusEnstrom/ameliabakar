@@ -22,6 +22,8 @@ type LatestQuery = {
             id: string
             uri: string
             title: string
+            ratingsAverage: number | null
+
             singlePaketAfc: {
                 tidFormat: string
                 tid: number
@@ -61,6 +63,7 @@ const Latest = ({
                     id
                     uri
                     title
+                    ratingsAverage
                     singlePaketAfc {
                         tidFormat
                         tid
@@ -107,7 +110,7 @@ const Latest = ({
                             }
                             uri={recipe.uri}
                             key={recipe.id}
-                            rating={4.2}
+                            rating={recipe.ratingsAverage}
                             id={recipe.id}
                             tid={recipe.singlePaketAfc.tid}
                             tidFormat={recipe.singlePaketAfc.tidFormat}

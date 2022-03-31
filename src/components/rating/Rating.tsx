@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import colors from '../../lib/colors'
 import typography from '../../lib/typography'
 import StarIcon from '../../assets/star-gold.svg'
 
@@ -30,11 +29,14 @@ const DotWrapper = styled.div({
 })
 type Props = {
     rating: number
-} & React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
-const Rating = ({rating, ...rest}: Props) => {
+} & React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+>
+const Rating = ({ rating, ...rest }: Props) => {
     return (
         <RatingWrapper {...rest}>
-            <RatingText>{rating}</RatingText>
+            <RatingText>{rating ? rating : '-'}</RatingText>
             <Star />
         </RatingWrapper>
     )

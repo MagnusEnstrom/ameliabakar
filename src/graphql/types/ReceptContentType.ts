@@ -1,98 +1,97 @@
 export type ReceptContent = {
-    id: string;
-    uri: string;
-    title: string;
-    content: string;
+    id: string
+    uri: string
+    title: string
+    content: string
+    ratingsAverage: number | null
     tags: {
         nodes: {
             name: 'string'
         }[]
-    };
+    }
     singlePaketAfc: {
-      tooltip: null | string;
-      tips: string;
-      tidFormat: "min" | "h";
-      tid: number;
-      svarighetsgrad: 'Lätt' | 'Medel' | 'Svår';
-      saHarGorDu: string;
-      kortBeskrivning: string;
-      images: {
-        localFile: {
-          childrenImageSharp: {
-            original: {
-              src: string;
+        tooltip: null | string
+        tips: string
+        tidFormat: 'min' | 'h'
+        tid: number
+        svarighetsgrad: 'Lätt' | 'Medel' | 'Svår'
+        saHarGorDu: string
+        kortBeskrivning: string
+        images: {
+            localFile: {
+                childrenImageSharp: {
+                    original: {
+                        src: string
+                    }
+                    fixed: {
+                        src: string
+                    }
+                }[]
             }
-            fixed: {
-              src: string;
-            }
-          }[]
-        }
-      }[]
+        }[]
     }
 }
 
-
 export type ReceptPageQuery = {
-    nodes:{
-        id: string;
-        uri: string;
-        title: string;
-        date: string;
+    nodes: {
+        id: string
+        uri: string
+        title: string
+        date: string
+        ratingsAverage: number | null
         tags: {
             nodes: {
-                name: string;
+                name: string
             }[]
-        };
+        }
         singlePaketAfc: {
-        tidFormat: "min" | "h";
-        tid: number;
-        svarighetsgrad: 'Lätt' | 'Medel' | 'Svår';
-        images: {
-            localFile: {
-            childrenImageSharp: {
-                original: {
-                src: string;
-                }
-                fixed: {
-                src: string;
+            tidFormat: 'min' | 'h'
+            tid: number
+            svarighetsgrad: 'Lätt' | 'Medel' | 'Svår'
+            images: {
+                localFile: {
+                    childrenImageSharp: {
+                        original: {
+                            src: string
+                        }
+                        fixed: {
+                            src: string
+                        }
+                    }[]
                 }
             }[]
-            }
-        }[]
         }
     }[]
 }
 
 export type TipsPageQuery = {
     nodes: {
-        id: string;
-        title: string;
-        content: string;
+        id: string
+        title: string
+        content: string
         tips: {
             image: {
                 localFile: {
                     childImageSharp: {
                         original: {
-                            src: string;
+                            src: string
                         }
                         fixed: {
-                            src: string;
+                            src: string
                         }
                     }
                 }
             }
         }
     }[]
-
 }
-
 
 export type LocalSearchRecepies = {
     localSearchRecepies: {
-        index: string;
+        index: string
         store: {
-            id: string,
-            slug: string,
+            id: string
+            slug: string
         }
     }
 }

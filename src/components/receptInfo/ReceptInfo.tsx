@@ -13,13 +13,22 @@ const ReceptInfoBar = styled.div({
     margin: '0px auto',
 })
 
-type Props = Pick<ReceptContent['singlePaketAfc'], 'tid' | 'tidFormat' | 'svarighetsgrad'>
-const ReceptInfo = ({tid, tidFormat, svarighetsgrad}: Props) => {
+type Props = Pick<
+    ReceptContent['singlePaketAfc'],
+    'tid' | 'tidFormat' | 'svarighetsgrad'
+> &
+    Pick<ReceptContent, 'ratingsAverage'>
+const ReceptInfo = ({
+    tid,
+    tidFormat,
+    svarighetsgrad,
+    ratingsAverage,
+}: Props) => {
     return (
         <ReceptInfoBar>
             <ReceptTime time={tid} timeFormat={tidFormat} />
             <Difficulty diff={svarighetsgrad} />
-            <Rating rating={4.2} />
+            <Rating rating={ratingsAverage} />
         </ReceptInfoBar>
     )
 }

@@ -167,7 +167,7 @@ const receptPost = ({ pageContext }: Props) => {
     return (
         <div>
             <RecipeCardHeader
-                rating={4.2}
+                rating={pageContext.ratingsAverage}
                 svarighetsgrad={pageContext.singlePaketAfc.svarighetsgrad}
                 tid={pageContext.singlePaketAfc.tid}
                 tidFormat={pageContext.singlePaketAfc.tidFormat}
