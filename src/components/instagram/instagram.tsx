@@ -184,7 +184,7 @@ const Instagram = () => {
     const [amount, setAmount] = useState(9)
 
     const onClick = () => {
-        setAmount(prev => prev + 3)
+        setAmount(prev => prev + 9)
     }
     const allInstagram = data.allInstagramContent.nodes
     const instagramData = allInstagram.slice(0, amount)
