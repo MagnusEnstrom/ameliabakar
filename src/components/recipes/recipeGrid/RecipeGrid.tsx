@@ -72,7 +72,7 @@ const RecipeGrid = ({
     const recipies = data.slice(0, amount)
 
     const onClick = () => {
-        setstate(prev => prev + 4)
+        setstate(prev => prev + 8)
     }
 
     return (
