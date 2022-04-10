@@ -1,0 +1,45 @@
+import { doc, getDoc } from 'firebase/firestore/lite'
+import { useMutation, useQueries, useQuery } from 'react-query'
+import { useFirebaseAuthContext } from '../context/FirebaseAuthContext'
+import { db } from '../lib/firebase/firebase'
+
+type RecipeRating =
+    | {
+          numRatings: number
+          avgRating: number
+      }
+    | undefined
+type UserRating =
+    | {
+          rating: number
+      }
+    | undefined
+
+const getRating = async (recipeId: string, uid: string) => {
+    const recipeRatingDoc = await getDoc(doc(db, 'recipes', recipeId))
+    const userRatingDoc = await getDoc(
+        doc(db, 'recipes', recipeId, 'ratings', uid)
+    )
+    const recipeRating = recipeRatingDoc?.data() as RecipeRating
+    const userRating = userRatingDoc?.data() as UserRating
+    const data = {
+        numRatings: recipeRating?.numRatings,
+        avgRating: recipeRating?.avgRating,
+        userRating: userRating?.rating,
+    }
+    return data
+}
+
+const useGetRating = (recipeId: string) => {
+    const { user } = useFirebaseAuthContext()
+
+    return useQuery(
+        ['recipe', recipeId, user?.uid],
+        () => getRating(recipeId, user?.uid),
+        {
+            enabled: !!user?.uid,
+        }
+    )
+}
+
+export default useGetRating

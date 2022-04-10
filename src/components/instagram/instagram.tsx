@@ -111,8 +111,16 @@ const SmallRight = styled(WheatSmallRight)({
     },
 })
 
-const StyledInvisibleLink = styled(InvisibleLink)({
+const StyledInvisibleLink = styled.a({
     width: '100%',
+    padding: '0px',
+    margin: '0px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: 'none',
+    backgroundColor: 'inherit',
+    textDecoration: 'none',
 })
 
 const FollowArea = styled.div({

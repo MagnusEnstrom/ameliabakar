@@ -6,7 +6,6 @@ import colors from '../../lib/colors'
 // import StarIcon from '../../assets/star-fill.svg'
 
 const Star = styled(StarIcon)(({ rating }: { rating: number }) => {
-    console.log('rating', rating)
     return {
         width: '16px',
         height: '16px',
