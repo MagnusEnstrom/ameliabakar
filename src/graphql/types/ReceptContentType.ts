@@ -3,7 +3,10 @@ export type ReceptContent = {
     uri: string
     title: string
     content: string
-    ratingsAverage: number | null
+    rating?: {
+        avgRating: number
+        numRatings: number
+    } | null
     tags: {
         nodes: {
             name: 'string'
@@ -38,7 +41,10 @@ export type ReceptPageQuery = {
         uri: string
         title: string
         date: string
-        ratingsAverage: number | null
+        rating?: {
+            avgRating: number
+            numRatings: number
+        } | null
         tags: {
             nodes: {
                 name: string

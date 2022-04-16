@@ -26,12 +26,21 @@ exports.createPages = async gatsbyUtilities => {
 const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
     const result = await graphql(`
         {
+            allRating {
+                nodes {
+                    id
+                    avgRating
+                    numRatings
+                    parent {
+                        id
+                    }
+                }
+            }
             allWpRecept(sort: { fields: [date], order: DESC }) {
                 nodes {
                     id
                     uri
                     title
-                    ratingsAverage
                     date
                     content
                     tags {
@@ -68,19 +77,27 @@ const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
         reporter.error('There was an error fetching posts', result.errors)
     }
 
-    const { allWpRecept } = result.data
+    const { allWpRecept, allRating } = result.data
 
     // Define the template to use
     const receptPost = require.resolve(`./src/templates/receptPost.tsx`)
 
+    console.log('allRating', allRating)
     if (allWpRecept.nodes.length) {
         allWpRecept.nodes.map(recept => {
+            const rating = allRating?.nodes?.find(
+                rating => rating.parent.id === recept.id
+            )
+            const receptWithRating = {
+                ...recept,
+                rating: rating ? rating : null,
+            }
             actions.createPage({
                 // It's best practice to use the uri field from WPGraphQL nodes when
                 // building
                 path: recept.uri,
                 component: receptPost,
-                context: recept,
+                context: receptWithRating,
             })
         })
     }
@@ -89,12 +106,21 @@ const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
 const createHomePage = async ({ actions, graphql, reporter }) => {
     const result = await graphql(`
         {
+            allRating {
+                nodes {
+                    id
+                    avgRating
+                    numRatings
+                    parent {
+                        id
+                    }
+                }
+            }
             allWpRecept {
                 nodes {
                     id
                     uri
                     title
-                    ratingsAverage
                     content
                     tags {
                         nodes {
@@ -130,10 +156,20 @@ const createHomePage = async ({ actions, graphql, reporter }) => {
         reporter.error('There was an error fetching posts', result.errors)
     }
 
-    const { allWpRecept } = result.data
+    const { allWpRecept, allRating } = result.data
 
     // Define the template to use
     const home = require.resolve(`./src/templates/home.tsx`)
+
+    allWpRecept.nodes = allWpRecept.nodes.map(recept => {
+        const rating = allRating?.nodes?.find(
+            rating => rating.parent.id === recept.id
+        )
+        return ({
+            ...recept,
+            rating: rating ? rating : null,
+        })
+    })
 
     actions.createPage({
         path: '/',
@@ -145,12 +181,21 @@ const createHomePage = async ({ actions, graphql, reporter }) => {
 const createReceptPage = async ({ actions, graphql, reporter }) => {
     const result = await graphql(`
         {
+            allRating {
+                nodes {
+                    id
+                    avgRating
+                    numRatings
+                    parent {
+                        id
+                    }
+                }
+            }
             allWpRecept(sort: { fields: [date], order: DESC }) {
                 nodes {
                     id
                     uri
                     title
-                    ratingsAverage
                     tags {
                         nodes {
                             name
@@ -180,10 +225,20 @@ const createReceptPage = async ({ actions, graphql, reporter }) => {
         reporter.error('There was an error fetching posts', result.errors)
     }
 
-    const { allWpRecept } = result.data
+    const { allWpRecept, allRating } = result.data
 
     // Define the template to use
     const recept = require.resolve(`./src/templates/recept.tsx`)
+
+    allWpRecept.nodes = allWpRecept.nodes.map(recept => {
+        const rating = allRating?.nodes?.find(
+            rating => rating.parent.id === recept.id
+        )
+        return ({
+            ...recept,
+            rating: rating ? rating : null,
+        })
+    })
 
     actions.createPage({
         // It's best practice to use the uri field from WPGraphQL nodes when
@@ -196,12 +251,21 @@ const createReceptPage = async ({ actions, graphql, reporter }) => {
 const createSavedReceptPage = async ({ actions, graphql, reporter }) => {
     const result = await graphql(`
         {
+            allRating {
+                nodes {
+                    id
+                    avgRating
+                    numRatings
+                    parent {
+                        id
+                    }
+                }
+            }
             allWpRecept(sort: { fields: [date], order: DESC }) {
                 nodes {
                     id
                     uri
                     title
-                    ratingsAverage
                     tags {
                         nodes {
                             name
@@ -231,10 +295,20 @@ const createSavedReceptPage = async ({ actions, graphql, reporter }) => {
         reporter.error('There was an error fetching posts', result.errors)
     }
 
-    const { allWpRecept } = result.data
+    const { allWpRecept, allRating } = result.data
 
     // Define the template to use
     const savedRecipes = require.resolve(`./src/templates/savedRecipes.tsx`)
+
+    allWpRecept.nodes = allWpRecept.nodes.map(recept => {
+        const rating = allRating?.nodes?.find(
+            rating => rating.parent.id === recept.id
+        )
+        return ({
+            ...recept,
+            rating: rating ? rating : null,
+        })
+    })
 
     actions.createPage({
         // It's best practice to use the uri field from WPGraphQL nodes when

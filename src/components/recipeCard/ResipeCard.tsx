@@ -181,7 +181,7 @@ type Props = {
     title: string
     tid: number
     tidFormat: string
-    rating: number
+    rating?: number
     uri: string
     id: string
     svarighetsgrad: 'Lätt' | 'Medel' | 'Svår'

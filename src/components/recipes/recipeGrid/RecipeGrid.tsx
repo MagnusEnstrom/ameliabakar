@@ -23,34 +23,6 @@ const Wrapper = styled.div({
     display: 'grid',
 })
 
-type LatestQuery = {
-    allWpRecept: {
-        nodes: {
-            id: string
-            uri: string
-            title: string
-            singlePaketAfc: {
-                tidFormat: string
-                tid: number
-                images: {
-                    localFile: {
-                        childrenImageSharp: [
-                            {
-                                original: {
-                                    src: string
-                                }
-                                fixed: {
-                                    src: string
-                                }
-                            }
-                        ]
-                    }
-                }[]
-            }
-        }[]
-    }
-}
-
 type Props = {
     data: ReceptPageQuery['nodes']
     show?: number
@@ -82,9 +54,12 @@ const RecipeGrid = ({
                     return (
                         <ResipeCard
                             uri={recipe.uri}
+                            svarighetsgrad={
+                                recipe.singlePaketAfc.svarighetsgrad
+                            }
                             key={recipe.id}
                             id={recipe.id}
-                            rating={recipe.ratingsAverage}
+                            rating={recipe?.rating?.avgRating}
                             tid={recipe.singlePaketAfc.tid}
                             tidFormat={recipe.singlePaketAfc.tidFormat}
                             title={recipe.title}

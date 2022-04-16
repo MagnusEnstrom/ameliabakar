@@ -25,12 +25,22 @@ const RecipeGrid = styled.div({
 })
 
 type PopularQuery = {
+    allRating: {
+        nodes: {
+            rating?: {
+                avgRating: number
+                numRatings: number
+            } | null
+            parent: {
+                id: string
+            }
+        }[]
+    }
     allWpRecept: {
         nodes: {
             id: string
             uri: string
             title: string
-            ratingsAverage: number | null
             singlePaketAfc: {
                 tidFormat: string
                 tid: number
@@ -62,12 +72,21 @@ const Popular = ({
 >) => {
     const data: PopularQuery = useStaticQuery(graphql`
         {
+            allRating {
+                nodes {
+                    id
+                    avgRating
+                    numRatings
+                    parent {
+                        id
+                    }
+                }
+            }
             allWpRecept(sort: { fields: [date], order: DESC }) {
                 nodes {
                     id
                     uri
                     title
-                    ratingsAverage
                     singlePaketAfc {
                         tidFormat
                         tid
@@ -90,7 +109,24 @@ const Popular = ({
         }
     `)
 
-    const recipies = data.allWpRecept.nodes.slice(0, 4)
+    data.allWpRecept.nodes = data.allWpRecept.nodes.map(recept => {
+        const rating = data.allRating?.nodes?.find(
+            rating => rating.parent.id === recept.id
+        )
+        return {
+            ...recept,
+            rating: rating ? rating : null,
+        }
+    })
+    const recipies = data.allWpRecept.nodes.slice(0, 4) as [
+        ...(PopularQuery['allWpRecept']['nodes'] &
+            {
+                rating?: {
+                    avgRating: number
+                    numRatings: number
+                } | null
+            }[])
+    ]
 
     return (
         <RecipeGrid {...rest}>
@@ -101,7 +137,7 @@ const Popular = ({
                         uri={recipe.uri}
                         key={recipe.id}
                         id={recipe.id}
-                        rating={recipe.ratingsAverage}
+                        rating={recipe?.rating?.avgRating}
                         tid={recipe.singlePaketAfc.tid}
                         tidFormat={recipe.singlePaketAfc.tidFormat}
                         title={recipe.title}

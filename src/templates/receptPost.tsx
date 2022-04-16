@@ -177,7 +177,7 @@ const StyleRateRecipe = styled(RateRecipe)({
 type ActiveNav = 'ingredienser' | 'detail'
 type Props = { pageContext: ReceptContent }
 const receptPost = ({ pageContext }: Props) => {
-    pageContext
+    console.log(pageContext)
 
     const images = pageContext?.singlePaketAfc?.images?.map(img => {
         return img.localFile.childrenImageSharp[0].original.src
@@ -187,7 +187,7 @@ const receptPost = ({ pageContext }: Props) => {
     return (
         <div>
             <RecipeCardHeader
-                rating={pageContext.ratingsAverage}
+                rating={pageContext?.rating?.avgRating}
                 svarighetsgrad={pageContext.singlePaketAfc.svarighetsgrad}
                 tid={pageContext.singlePaketAfc.tid}
                 tidFormat={pageContext.singlePaketAfc.tidFormat}
