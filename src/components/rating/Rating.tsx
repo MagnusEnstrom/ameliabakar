@@ -3,7 +3,7 @@ import React from 'react'
 import typography from '../../lib/typography'
 import StarIcon from '../../assets/star-gold.svg'
 import colors from '../../lib/colors'
-import useGetRatings from '../../api/getRatings'
+import useGetRatings from '../../hooks/getRatings'
 // import StarIcon from '../../assets/star-fill.svg'
 
 const Star = styled(StarIcon)(({ rating }: { rating: number }) => {
