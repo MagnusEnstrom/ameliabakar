@@ -1,11 +1,6 @@
 import { doc, setDoc } from 'firebase/firestore'
-import {
-    QueryClient,
-    useMutation,
-    useQueries,
-    useQueryClient,
-} from 'react-query'
-import { useFirebaseAuthContext } from '../context/FirebaseAuthContext'
+import { useMutation, useQueryClient } from 'react-query'
+import { useFirebaseAuthContext } from '../context/FirebaseAuthContext2'
 import { db } from '../lib/firebase/firebase'
 import { getRatingsQuerykey } from './getRatings'
 import { getRatingQuerykeyFactory } from './getRating'

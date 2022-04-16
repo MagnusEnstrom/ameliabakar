@@ -1,6 +1,6 @@
 import { doc, setDoc } from 'firebase/firestore'
 import { useMutation } from 'react-query'
-import { useFirebaseAuthContext } from '../context/FirebaseAuthContext'
+import { useFirebaseAuthContext } from '../context/FirebaseAuthContext2'
 import { db } from '../lib/firebase/firebase'
 
 const subscribe = async (email: string, uid: string) => {

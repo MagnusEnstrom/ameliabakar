@@ -22,7 +22,7 @@ window.addEventListener('resize', () => {
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import React from 'react'
-import FirebaseAuthProvider from './src/context/FirebaseAuthContext';
+import FirebaseAuthProvider from './src/context/FirebaseAuthContext2';
 
 export const wrapPageElement = ({ element }) => {
     const queryClient = new QueryClient()

@@ -2,7 +2,6 @@ import { collection, getDocs, onSnapshot, query } from 'firebase/firestore'
 import { useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { db } from '../lib/firebase/firebase'
-import { getRatingQuerykeyFactory } from './getRating'
 
 type RecipeRating = {
     numRatings: number
