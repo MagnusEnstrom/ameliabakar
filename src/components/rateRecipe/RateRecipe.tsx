@@ -4,10 +4,10 @@ import { ReceptContent } from '../../graphql/types/ReceptContentType'
 import StarIcon from '../../assets/star-gold.svg'
 import colors from '../../lib/colors'
 import typography from '../../lib/typography'
-import useAddRating from '../../api/addRating'
-import useGetRating from '../../api/getRating'
+import useAddRating from '../../hooks/addRating'
 import { useQueryClient } from 'react-query'
-import useGetRatings from '../../api/getRatings'
+import useGetRatings from '../../hooks/getRatings'
+import useGetRating from '../../hooks/getRating'
 
 const RatingContainer = styled.div({
     display: 'flex',
