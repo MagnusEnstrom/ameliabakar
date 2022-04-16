@@ -1,4 +1,4 @@
-import { doc, getDoc } from 'firebase/firestore/lite'
+import { doc, getDoc } from 'firebase/firestore'
 import { useMutation, useQueries, useQuery } from 'react-query'
 import { useFirebaseAuthContext } from '../context/FirebaseAuthContext'
 import { db } from '../lib/firebase/firebase'
@@ -14,6 +14,15 @@ type UserRating =
           rating: number
       }
     | undefined
+
+export const getRatingQuerykeyFactory = {
+    all: ['recipe'],
+    id: (recipeId?: string, userId?: string) => [
+        ...getRatingQuerykeyFactory.all,
+        recipeId,
+        userId,
+    ],
+}
 
 const getRating = async (recipeId: string, uid: string) => {
     const recipeRatingDoc = await getDoc(doc(db, 'recipes', recipeId))
@@ -34,7 +43,7 @@ const useGetRating = (recipeId: string) => {
     const { user } = useFirebaseAuthContext()
 
     return useQuery(
-        ['recipe', recipeId, user?.uid],
+        getRatingQuerykeyFactory.id(recipeId, user?.uid),
         () => getRating(recipeId, user?.uid),
         {
             enabled: !!user?.uid,

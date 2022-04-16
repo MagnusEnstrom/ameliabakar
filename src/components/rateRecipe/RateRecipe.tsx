@@ -7,6 +7,7 @@ import typography from '../../lib/typography'
 import useAddRating from '../../api/addRating'
 import useGetRating from '../../api/getRating'
 import { useQueryClient } from 'react-query'
+import useGetRatings from '../../api/getRatings'
 
 const RatingContainer = styled.div({
     display: 'flex',
@@ -67,6 +68,7 @@ const Wrapper = styled.div({
 type Props = { pageContext: ReceptContent } & HTMLAttributes<HTMLDivElement>
 const RateRecipe = ({ pageContext, ...rest }: Props) => {
     const { mutate } = useAddRating()
+    const { data: ratings } = useGetRatings(pageContext.id)
 
     const [hasVoted, setHasVoted] = useState(false)
     const [error, setError] = useState('')
@@ -113,7 +115,7 @@ const RateRecipe = ({ pageContext, ...rest }: Props) => {
         <Wrapper {...rest}>
             <FlexContainer>
                 <RatingContainer>{Stars}</RatingContainer>
-                <TotalRating>({data?.numRatings || 0})</TotalRating>
+                <TotalRating>({ratings?.numRatings || 0})</TotalRating>
             </FlexContainer>
             {error && <ThankYouMessage>{error}</ThankYouMessage>}
             {hasVoted && <ThankYouMessage>Tack för ditt betyg</ThankYouMessage>}

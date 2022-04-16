@@ -18,7 +18,7 @@ const {
     getDocs,
     doc,
     collection,
-} = require('firebase/firestore/lite')
+} = require('firebase/firestore')
 
 exports.onPreInit = () =>
     console.log(

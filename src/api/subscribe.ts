@@ -1,4 +1,4 @@
-import { doc, setDoc } from 'firebase/firestore/lite'
+import { doc, setDoc } from 'firebase/firestore'
 import { useMutation } from 'react-query'
 import { useFirebaseAuthContext } from '../context/FirebaseAuthContext'
 import { db } from '../lib/firebase/firebase'

@@ -3,6 +3,7 @@ import React from 'react'
 import typography from '../../lib/typography'
 import StarIcon from '../../assets/star-gold.svg'
 import colors from '../../lib/colors'
+import useGetRatings from '../../api/getRatings'
 // import StarIcon from '../../assets/star-fill.svg'
 
 const Star = styled(StarIcon)(({ rating }: { rating: number }) => {
@@ -34,11 +35,15 @@ const DotWrapper = styled.div({
 })
 type Props = {
     rating: number
+    recipeId: string
 } & React.DetailedHTMLProps<
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
 >
-const Rating = ({ rating, ...rest }: Props) => {
+const Rating = ({ rating: cacheRating, recipeId, ...rest }: Props) => {
+    const { data } = useGetRatings(recipeId)
+
+    const rating = data ? data.avgRating : cacheRating
     return (
         <RatingWrapper {...rest}>
             <RatingText>{rating ? rating : '-'}</RatingText>

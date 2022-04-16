@@ -17,13 +17,21 @@ type Props = Pick<
     ReceptContent['singlePaketAfc'],
     'tid' | 'tidFormat' | 'svarighetsgrad'
 > &
-    Pick<ReceptContent, 'rating'>
-const ReceptInfo = ({ tid, tidFormat, svarighetsgrad, rating }: Props) => {
+    Pick<ReceptContent, 'rating'> & {
+        recipeId: string
+    }
+const ReceptInfo = ({
+    tid,
+    tidFormat,
+    svarighetsgrad,
+    rating,
+    recipeId,
+}: Props) => {
     return (
         <ReceptInfoBar>
             <ReceptTime time={tid} timeFormat={tidFormat} />
             <Difficulty diff={svarighetsgrad} />
-            <Rating rating={rating?.avgRating} />
+            <Rating recipeId={recipeId} rating={rating?.avgRating} />
         </ReceptInfoBar>
     )
 }
