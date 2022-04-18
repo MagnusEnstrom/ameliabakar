@@ -168,26 +168,27 @@ const InstagramIco = styled(InstagramIcon)({
 })
 
 const Instagram = () => {
-    const data = useStaticQuery<InstagramData>(graphql`
-        {
-            allInstagramContent(
-                sort: { fields: [timestamp], order: DESC }
-                limit: 100
-            ) {
-                nodes {
-                    id
-                    permalink
-                    localFile {
-                        childImageSharp {
-                            fixed(width: 300, height: 300) {
-                                src
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    `)
+    return <div>Instagram</div>
+    // const data = useStaticQuery<InstagramData>(graphql`
+    //     {
+    //         allInstagramContent(
+    //             sort: { fields: [timestamp], order: DESC }
+    //             limit: 100
+    //         ) {
+    //             nodes {
+    //                 id
+    //                 permalink
+    //                 localFile {
+    //                     childImageSharp {
+    //                         fixed(width: 300, height: 300) {
+    //                             src
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // `)
 
     const [amount, setAmount] = useState(9)
 
