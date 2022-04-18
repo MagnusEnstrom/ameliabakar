@@ -4,12 +4,12 @@ import { getFirestore } from 'firebase/firestore'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: process.env.API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
-    projectId: process.env.PROJECT_ID,
-    storageBucket: process.env.STORAGE_BUCKET,
-    messagingSenderId: process.env.MESSAGE_SENDER_ID,
-    appId: process.env.APP_ID,
+    apiKey: process.env.GATSBY_API_KEY,
+    authDomain: process.env.GATSBY_AUTH_DOMAIN,
+    projectId: process.env.GATSBY_PROJECT_ID,
+    storageBucket: process.env.GATSBY_STORAGE_BUCKET,
+    messagingSenderId: process.env.GATSBY_MESSAGE_SENDER_ID,
+    appId: process.env.GATSBY_APP_ID,
 }
 
 // Initialize Firebase
