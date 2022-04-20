@@ -168,27 +168,26 @@ const InstagramIco = styled(InstagramIcon)({
 })
 
 const Instagram = () => {
-    return <div>Instagram</div>
-    // const data = useStaticQuery<InstagramData>(graphql`
-    //     {
-    //         allInstagramContent(
-    //             sort: { fields: [timestamp], order: DESC }
-    //             limit: 100
-    //         ) {
-    //             nodes {
-    //                 id
-    //                 permalink
-    //                 localFile {
-    //                     childImageSharp {
-    //                         fixed(width: 300, height: 300) {
-    //                             src
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // `)
+    const data = useStaticQuery<InstagramData>(graphql`
+        {
+            allInstagramContent(
+                sort: { fields: [timestamp], order: DESC }
+                limit: 100
+            ) {
+                nodes {
+                    id
+                    permalink
+                    localFile {
+                        childImageSharp {
+                            fixed(width: 300, height: 300) {
+                                src
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    `)
 
     const [amount, setAmount] = useState(9)
 
@@ -211,7 +210,10 @@ const Instagram = () => {
             <InstagramGrid>
                 {instagramData.map(node => {
                     return (
-                        <StyledInvisibleLink key={node.id} to={node.permalink}>
+                        <StyledInvisibleLink
+                            key={node.id}
+                            href={node.permalink}
+                        >
                             <InstagramImage
                                 src={node.localFile.childImageSharp.fixed.src}
                             />
