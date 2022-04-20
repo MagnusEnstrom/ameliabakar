@@ -111,8 +111,16 @@ const SmallRight = styled(WheatSmallRight)({
     },
 })
 
-const StyledInvisibleLink = styled(InvisibleLink)({
+const StyledInvisibleLink = styled.a({
     width: '100%',
+    padding: '0px',
+    margin: '0px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: 'none',
+    backgroundColor: 'inherit',
+    textDecoration: 'none',
 })
 
 const FollowArea = styled.div({
@@ -184,7 +192,7 @@ const Instagram = () => {
     const [amount, setAmount] = useState(9)
 
     const onClick = () => {
-        setAmount(prev => prev + 3)
+        setAmount(prev => prev + 9)
     }
     const allInstagram = data.allInstagramContent.nodes
     const instagramData = allInstagram.slice(0, amount)
@@ -202,7 +210,10 @@ const Instagram = () => {
             <InstagramGrid>
                 {instagramData.map(node => {
                     return (
-                        <StyledInvisibleLink key={node.id} to={node.permalink}>
+                        <StyledInvisibleLink
+                            key={node.id}
+                            href={node.permalink}
+                        >
                             <InstagramImage
                                 src={node.localFile.childImageSharp.fixed.src}
                             />

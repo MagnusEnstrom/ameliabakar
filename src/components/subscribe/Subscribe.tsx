@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import Newsletter from '../../assets/newsletter.svg'
-import colors from '../../lib/colors';
-import radius from '../../lib/radius';
-import typography from '../../lib/typography';
-import Primary from '../buttons/primary/Primary';
-import Toast from '../toast/Toast';
-
+import useSubscribe from '../../hooks/subscribe'
+import colors from '../../lib/colors'
+import radius from '../../lib/radius'
+import typography from '../../lib/typography'
+import Primary from '../buttons/primary/Primary'
+import Toast from '../toast/Toast'
 
 const SubscribeWrapper = styled.div({
     display: 'grid',
@@ -19,7 +19,6 @@ const IconWrapper = styled.div({
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
-
 })
 
 const NewsletterIcon = styled(Newsletter)({
@@ -37,7 +36,7 @@ const InputWrapper = styled.form({
     backgroundColor: colors.white,
     position: 'relative',
     gridTemplateColumns: '1fr max-content',
-});
+})
 
 const Input = styled.input({
     borderRadius: radius.button,
@@ -54,7 +53,7 @@ const Input = styled.input({
     },
     ':focus-visible': {
         outline: 'none',
-    }
+    },
 })
 
 const ErrorMessage = styled.span({
@@ -66,26 +65,55 @@ const ErrorMessage = styled.span({
     // position: 'absolute',
 })
 
-const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const EMAIL_REGEX =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-const Subscribe = ({...rest}: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>) => {
-    const [subscribeStatus, setSubscriobeStatus] = useState<'success' | 'idle'>('idle');
-    const [error, setError] = useState<string | null>(null);
-    const [value, setValue] = useState('');
+const Subscribe = ({
+    ...rest
+}: React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+>) => {
+    const [subscribeStatus, setSubscriobeStatus] = useState<'success' | 'idle'>(
+        'idle'
+    )
+
+    const { mutate } = useSubscribe()
+    const [error, setError] = useState<string | null>(null)
+    const [value, setValue] = useState('')
     const handleSubmit = (e: React.FormEvent<HTMLDivElement>) => {
-        e.preventDefault();
+        e.preventDefault()
         setError('')
-        const emailMatch = value.match(EMAIL_REGEX);
-        if(!emailMatch) {
+        const emailMatch = value.match(EMAIL_REGEX)
+        console.log(emailMatch)
+        if (!emailMatch || !emailMatch?.[0]) {
             return setError('Fel. Ange data i rätt format example@mail.com')
         }
 
-        if(subscribeStatus !== 'success') {
-            setValue('')
-            return setSubscriobeStatus('success')
-        }
+        mutate(emailMatch?.[0], {
+            onSuccess: () => {
+                setValue('')
+                return setSubscriobeStatus('success')
+            },
+        })
+    }
 
-        return setSubscriobeStatus('idle')
+    if (subscribeStatus === 'success') {
+        return (
+            <SubscribeWrapper {...rest} onSubmit={handleSubmit}>
+                <IconWrapper>
+                    <NewsletterIcon />
+                    <span>Nyhetsbrev</span>
+                </IconWrapper>
+                <div>
+                    <Toast
+                        onClick={() => setSubscriobeStatus('idle')}
+                        style={{ padding: '9.5px 25px' }}
+                        variant={'subscribed'}
+                    />
+                </div>
+            </SubscribeWrapper>
+        )
     }
     return (
         <SubscribeWrapper {...rest} onSubmit={handleSubmit}>
@@ -95,15 +123,22 @@ const Subscribe = ({...rest}: React.DetailedHTMLProps<React.HTMLAttributes<HTMLD
             </IconWrapper>
             <div>
                 <InputWrapper>
-                    <Input value={value} onChange={(e) => setValue(e.target.value)} type={'email'} placeholder={'E-mail adress'}  />
-                    {subscribeStatus !== 'success' && 
+                    <Input
+                        value={value}
+                        onChange={e => setValue(e.target.value)}
+                        type={'email'}
+                        placeholder={'E-mail adress'}
+                    />
+                    {subscribeStatus === 'idle' && (
                         <>
-                            <Primary type={'submit'} style={{padding: '14px 25px'}}>Prenumerera</Primary>
+                            <Primary
+                                type={'submit'}
+                                style={{ padding: '14px 25px' }}
+                            >
+                                Prenumerera
+                            </Primary>
                         </>
-                    }
-                    {subscribeStatus === 'success' && 
-                        <Toast onClick={() => setSubscriobeStatus('idle')} style={{padding: '9.5px 25px'}} variant={'subscribed'} />
-                    }
+                    )}
                 </InputWrapper>
                 <ErrorMessage>{error}</ErrorMessage>
             </div>

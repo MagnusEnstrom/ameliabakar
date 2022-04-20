@@ -17,6 +17,17 @@ const Wrapper = styled.div({
 })
 
 type LatestQuery = {
+    allRating: {
+        nodes: {
+            rating?: {
+                avgRating: number
+                numRatings: number
+            } | null
+            parent: {
+                id: string
+            }
+        }[]
+    }
     allWpRecept: {
         nodes: {
             id: string
@@ -56,6 +67,16 @@ const Latest = ({
 >) => {
     const data: LatestQuery = useStaticQuery(graphql`
         {
+            allRating {
+                nodes {
+                    id
+                    avgRating
+                    numRatings
+                    parent {
+                        id
+                    }
+                }
+            }
             allWpRecept(sort: { fields: [date], order: DESC }) {
                 nodes {
                     id
@@ -84,12 +105,28 @@ const Latest = ({
         }
     `)
 
+    data.allWpRecept.nodes = data.allWpRecept.nodes.map(recept => {
+        const rating = data.allRating?.nodes?.find(
+            rating => rating.parent.id === recept.id
+        )
+        return {
+            ...recept,
+            rating: rating ? rating : null,
+        }
+    })
     const [amount, setstate] = useState(show)
     const allRecipes = data.allWpRecept.nodes
-    const recipies = data.allWpRecept.nodes.slice(0, amount)
-
+    const recipies = data.allWpRecept.nodes.slice(0, amount) as [
+        ...(LatestQuery['allWpRecept']['nodes'] &
+            {
+                rating?: {
+                    avgRating: number
+                    numRatings: number
+                } | null
+            }[])
+    ]
     const onClick = () => {
-        setstate(prev => prev + 4)
+        setstate(prev => prev + 8)
     }
 
     return (
@@ -107,7 +144,7 @@ const Latest = ({
                             }
                             uri={recipe.uri}
                             key={recipe.id}
-                            rating={4.2}
+                            rating={recipe?.rating?.avgRating}
                             id={recipe.id}
                             tid={recipe.singlePaketAfc.tid}
                             tidFormat={recipe.singlePaketAfc.tidFormat}

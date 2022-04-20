@@ -15,10 +15,8 @@ import Spoon from '../assets/spoon.svg'
 import Glove from '../assets/glove.svg'
 import Instagram from '../components/instagram/instagram'
 import Footer from '../components/footer/Footer'
-import HeaderImgs from '../components/header/HeaderImgs'
-import Header from '../components/header/Header'
 import RecipeCardHeader from '../components/header/RecipeCardHeader'
-import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
+import RateRecipe from '../components/rateRecipe/RateRecipe'
 
 const ChipArea = styled.div({
     display: 'flex',
@@ -28,6 +26,7 @@ const ChipArea = styled.div({
     rowGap: '10px',
     ['@media only screen and (min-width: 90ch)']: {
         margin: '32px 20px 0px 20px',
+        gridColumn: '1 / -1',
     },
     ['@media only screen and (min-width: 170ch)']: {
         gridArea: '1 / 3 / 2 / 4',
@@ -64,6 +63,7 @@ const ContentArea = styled.div({
         display: 'grid',
         maxWidth: '1360px',
         margin: '0px auto',
+        gridTemplateColumns: 'repeat(2, 1fr)',
     },
     ['@media only screen and (min-width: 170ch)']: {
         gridTemplateColumns: 'repeat(3, 1fr)',
@@ -97,6 +97,9 @@ const StyledH2 = styled(H2)({
 const StyledDoLikeThis = styled(DoLikeThis)(
     ({ activeNav }: { activeNav: ActiveNav }) => ({
         display: activeNav === 'detail' ? 'block' : 'none',
+        ['@media only screen and (min-width: 90ch)']: {
+            gridColumn: '1 / -1',
+        },
         ['@media only screen and (min-width: 170ch)']: {
             display: 'block',
             margin: '0px',
@@ -108,6 +111,9 @@ const StyledDoLikeThis = styled(DoLikeThis)(
 const StyledIngredients = styled(Ingredients)(
     ({ activeNav }: { activeNav: ActiveNav }) => ({
         display: activeNav === 'ingredienser' ? 'flex' : 'none',
+        ['@media only screen and (min-width: 90ch)']: {
+            gridColumn: '1 / -1',
+        },
         ['@media only screen and (min-width: 170ch)']: {
             display: 'flex',
             margin: '0px',
@@ -117,6 +123,9 @@ const StyledIngredients = styled(Ingredients)(
 )
 
 const StyledContentNavWrapper = styled(ContentNavWrapper)({
+    ['@media only screen and (min-width: 90ch)']: {
+        gridColumn: '1 / -1',
+    },
     ['@media only screen and (min-width: 170ch)']: {
         display: 'none',
     },
@@ -154,10 +163,21 @@ const IconSpan = styled.span({
     width: 'max-content',
 })
 
+const StyleRateRecipe = styled(RateRecipe)({
+    padding: '20px 10px 0px 10px',
+    ['@media only screen and (min-width: 90ch)']: {
+        gridColumn: '1 / 2',
+    },
+
+    ['@media only screen and (min-width: 170ch)']: {
+        gridColumn: '1 / 2',
+    },
+})
+
 type ActiveNav = 'ingredienser' | 'detail'
 type Props = { pageContext: ReceptContent }
 const receptPost = ({ pageContext }: Props) => {
-    pageContext
+    console.log(pageContext)
 
     const images = pageContext?.singlePaketAfc?.images?.map(img => {
         return img.localFile.childrenImageSharp[0].original.src
@@ -167,7 +187,8 @@ const receptPost = ({ pageContext }: Props) => {
     return (
         <div>
             <RecipeCardHeader
-                rating={4.2}
+                rating={pageContext?.rating?.avgRating}
+                recipeId={pageContext.id}
                 svarighetsgrad={pageContext.singlePaketAfc.svarighetsgrad}
                 tid={pageContext.singlePaketAfc.tid}
                 tidFormat={pageContext.singlePaketAfc.tidFormat}
@@ -186,6 +207,7 @@ const receptPost = ({ pageContext }: Props) => {
 
             {/* Betygsätt */}
             <ContentArea>
+                <StyleRateRecipe pageContext={pageContext} />
                 <StyledContentNavWrapper>
                     <ContentNavItem
                         text={'Ingredienser'}
@@ -198,7 +220,6 @@ const receptPost = ({ pageContext }: Props) => {
                         active={activeNav === 'detail'}
                     />
                 </StyledContentNavWrapper>
-
                 <StyledH3Recipe>
                     <IconSpan>
                         <StyledSpoon />

@@ -13,128 +13,164 @@ const chunk = require(`lodash/chunk`)
  */
 
 exports.createPages = async gatsbyUtilities => {
-    const { actions, graphql, reporter} = gatsbyUtilities
+    const { actions, graphql, reporter } = gatsbyUtilities
 
-    await createAboutMePage(gatsbyUtilities);
-    await createRecipeDetailPage(gatsbyUtilities);
-    await createHomePage(gatsbyUtilities);
-    await createReceptPage(gatsbyUtilities);
-    await createTipsPage(gatsbyUtilities);
-    await createSavedReceptPage(gatsbyUtilities);
-  
+    await createAboutMePage(gatsbyUtilities)
+    await createRecipeDetailPage(gatsbyUtilities)
+    await createHomePage(gatsbyUtilities)
+    await createReceptPage(gatsbyUtilities)
+    await createTipsPage(gatsbyUtilities)
+    await createSavedReceptPage(gatsbyUtilities)
 }
 
-const createRecipeDetailPage = async ({ actions, graphql, reporter}) => {
+const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
     const result = await graphql(`
-    {
-        allWpRecept(sort: { fields: [date] order: DESC}) {
-          nodes {
-            id
-            uri
-            title
-                  date
-            content
-            tags {
-              nodes {
-                name
-              }
-            }
-            singlePaketAfc {
-              tooltip
-              tips
-              tidFormat
-              tid
-              svarighetsgrad
-              saHarGorDu
-              kortBeskrivning
-              images {
-                localFile {
-                  childrenImageSharp {
-                    original {
-                      src
-                    }
-                    fixed(width: 400, height: 400) {
-                      src
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }      
-  `)
-  if (result.errors) {
-    reporter.error("There was an error fetching posts", result.errors)
-  }
-  
-  const { allWpRecept } = result.data
-  
-  // Define the template to use
-  const receptPost = require.resolve(`./src/templates/receptPost.tsx`)
-  
-  if (allWpRecept.nodes.length) {
-    allWpRecept.nodes.map(recept => {
-      actions.createPage({
-        // It's best practice to use the uri field from WPGraphQL nodes when
-        // building
-        path: recept.uri,
-        component: receptPost,
-        context: recept,
-      })
-    })
-  }
-} 
-
-const createHomePage = async ({ actions, graphql, reporter}) => {
-    const result = await graphql(`
-    {
-        allWpRecept {
-            nodes {
-                id
-                uri
-                title
-                content
-            tags {
+        {
+            allRating {
                 nodes {
-                    name
+                    id
+                    avgRating
+                    numRatings
+                    parent {
+                        id
+                    }
                 }
             }
-            singlePaketAfc {
-                tooltip
-                tips
-                tidFormat
-                tid
-                svarighetsgrad
-                saHarGorDu
-                kortBeskrivning
-                images {
-                    localFile {
-                        childrenImageSharp {
-                            original {
-                                src
-                            }
-                            fixed(width: 400, height: 400) {
-                                src
+            allWpRecept(sort: { fields: [date], order: DESC }) {
+                nodes {
+                    id
+                    uri
+                    title
+                    date
+                    content
+                    tags {
+                        nodes {
+                            name
+                        }
+                    }
+                    singlePaketAfc {
+                        tooltip
+                        tips
+                        tidFormat
+                        tid
+                        svarighetsgrad
+                        saHarGorDu
+                        kortBeskrivning
+                        images {
+                            localFile {
+                                childrenImageSharp {
+                                    original {
+                                        src
+                                    }
+                                    fixed(width: 400, height: 400) {
+                                        src
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
-        }
-    }
-      
     `)
     if (result.errors) {
-        reporter.error("There was an error fetching posts", result.errors)
+        reporter.error('There was an error fetching posts', result.errors)
     }
-  
-    const { allWpRecept } = result.data
-  
+
+    const { allWpRecept, allRating } = result.data
+
+    // Define the template to use
+    const receptPost = require.resolve(`./src/templates/receptPost.tsx`)
+
+    console.log('allRating', allRating)
+    if (allWpRecept.nodes.length) {
+        allWpRecept.nodes.map(recept => {
+            const rating = allRating?.nodes?.find(
+                rating => rating.parent.id === recept.id
+            )
+            const receptWithRating = {
+                ...recept,
+                rating: rating ? rating : null,
+            }
+            actions.createPage({
+                // It's best practice to use the uri field from WPGraphQL nodes when
+                // building
+                path: recept.uri,
+                component: receptPost,
+                context: receptWithRating,
+            })
+        })
+    }
+}
+
+const createHomePage = async ({ actions, graphql, reporter }) => {
+    const result = await graphql(`
+        {
+            allRating {
+                nodes {
+                    id
+                    avgRating
+                    numRatings
+                    parent {
+                        id
+                    }
+                }
+            }
+            allWpRecept {
+                nodes {
+                    id
+                    uri
+                    title
+                    content
+                    tags {
+                        nodes {
+                            name
+                        }
+                    }
+                    singlePaketAfc {
+                        tooltip
+                        tips
+                        tidFormat
+                        tid
+                        svarighetsgrad
+                        saHarGorDu
+                        kortBeskrivning
+                        images {
+                            localFile {
+                                childrenImageSharp {
+                                    original {
+                                        src
+                                    }
+                                    fixed(width: 400, height: 400) {
+                                        src
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    `)
+    if (result.errors) {
+        reporter.error('There was an error fetching posts', result.errors)
+    }
+
+    const { allWpRecept, allRating } = result.data
+
     // Define the template to use
     const home = require.resolve(`./src/templates/home.tsx`)
-  
+
+    allWpRecept.nodes = allWpRecept.nodes.map(recept => {
+        const rating = allRating?.nodes?.find(
+            rating => rating.parent.id === recept.id
+        )
+        return ({
+            ...recept,
+            rating: rating ? rating : null,
+        })
+    })
+
     actions.createPage({
         path: '/',
         component: home,
@@ -142,48 +178,67 @@ const createHomePage = async ({ actions, graphql, reporter}) => {
     })
 }
 
-const createReceptPage = async ({ actions, graphql, reporter}) => {
+const createReceptPage = async ({ actions, graphql, reporter }) => {
     const result = await graphql(`
-    {
-        allWpRecept(sort: { fields: [date] order: DESC}) {
-          nodes {
-            id
-            uri
-            title
-            tags {
+        {
+            allRating {
                 nodes {
-                  name
+                    id
+                    avgRating
+                    numRatings
+                    parent {
+                        id
+                    }
                 }
             }
-            singlePaketAfc {
-              tidFormat
-              tid
-              images {
-                localFile {
-                  childrenImageSharp {
-                    original {
-                      src
+            allWpRecept(sort: { fields: [date], order: DESC }) {
+                nodes {
+                    id
+                    uri
+                    title
+                    tags {
+                        nodes {
+                            name
+                        }
                     }
-                    fixed(width: 400, height: 400) {
-                      src
+                    singlePaketAfc {
+                        tidFormat
+                        tid
+                        images {
+                            localFile {
+                                childrenImageSharp {
+                                    original {
+                                        src
+                                    }
+                                    fixed(width: 400, height: 400) {
+                                        src
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
             }
-          }
         }
-      }
-      
     `)
     if (result.errors) {
-        reporter.error("There was an error fetching posts", result.errors)
+        reporter.error('There was an error fetching posts', result.errors)
     }
-  
-    const { allWpRecept } = result.data
-  
+
+    const { allWpRecept, allRating } = result.data
+
     // Define the template to use
     const recept = require.resolve(`./src/templates/recept.tsx`)
+
+    allWpRecept.nodes = allWpRecept.nodes.map(recept => {
+        const rating = allRating?.nodes?.find(
+            rating => rating.parent.id === recept.id
+        )
+        return ({
+            ...recept,
+            rating: rating ? rating : null,
+        })
+    })
 
     actions.createPage({
         // It's best practice to use the uri field from WPGraphQL nodes when
@@ -193,48 +248,67 @@ const createReceptPage = async ({ actions, graphql, reporter}) => {
         context: allWpRecept,
     })
 }
-const createSavedReceptPage = async ({ actions, graphql, reporter}) => {
+const createSavedReceptPage = async ({ actions, graphql, reporter }) => {
     const result = await graphql(`
-    {
-        allWpRecept(sort: { fields: [date] order: DESC}) {
-          nodes {
-            id
-            uri
-            title
-            tags {
+        {
+            allRating {
                 nodes {
-                  name
+                    id
+                    avgRating
+                    numRatings
+                    parent {
+                        id
+                    }
                 }
             }
-            singlePaketAfc {
-              tidFormat
-              tid
-              images {
-                localFile {
-                  childrenImageSharp {
-                    original {
-                      src
+            allWpRecept(sort: { fields: [date], order: DESC }) {
+                nodes {
+                    id
+                    uri
+                    title
+                    tags {
+                        nodes {
+                            name
+                        }
                     }
-                    fixed(width: 400, height: 400) {
-                      src
+                    singlePaketAfc {
+                        tidFormat
+                        tid
+                        images {
+                            localFile {
+                                childrenImageSharp {
+                                    original {
+                                        src
+                                    }
+                                    fixed(width: 400, height: 400) {
+                                        src
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
             }
-          }
         }
-      }
-      
     `)
     if (result.errors) {
-        reporter.error("There was an error fetching posts", result.errors)
+        reporter.error('There was an error fetching posts', result.errors)
     }
-  
-    const { allWpRecept } = result.data
-  
+
+    const { allWpRecept, allRating } = result.data
+
     // Define the template to use
     const savedRecipes = require.resolve(`./src/templates/savedRecipes.tsx`)
+
+    allWpRecept.nodes = allWpRecept.nodes.map(recept => {
+        const rating = allRating?.nodes?.find(
+            rating => rating.parent.id === recept.id
+        )
+        return ({
+            ...recept,
+            rating: rating ? rating : null,
+        })
+    })
 
     actions.createPage({
         // It's best practice to use the uri field from WPGraphQL nodes when
@@ -244,8 +318,7 @@ const createSavedReceptPage = async ({ actions, graphql, reporter}) => {
         context: allWpRecept,
     })
 }
-const createAboutMePage = async ({ actions, graphql, reporter}) => {
-  
+const createAboutMePage = async ({ actions, graphql, reporter }) => {
     // Define the template to use
     const aboutMe = require.resolve(`./src/templates/aboutMe.tsx`)
 
@@ -256,40 +329,37 @@ const createAboutMePage = async ({ actions, graphql, reporter}) => {
     })
 }
 
-const createTipsPage = async ({ actions, graphql, reporter}) => {
-
+const createTipsPage = async ({ actions, graphql, reporter }) => {
     const result = await graphql(`
-    {
-        allWpTip {
-          nodes {
-            title
-            tips {
-              image {
-                localFile {
-                  childImageSharp {
-                    original {
-                      src
+        {
+            allWpTip {
+                nodes {
+                    title
+                    tips {
+                        image {
+                            localFile {
+                                childImageSharp {
+                                    original {
+                                        src
+                                    }
+                                    fixed {
+                                        src
+                                    }
+                                }
+                            }
+                        }
                     }
-                    fixed {
-                      src
-                    }
-                  }
+                    content
                 }
-              }
             }
-            content
-          }
         }
-      }
-      
-      
     `)
     if (result.errors) {
-        reporter.error("There was an error fetching posts", result.errors)
+        reporter.error('There was an error fetching posts', result.errors)
     }
-  
+
     const { allWpTip } = result.data
-  
+
     // Define the template to use
     const tips = require.resolve(`./src/templates/tips.tsx`)
 

@@ -10,7 +10,7 @@ describe('/recept', () => {
         cy.findAllByLabelText('recept').should('have.length', 10)
         // loads in more recipes
         cy.get('[data-cy=loadmore]').click()
-        cy.findAllByLabelText('recept').should('have.length', 14)
+        cy.findAllByLabelText('recept').should('have.length', 18)
     })
 
     it('shows filter & hide filter', () => {

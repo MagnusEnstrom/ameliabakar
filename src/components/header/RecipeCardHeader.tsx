@@ -143,10 +143,12 @@ type Props = {
     kortBeskrivning?: string
     imgUrl: string
     images?: string[]
+    recipeId: string
 } & React.HTMLAttributes<HTMLDivElement>
 
 const RecipeCardHeader = ({
     tidFormat,
+    id,
     rating,
     tid,
     title,
@@ -154,6 +156,7 @@ const RecipeCardHeader = ({
     kortBeskrivning,
     imgUrl,
     images,
+    recipeId,
     ...rest
 }: Props) => {
     return (
@@ -182,6 +185,7 @@ const RecipeCardHeader = ({
                             style={{ justifySelf: 'start' }}
                         />
                         <Rating
+                            recipeId={recipeId}
                             style={{ gridArea: 'Rating', justifySelf: 'start' }}
                             rating={rating}
                         />

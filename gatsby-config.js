@@ -18,6 +18,20 @@ module.exports = {
    */
   plugins: [
     {
+        resolve: require.resolve(`./source-plugin`),
+        options: {
+            credentials: {
+                apiKey: process.env.GATSBY_API_KEY,
+                authDomain: process.env.GATSBY_AUTH_DOMAIN,
+                projectId: process.env.GATSBY_PROJECT_ID,
+                storageBucket: process.env.GATSBY_STORAGE_BUCKET,
+                messagingSenderId: process.env.GATSBY_MESSAGE_SENDER_ID,
+                appId: process.env.GATSBY_APP_ID,
+            }
+        }
+    },
+    
+    {
         resolve: `gatsby-plugin-google-fonts`,
         options: {
             fonts: [

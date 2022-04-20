@@ -181,7 +181,7 @@ type Props = {
     title: string
     tid: number
     tidFormat: string
-    rating: number
+    rating?: number
     uri: string
     id: string
     svarighetsgrad: 'Lätt' | 'Medel' | 'Svår'
@@ -236,6 +236,7 @@ const ResipeCard = ({
                         </Time>
                         <StyledDifficulty diff={svarighetsgrad} />
                         <Rating
+                            recipeId={id}
                             style={{ gridArea: 'Rating', justifySelf: 'end' }}
                             rating={rating}
                         />
@@ -267,6 +268,7 @@ const ResipeCard = ({
                         </Time>
                         <StyledDifficulty diff={svarighetsgrad} />
                         <Rating
+                            recipeId={id}
                             style={{ gridArea: 'Rating', justifySelf: 'end' }}
                             rating={rating}
                         />
@@ -305,6 +307,7 @@ const ResipeCard = ({
                         style={{ justifySelf: 'start' }}
                     />
                     <Rating
+                        recipeId={id}
                         style={{ gridArea: 'Rating', justifySelf: 'start' }}
                         rating={rating}
                     />

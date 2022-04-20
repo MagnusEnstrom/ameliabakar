@@ -1,18 +1,14 @@
 import styled from '@emotion/styled'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import colors from '../../lib/colors'
 import radius from '../../lib/radius'
 import SearchIcon from '../../assets/search.svg'
-import { useFlexSearch } from 'react-use-flexsearch'
-import { graphql, useStaticQuery } from 'gatsby'
-import { LocalSearchRecepies } from '../../graphql/types/ReceptContentType'
-
 
 const StyledSearchIcon = styled(SearchIcon)({
     width: '24px',
     height: '24px',
     marginRight: '12px',
-});
+})
 
 const StyledInput = styled.input({
     border: `none`,
@@ -27,7 +23,7 @@ const StyledInput = styled.input({
     },
     ':focus-visible': {
         outline: 'none',
-    }
+    },
 })
 const SearchInputComponent = styled.div({
     display: 'flex',
@@ -46,14 +42,18 @@ const SearchInputComponent = styled.div({
     },
     ':focus-visible': {
         outline: 'none',
-    }
+    },
 })
 
-
-
-const SearchInput = ({className, ...rest}:  & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) => {
+const SearchInput = ({
+    className,
+    ...rest
+}: React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+>) => {
     return (
-        <SearchInputComponent className={className} >
+        <SearchInputComponent className={className}>
             <StyledSearchIcon />
             <StyledInput {...rest} />
         </SearchInputComponent>
