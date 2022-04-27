@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
+import { UseMutateFunction } from 'react-query'
 import Newsletter from '../../assets/newsletter.svg'
 import useSubscribe from '../../hooks/subscribe'
 import colors from '../../lib/colors'
@@ -43,6 +44,7 @@ const Input = styled.input({
     paddingLeft: '20px',
     border: 'none',
     fontWeight: 300,
+    lineHeight: 'inherit',
     width: '100%',
     fontSize: '16px',
     '::placeholder': {
@@ -68,6 +70,38 @@ const ErrorMessage = styled.span({
 const EMAIL_REGEX =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
+type SubmitVariables = {
+    e: React.FormEvent<HTMLFormElement>
+    setValue: React.Dispatch<React.SetStateAction<string>>
+    value: string
+    mutate: UseMutateFunction<void, unknown, string, unknown>
+    setError: React.Dispatch<React.SetStateAction<string>>
+    setSubscriobeStatus: React.Dispatch<
+        React.SetStateAction<'success' | 'idle'>
+    >
+}
+export const handleSubmitFactory = ({
+    e,
+    setError,
+    value,
+    setValue,
+    mutate,
+    setSubscriobeStatus,
+}: SubmitVariables) => {
+    e.preventDefault()
+    setError('')
+    const emailMatch = value.match(EMAIL_REGEX)
+    if (!emailMatch || !emailMatch?.[0]) {
+        return setError('Fel. Ange data i rätt format example@mail.com')
+    }
+
+    mutate(emailMatch?.[0], {
+        onSuccess: () => {
+            setValue('')
+            return setSubscriobeStatus('success')
+        },
+    })
+}
 const Subscribe = ({
     ...rest
 }: React.DetailedHTMLProps<
@@ -81,26 +115,21 @@ const Subscribe = ({
     const { mutate } = useSubscribe()
     const [error, setError] = useState<string | null>(null)
     const [value, setValue] = useState('')
-    const handleSubmit = (e: React.FormEvent<HTMLDivElement>) => {
-        e.preventDefault()
-        setError('')
-        const emailMatch = value.match(EMAIL_REGEX)
-        console.log(emailMatch)
-        if (!emailMatch || !emailMatch?.[0]) {
-            return setError('Fel. Ange data i rätt format example@mail.com')
-        }
 
-        mutate(emailMatch?.[0], {
-            onSuccess: () => {
-                setValue('')
-                return setSubscriobeStatus('success')
-            },
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        handleSubmitFactory({
+            e,
+            mutate,
+            setError,
+            setValue,
+            value,
+            setSubscriobeStatus,
         })
     }
 
     if (subscribeStatus === 'success') {
         return (
-            <SubscribeWrapper {...rest} onSubmit={handleSubmit}>
+            <SubscribeWrapper {...rest}>
                 <IconWrapper>
                     <NewsletterIcon />
                     <span>Nyhetsbrev</span>
@@ -116,13 +145,13 @@ const Subscribe = ({
         )
     }
     return (
-        <SubscribeWrapper {...rest} onSubmit={handleSubmit}>
+        <SubscribeWrapper {...rest}>
             <IconWrapper>
                 <NewsletterIcon />
                 <span>Nyhetsbrev</span>
             </IconWrapper>
             <div>
-                <InputWrapper>
+                <InputWrapper onSubmit={handleSubmit}>
                     <Input
                         value={value}
                         onChange={e => setValue(e.target.value)}

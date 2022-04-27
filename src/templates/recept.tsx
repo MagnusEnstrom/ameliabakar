@@ -330,7 +330,7 @@ const recept = ({ pageContext, location }: Props & PageProps) => {
                     <RecipeGrid
                         data={filteredRecipes}
                         loadMore={true}
-                        show={10}
+                        show={12}
                     />
                 </RecipeWrapper>
             </PageWrapper>

@@ -8,8 +8,10 @@ import typography from '../../../lib/typography'
 import Toast from '../../toast/Toast'
 import radius from '../../../lib/radius'
 import Input from '../../Form/Input'
+import { handleSubmitFactory } from '../Subscribe'
+import useSubscribe from '../../../hooks/subscribe'
 
-const SubContainer = styled.form({
+const SubContainer = styled.div({
     backgroundColor: colors.cultured,
     display: 'grid',
     padding: '50px 20px 100px 20px',
@@ -83,6 +85,7 @@ const StyledInput = styled.input({
     borderRadius: radius.button,
     paddingLeft: '20px',
     border: 'none',
+    lineHeight: 'inherit',
     fontWeight: 300,
     width: '100%',
     fontSize: '16px',
@@ -154,33 +157,26 @@ const ErrorMessage = styled.span({
     justifySelf: 'center',
 })
 
-const EMAIL_REGEX =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
 const SubHome = ({ ...rest }) => {
     const [subscribeStatus, setSubscriobeStatus] = useState<'success' | 'idle'>(
         'idle'
     )
+    const { mutate } = useSubscribe()
     const [error, setError] = useState<string | null>(null)
     const [value, setValue] = useState('')
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setError('')
-        const emailMatch = value.match(EMAIL_REGEX)
-        if (!emailMatch) {
-            return setError('Fel. Ange data i rätt format example@mail.com')
-        }
-
-        if (subscribeStatus !== 'success') {
-            setValue('')
-            return setSubscriobeStatus('success')
-        }
-
-        return setSubscriobeStatus('idle')
+        handleSubmitFactory({
+            e,
+            mutate,
+            setError,
+            setValue,
+            value,
+            setSubscriobeStatus,
+        })
     }
 
     return (
-        <SubContainer {...rest} onSubmit={e => handleSubmit(e)}>
+        <SubContainer {...rest}>
             <TabletContainer>
                 <NewsletterIcon />
                 <TabletH2>
@@ -195,7 +191,7 @@ const SubHome = ({ ...rest }) => {
                 Missa inga uppdateringar, prenumerera på Amelias nyhetsbrev
             </StyledH2>
             <StyledFormInput placeholder={'E-mail adress'} />
-            <InputWrapper>
+            <InputWrapper onSubmit={e => handleSubmit(e)}>
                 <StyledInput
                     value={value}
                     onChange={e => setValue(e.target.value)}

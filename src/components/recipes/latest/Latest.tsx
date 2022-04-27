@@ -107,7 +107,7 @@ const Latest = ({
 
     data.allWpRecept.nodes = data.allWpRecept.nodes.map(recept => {
         const rating = data.allRating?.nodes?.find(
-            rating => rating.parent.id === recept.id
+            rating => rating.parent?.id === recept.id
         )
         return {
             ...recept,

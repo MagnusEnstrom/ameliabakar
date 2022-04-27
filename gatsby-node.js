@@ -86,7 +86,7 @@ const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
     if (allWpRecept.nodes.length) {
         allWpRecept.nodes.map(recept => {
             const rating = allRating?.nodes?.find(
-                rating => rating.parent.id === recept.id
+                rating => rating.parent?.id === recept.id
             )
             const receptWithRating = {
                 ...recept,
@@ -163,7 +163,7 @@ const createHomePage = async ({ actions, graphql, reporter }) => {
 
     allWpRecept.nodes = allWpRecept.nodes.map(recept => {
         const rating = allRating?.nodes?.find(
-            rating => rating.parent.id === recept.id
+            rating => rating.parent?.id === recept.id
         )
         return ({
             ...recept,
@@ -232,7 +232,7 @@ const createReceptPage = async ({ actions, graphql, reporter }) => {
 
     allWpRecept.nodes = allWpRecept.nodes.map(recept => {
         const rating = allRating?.nodes?.find(
-            rating => rating.parent.id === recept.id
+            rating => rating.parent?.id === recept.id
         )
         return ({
             ...recept,
@@ -302,7 +302,7 @@ const createSavedReceptPage = async ({ actions, graphql, reporter }) => {
 
     allWpRecept.nodes = allWpRecept.nodes.map(recept => {
         const rating = allRating?.nodes?.find(
-            rating => rating.parent.id === recept.id
+            rating => rating.parent?.id === recept.id
         )
         return ({
             ...recept,
