@@ -20,10 +20,7 @@ const {
     collection,
 } = require('firebase/firestore')
 
-exports.onPreInit = () =>
-    console.log(
-        'Loaded gatsby-starter-plugin ---_**_*_**__**___*_*_**_*_*__*_****__**_*__*_*_*_*_*'
-    )
+exports.onPreInit = () => console.log('Loaded gatsby-starter-plugin firebase')
 
 // constants for your GraphQL Post and Author types
 const RATING_NODE_TYPE = `Rating`

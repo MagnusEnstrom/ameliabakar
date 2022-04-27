@@ -177,8 +177,6 @@ const StyleRateRecipe = styled(RateRecipe)({
 type ActiveNav = 'ingredienser' | 'detail'
 type Props = { pageContext: ReceptContent }
 const receptPost = ({ pageContext }: Props) => {
-    console.log(pageContext)
-
     const images = pageContext?.singlePaketAfc?.images?.map(img => {
         return img.localFile.childrenImageSharp[0].original.src
     })

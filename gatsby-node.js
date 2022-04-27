@@ -82,7 +82,6 @@ const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
     // Define the template to use
     const receptPost = require.resolve(`./src/templates/receptPost.tsx`)
 
-    console.log('allRating', allRating)
     if (allWpRecept.nodes.length) {
         allWpRecept.nodes.map(recept => {
             const rating = allRating?.nodes?.find(
