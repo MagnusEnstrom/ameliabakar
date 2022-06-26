@@ -57,7 +57,7 @@ const StyledHeader = styled.header(
                 "links logo icons"
             `
                         : `
-                "links logo search icons"
+                "links logo icons"
             `,
             },
         }
@@ -359,6 +359,17 @@ const Header = ({ transparent, onlynav, ...rest }: Props) => {
                         <SearchIcon className={onlynav ? 'noimg' : ''} />
                     </SearchButton>
                 )}
+                {navStatus === 'search' && (
+                    <SearchForm onSubmit={handleSearchSubmit} role={'search'}>
+                        <StyledSearchInput
+                            value={query}
+                            onChange={e => setQuery(e.target.value)}
+                            aria-label="search"
+                            name={'search'}
+                            placeholder={'sök...'}
+                        />
+                    </SearchForm>
+                )}
                 <HeartLink to={'/mina-recept'}>
                     <StyledSavedCounter />
                     <HeartIcon className={onlynav ? 'noimg' : ''} />
@@ -394,17 +405,6 @@ const Header = ({ transparent, onlynav, ...rest }: Props) => {
                         </NavLink>
                     </HeaderExpandedContent>
                 </>
-            )}
-            {navStatus === 'search' && (
-                <SearchForm onSubmit={handleSearchSubmit} role={'search'}>
-                    <StyledSearchInput
-                        value={query}
-                        onChange={e => setQuery(e.target.value)}
-                        aria-label="search"
-                        name={'search'}
-                        placeholder={'sök...'}
-                    />
-                </SearchForm>
             )}
         </StyledHeader>
     )
