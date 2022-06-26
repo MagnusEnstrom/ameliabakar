@@ -126,7 +126,9 @@ const InvinsibleButton = styled.button({
 const SearchButton = styled(InvinsibleButton)({
     padding: '0px 10px 0px 10px',
     ['@media only screen and (min-width: 170ch)']: {
-        display: 'block',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 })
 const InvinsibleLink = styled(Link)({
