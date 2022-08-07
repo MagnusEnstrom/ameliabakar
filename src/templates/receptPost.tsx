@@ -17,6 +17,9 @@ import Instagram from '../components/instagram/instagram'
 import Footer from '../components/footer/Footer'
 import RecipeCardHeader from '../components/header/RecipeCardHeader'
 import RateRecipe from '../components/rateRecipe/RateRecipe'
+import SimilarRecipes from '../components/similarRecipes/similarRecipes'
+import useSaveRecipe from '../hooks/useSaveRecipe'
+import useIsRecipeSaved from '../hooks/useIsRecipeSaved'
 
 const ChipArea = styled.div({
     display: 'flex',
@@ -174,12 +177,36 @@ const StyleRateRecipe = styled(RateRecipe)({
     },
 })
 
+const StyledSimilarRecipes = styled(SimilarRecipes)({
+    marginBottom: '50px',
+    ['@media only screen and (min-width: 90ch)']: {
+        marginBottom: '70px',
+    },
+
+    ['@media only screen and (min-width: 170ch)']: {
+        marginBottom: '100px',
+    },
+})
 type ActiveNav = 'ingredienser' | 'detail'
 type Props = { pageContext: ReceptContent }
 const receptPost = ({ pageContext }: Props) => {
     const images = pageContext?.singlePaketAfc?.images?.map(img => {
         return img.localFile.childrenImageSharp[0].original.src
     })
+
+    const toggleRecipe = useSaveRecipe()
+    const [checked, setChecked] = useState<boolean>()
+    const handleClick = (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+        e.stopPropagation()
+        e.preventDefault()
+        setChecked(toggleRecipe(pageContext.id))
+    }
+
+    const isSaved = useIsRecipeSaved(pageContext.id)
+
+    const isChecked = typeof checked !== 'undefined' ? checked : isSaved
 
     const [activeNav, setActiveNav] = useState<ActiveNav>('ingredienser')
     return (
@@ -249,8 +276,12 @@ const receptPost = ({ pageContext }: Props) => {
                     ))}
                 </ChipArea>
                 <FabArea>
-                    <FabWrapper>
-                        <Fab variant={'save'} />
+                    <FabWrapper onClick={e => handleClick(e)}>
+                        {isChecked ? (
+                            <Fab variant={'saved'} />
+                        ) : (
+                            <Fab variant={'save'} />
+                        )}
                         <FabText>Spara</FabText>
                     </FabWrapper>
                     <FabWrapper>
@@ -263,7 +294,11 @@ const receptPost = ({ pageContext }: Props) => {
                     </FabWrapper>
                 </FabArea>
             </ContentArea>
+
             <StyledH2>Du kanske också gillar...</StyledH2>
+            {/* <StyledSimilarRecipes
+                tags={pageContext.tags.nodes.map(tag => tag.name)}
+            /> */}
             <Instagram />
             <Footer />
         </div>

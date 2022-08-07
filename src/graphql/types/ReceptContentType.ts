@@ -13,7 +13,6 @@ export type ReceptContent = {
         }[]
     }
     singlePaketAfc: {
-        tooltip: null | string
         tips: string
         tidFormat: 'min' | 'h'
         tid: number
