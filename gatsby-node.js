@@ -49,7 +49,6 @@ const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
                         }
                     }
                     singlePaketAfc {
-                        tooltip
                         tips
                         tidFormat
                         tid
@@ -127,7 +126,6 @@ const createHomePage = async ({ actions, graphql, reporter }) => {
                         }
                     }
                     singlePaketAfc {
-                        tooltip
                         tips
                         tidFormat
                         tid
