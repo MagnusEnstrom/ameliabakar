@@ -49,7 +49,6 @@ const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
                         }
                     }
                     singlePaketAfc {
-                        tips
                         tidFormat
                         tid
                         svarighetsgrad
@@ -126,7 +125,6 @@ const createHomePage = async ({ actions, graphql, reporter }) => {
                         }
                     }
                     singlePaketAfc {
-                        tips
                         tidFormat
                         tid
                         svarighetsgrad
