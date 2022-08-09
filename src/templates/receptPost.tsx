@@ -17,7 +17,6 @@ import Instagram from '../components/instagram/instagram'
 import Footer from '../components/footer/Footer'
 import RecipeCardHeader from '../components/header/RecipeCardHeader'
 import RateRecipe from '../components/rateRecipe/RateRecipe'
-import SimilarRecipes from '../components/similarRecipes/similarRecipes'
 import useSaveRecipe from '../hooks/useSaveRecipe'
 import useIsRecipeSaved from '../hooks/useIsRecipeSaved'
 
