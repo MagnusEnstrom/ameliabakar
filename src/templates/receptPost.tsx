@@ -19,7 +19,7 @@ import RecipeCardHeader from '../components/header/RecipeCardHeader'
 import RateRecipe from '../components/rateRecipe/RateRecipe'
 import useSaveRecipe from '../hooks/useSaveRecipe'
 import useIsRecipeSaved from '../hooks/useIsRecipeSaved'
-import SimilarRecipes from '../components/similarRecipes/similarRecipes'
+import SimilarRecipes from '../components/similarRecipes/SimilarRecipes'
 import colors from '../lib/colors'
 
 const ChipArea = styled.div({
