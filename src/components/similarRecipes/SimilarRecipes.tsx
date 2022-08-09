@@ -1,64 +1,63 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
-import { ReceptPageQuery } from '../../../graphql/types/ReceptContentType'
-import Secondary from '../../buttons/secondary/Secondary'
-import ResipeCard from '../../recipeCard/ResipeCard'
+import { AllWpRecept } from '../../graphql/types/ReceptContentType'
+import Secondary from '../buttons/secondary/Secondary'
+import ResipeCard from '../recipeCard/ResipeCard'
 
-const StyledRecipeGrid = styled.div({
+const RecipeGrid = styled.div({
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '10px',
-
     ['@media only screen and (min-width: 90ch)']: {
-        gridTemplateColumns: '1fr 1fr 1fr',
-        gap: '20px',
-    },
-    ['@media only screen and (min-width: 170ch)']: {
-        gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '30px',
+        gridTemplateColumns: '1fr',
     },
 })
 const Wrapper = styled.div({
     display: 'grid',
 })
 
-type Props = {
-    data: ReceptPageQuery['nodes']
-    show?: number
-    loadMore?: boolean
-}
-
-const RecipeGrid = ({
+const SimilarRecipes = ({
     show = 6,
     loadMore,
-    data,
+    tags,
+    allWpRecept,
     ...rest
-}: Props &
-    React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLDivElement>,
-        HTMLDivElement
-    >) => {
+}: {
+    show?: number
+    loadMore?: boolean
+    tags: string[]
+    allWpRecept: AllWpRecept
+} & React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+>) => {
     const [amount, setstate] = useState(show)
-    const allRecipes = data
-    const recipies = data.slice(0, amount)
 
+    const allSimilarWpRecept = allWpRecept.filter(recept => {
+        return recept.tags.nodes.some(tag => tags.includes(tag.name))
+    })
+    const recipies = allSimilarWpRecept.slice(0, amount)
     const onClick = () => {
         setstate(prev => prev + 8)
     }
 
     return (
         <Wrapper>
-            <StyledRecipeGrid {...rest}>
+            <RecipeGrid {...rest}>
                 {recipies.map(recipe => {
                     return (
                         <ResipeCard
-                            uri={recipe.uri}
+                            kortBeskrivning={
+                                recipe.singlePaketAfc.kortBeskrivning
+                            }
+                            variant="vert"
                             svarighetsgrad={
                                 recipe.singlePaketAfc.svarighetsgrad
                             }
+                            uri={recipe.uri}
                             key={recipe.id}
-                            id={recipe.id}
                             rating={recipe?.rating?.avgRating}
+                            id={recipe.id}
                             tid={recipe.singlePaketAfc.tid}
                             tidFormat={recipe.singlePaketAfc.tidFormat}
                             title={recipe.title}
@@ -69,10 +68,9 @@ const RecipeGrid = ({
                         />
                     )
                 })}
-            </StyledRecipeGrid>
-            {loadMore && amount < allRecipes.length && (
+            </RecipeGrid>
+            {loadMore && amount < allSimilarWpRecept.length && (
                 <Secondary
-                    data-cy={'loadmore'}
                     style={{ marginTop: '30px', placeSelf: 'center' }}
                     onClick={onClick}
                 >
@@ -83,4 +81,4 @@ const RecipeGrid = ({
     )
 }
 
-export default RecipeGrid
+export default SimilarRecipes

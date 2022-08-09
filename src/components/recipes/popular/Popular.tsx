@@ -118,7 +118,8 @@ const Popular = ({
             rating: rating ? rating : null,
         }
     })
-    const recipies = data.allWpRecept.nodes.slice(0, 4) as [
+
+    const recipesWithRating = data.allWpRecept.nodes as [
         ...(PopularQuery['allWpRecept']['nodes'] &
             {
                 rating?: {
@@ -127,6 +128,14 @@ const Popular = ({
                 } | null
             }[])
     ]
+
+    recipesWithRating.sort((a, b) => {
+        if (a.rating?.avgRating) return 1
+        if (a.rating?.avgRating > b.rating?.avgRating) return -1
+        if (a.rating?.avgRating < b.rating?.avgRating) return 1
+        return 0
+    })
+    const recipies = recipesWithRating.slice(0, 4)
 
     return (
         <RecipeGrid {...rest}>

@@ -100,3 +100,59 @@ export type LocalSearchRecepies = {
         }
     }
 }
+
+type LatestQuery = {
+    allRating: {
+        nodes: {
+            rating?: {
+                avgRating: number
+                numRatings: number
+            } | null
+            parent: {
+                id: string
+            }
+        }[]
+    }
+    allWpRecept: {
+        nodes: {
+            id: string
+            uri: string
+            title: string
+            tags: {
+                nodes: {
+                    name: string
+                }[]
+            }
+            singlePaketAfc: {
+                tidFormat: string
+                tid: number
+                svarighetsgrad: 'Lätt' | 'Medel' | 'Svår'
+                kortBeskrivning: string
+                images: {
+                    localFile: {
+                        childrenImageSharp: [
+                            {
+                                original: {
+                                    src: string
+                                }
+                                fixed: {
+                                    src: string
+                                }
+                            }
+                        ]
+                    }
+                }[]
+            }
+        }[]
+    }
+}
+
+export type AllWpRecept = [
+    ...(LatestQuery['allWpRecept']['nodes'] &
+        {
+            rating?: {
+                avgRating: number
+                numRatings: number
+            } | null
+        }[])
+]

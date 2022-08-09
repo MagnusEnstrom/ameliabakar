@@ -9,12 +9,11 @@ const Wrapper = styled.div({
         margin: '32px 20px',
     },
 })
-const ContentNavWrapper: FC = ({children, ...rest}) => {
-    return (
-        <Wrapper {...rest}>
-            {children}
-        </Wrapper>
-    )
+const ContentNavWrapper: FC<React.HTMLAttributes<HTMLDivElement>> = ({
+    children,
+    ...rest
+}) => {
+    return <Wrapper {...rest}>{children}</Wrapper>
 }
 
 export default ContentNavWrapper

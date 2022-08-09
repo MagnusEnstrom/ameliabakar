@@ -75,26 +75,32 @@ const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
         reporter.error('There was an error fetching posts', result.errors)
     }
 
-    const { allWpRecept, allRating } = result.data
+    const { allWpRecept, allRating } = result.data;
+
+    allWpRecept.nodes = allWpRecept.nodes.map(recept => {
+        const rating = allRating?.nodes?.find(
+            rating => rating.parent?.id === recept.id
+        )
+        return {
+            ...recept,
+            rating: rating ? rating : null,
+        }
+    })
 
     // Define the template to use
     const receptPost = require.resolve(`./src/templates/receptPost.tsx`)
 
     if (allWpRecept.nodes.length) {
         allWpRecept.nodes.map(recept => {
-            const rating = allRating?.nodes?.find(
-                rating => rating.parent?.id === recept.id
-            )
-            const receptWithRating = {
-                ...recept,
-                rating: rating ? rating : null,
-            }
             actions.createPage({
                 // It's best practice to use the uri field from WPGraphQL nodes when
                 // building
                 path: recept.uri,
                 component: receptPost,
-                context: receptWithRating,
+                context: {
+                    recept,
+                    allWpRecept: allWpRecept.nodes,
+                },
             })
         })
     }

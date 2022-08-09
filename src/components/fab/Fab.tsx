@@ -8,7 +8,7 @@ import HeartFilled from '../../assets/heart-fill-red.svg'
 import Copy from '../../assets/copy.svg'
 import Filter from '../../assets/filter-vertical.svg'
 
-const StyledFab = styled.button({
+const StyledFab = styled.div({
     width: '44px',
     height: '44px',
     borderRadius: '50%',
