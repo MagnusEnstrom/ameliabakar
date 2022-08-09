@@ -300,17 +300,24 @@ const receptPost = ({ pageContext }: Props) => {
                         <FabText>Skriv ut</FabText>
                     </FabWrapper>
                 </FabArea>
-                <div style={{ gridColumn: '1 / -1', width: '100%' }}>
-                    <StyledH2>Du kanske också gillar...</StyledH2>
-                    <StyledSimilarRecipes
-                        tags={recept.tags.nodes.map(tag => tag.name)}
-                        allWpRecept={allWpRecept.filter(
-                            wpRecept => wpRecept.id !== recept.id
-                        )}
-                    />
-                </div>
             </ContentArea>
 
+            <div
+                style={{
+                    width: '100%',
+                    display: 'grid',
+                    justifyContent: 'center',
+                }}
+            >
+                <StyledH2>Du kanske också gillar...</StyledH2>
+                <StyledSimilarRecipes
+                    tags={recept.tags.nodes.map(tag => tag.name)}
+                    show={4}
+                    allWpRecept={allWpRecept.filter(
+                        wpRecept => wpRecept.id !== recept.id
+                    )}
+                />
+            </div>
             <Instagram />
             <Footer />
         </div>

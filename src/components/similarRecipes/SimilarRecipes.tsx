@@ -8,8 +8,20 @@ const RecipeGrid = styled.div({
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '10px',
+
     ['@media only screen and (min-width: 90ch)']: {
-        gridTemplateColumns: '1fr',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: '20px',
+        'a:last-of-type': {
+            display: 'none',
+        },
+    },
+    ['@media only screen and (min-width: 170ch)']: {
+        gap: '30px',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        'a:last-of-type': {
+            display: 'block',
+        },
     },
 })
 const Wrapper = styled.div({
@@ -50,7 +62,7 @@ const SimilarRecipes = ({
                             kortBeskrivning={
                                 recipe.singlePaketAfc.kortBeskrivning
                             }
-                            variant="vert"
+                            variant="card"
                             svarighetsgrad={
                                 recipe.singlePaketAfc.svarighetsgrad
                             }

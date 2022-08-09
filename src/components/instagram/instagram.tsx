@@ -168,34 +168,34 @@ const InstagramIco = styled(InstagramIcon)({
 })
 
 const Instagram = () => {
-    // const data = useStaticQuery<InstagramData>(graphql`
-    //     {
-    //         allInstagramContent(
-    //             sort: { fields: [timestamp], order: DESC }
-    //             limit: 100
-    //         ) {
-    //             nodes {
-    //                 id
-    //                 permalink
-    //                 localFile {
-    //                     childImageSharp {
-    //                         fixed(width: 300, height: 300) {
-    //                             src
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // `)
+    const data = useStaticQuery<InstagramData>(graphql`
+        {
+            allInstagramContent(
+                sort: { fields: [timestamp], order: DESC }
+                limit: 100
+            ) {
+                nodes {
+                    id
+                    permalink
+                    localFile {
+                        childImageSharp {
+                            fixed(width: 300, height: 300) {
+                                src
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    `)
 
     const [amount, setAmount] = useState(9)
 
     const onClick = () => {
         setAmount(prev => prev + 9)
     }
-    // const allInstagram = data.allInstagramContent.nodes
-    // const instagramData = allInstagram.slice(0, amount)
+    const allInstagram = data.allInstagramContent.nodes
+    const instagramData = allInstagram.slice(0, amount)
     return (
         <Wrapper>
             <FollowArea>
@@ -208,7 +208,7 @@ const Instagram = () => {
                 </FollowMeOnInsta>
             </FollowArea>
             <InstagramGrid>
-                {/* {instagramData.map(node => {
+                {instagramData.map(node => {
                     return (
                         <StyledInvisibleLink
                             key={node.id}
@@ -219,20 +219,23 @@ const Instagram = () => {
                             />
                         </StyledInvisibleLink>
                     )
-                })} */}
+                })}
             </InstagramGrid>
 
-            {/* {amount < allInstagram.length && ( */}
-            <LoadMoreWrapper>
-                <BigLeft />
-                <SmallLeft />
-                <Secondary style={{ placeSelf: 'center' }} onClick={onClick}>
-                    Ladda fler
-                </Secondary>
-                <SmallRight />
-                <BigRight />
-            </LoadMoreWrapper>
-            {/* )} */}
+            {amount < allInstagram.length && (
+                <LoadMoreWrapper>
+                    <BigLeft />
+                    <SmallLeft />
+                    <Secondary
+                        style={{ placeSelf: 'center' }}
+                        onClick={onClick}
+                    >
+                        Ladda fler
+                    </Secondary>
+                    <SmallRight />
+                    <BigRight />
+                </LoadMoreWrapper>
+            )}
         </Wrapper>
     )
 }
