@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ReceptContent } from '../graphql/types/ReceptContentType'
+import { AllWpRecept, ReceptContent } from '../graphql/types/ReceptContentType'
 import H2 from '../components/typography/h2/H2'
 import styled from '@emotion/styled'
 import ContentNavWrapper from '../components/navigation/contentNavWrapper/ContentNavWrapper'
@@ -19,6 +19,8 @@ import RecipeCardHeader from '../components/header/RecipeCardHeader'
 import RateRecipe from '../components/rateRecipe/RateRecipe'
 import useSaveRecipe from '../hooks/useSaveRecipe'
 import useIsRecipeSaved from '../hooks/useIsRecipeSaved'
+import SimilarRecipes from '../components/similarRecipes/SimilarRecipes'
+import colors from '../lib/colors'
 
 const ChipArea = styled.div({
     display: 'flex',
@@ -73,11 +75,13 @@ const ContentArea = styled.div({
     },
 })
 
-const FabWrapper = styled.div({
+const FabWrapper = styled.button({
     display: 'flex',
     flexDirection: 'column',
     gap: '10px',
     alignItems: 'center',
+    backgroundColor: colors.white,
+    border: 'none',
 })
 
 const FabText = styled.span({
@@ -187,9 +191,13 @@ const StyledSimilarRecipes = styled(SimilarRecipes)({
     },
 })
 type ActiveNav = 'ingredienser' | 'detail'
-type Props = { pageContext: ReceptContent }
+type Props = {
+    pageContext: { allWpRecept: AllWpRecept; recept: ReceptContent }
+}
 const receptPost = ({ pageContext }: Props) => {
-    const images = pageContext?.singlePaketAfc?.images?.map(img => {
+    const { allWpRecept, recept } = pageContext
+    console.log('pageContext', pageContext)
+    const images = recept?.singlePaketAfc?.images?.map(img => {
         return img.localFile.childrenImageSharp[0].original.src
     })
 
@@ -200,10 +208,10 @@ const receptPost = ({ pageContext }: Props) => {
     ) => {
         e.stopPropagation()
         e.preventDefault()
-        setChecked(toggleRecipe(pageContext.id))
+        setChecked(toggleRecipe(recept.id))
     }
 
-    const isSaved = useIsRecipeSaved(pageContext.id)
+    const isSaved = useIsRecipeSaved(recept.id)
 
     const isChecked = typeof checked !== 'undefined' ? checked : isSaved
 
@@ -211,15 +219,15 @@ const receptPost = ({ pageContext }: Props) => {
     return (
         <div>
             <RecipeCardHeader
-                rating={pageContext?.rating?.avgRating}
-                recipeId={pageContext.id}
-                svarighetsgrad={pageContext.singlePaketAfc.svarighetsgrad}
-                tid={pageContext.singlePaketAfc.tid}
-                tidFormat={pageContext.singlePaketAfc.tidFormat}
-                kortBeskrivning={pageContext.singlePaketAfc.kortBeskrivning}
-                title={pageContext.title}
+                rating={recept?.rating?.avgRating}
+                recipeId={recept.id}
+                svarighetsgrad={recept.singlePaketAfc.svarighetsgrad}
+                tid={recept.singlePaketAfc.tid}
+                tidFormat={recept.singlePaketAfc.tidFormat}
+                kortBeskrivning={recept.singlePaketAfc.kortBeskrivning}
+                title={recept.title}
                 imgUrl={
-                    pageContext.singlePaketAfc?.images?.[0]?.localFile
+                    recept.singlePaketAfc?.images?.[0]?.localFile
                         ?.childrenImageSharp?.[0]?.original?.src
                 }
                 images={images}
@@ -231,7 +239,7 @@ const receptPost = ({ pageContext }: Props) => {
 
             {/* Betygsätt */}
             <ContentArea>
-                <StyleRateRecipe pageContext={pageContext} />
+                <StyleRateRecipe pageContext={recept} />
                 <StyledContentNavWrapper>
                     <ContentNavItem
                         text={'Ingredienser'}
@@ -252,7 +260,7 @@ const receptPost = ({ pageContext }: Props) => {
                 </StyledH3Recipe>
                 <StyledIngredients
                     activeNav={activeNav}
-                    content={pageContext.content}
+                    content={recept.content}
                 />
                 <StyledH3DoLikeTHis>
                     <IconSpan>
@@ -262,10 +270,10 @@ const receptPost = ({ pageContext }: Props) => {
                 </StyledH3DoLikeTHis>
                 <StyledDoLikeThis
                     activeNav={activeNav}
-                    saHarGorDu={pageContext.singlePaketAfc.saHarGorDu}
+                    saHarGorDu={recept.singlePaketAfc.saHarGorDu}
                 />
                 <ChipArea>
-                    {pageContext.tags.nodes.map(tag => (
+                    {recept.tags.nodes.map(tag => (
                         <InvisibleLink
                             key={tag.name}
                             to={`/recept?q=${tag.name}`}
@@ -294,10 +302,22 @@ const receptPost = ({ pageContext }: Props) => {
                 </FabArea>
             </ContentArea>
 
-            <StyledH2>Du kanske också gillar...</StyledH2>
-            {/* <StyledSimilarRecipes
-                tags={pageContext.tags.nodes.map(tag => tag.name)}
-            /> */}
+            <div
+                style={{
+                    width: '100%',
+                    display: 'grid',
+                    justifyContent: 'center',
+                }}
+            >
+                <StyledH2>Du kanske också gillar...</StyledH2>
+                <StyledSimilarRecipes
+                    tags={recept.tags.nodes.map(tag => tag.name)}
+                    show={4}
+                    allWpRecept={allWpRecept.filter(
+                        wpRecept => wpRecept.id !== recept.id
+                    )}
+                />
+            </div>
             <Instagram />
             <Footer />
         </div>
