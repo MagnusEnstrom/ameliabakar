@@ -9,9 +9,13 @@ import H1 from '../typography/h1/H1'
 import P from '../typography/p/P'
 import Header from './Header'
 
-const HeaderImg = styled.div(({imgSrc}: {imgSrc: string}) => {
+const HeaderImg = styled.div(({ imgSrc }: { imgSrc: string }) => {
     return {
-        height: ['100vh', '-webkit-fill-available', 'calc(var(--vh, 1vh) * 100)'],
+        height: [
+            '100vh',
+            '-webkit-fill-available',
+            'calc(var(--vh, 1vh) * 100)',
+        ],
         backgroundImage: `url(${imgSrc})`,
         padding: '20px 20px 30px 20px',
         backgroundPosition: 'center',
@@ -37,13 +41,12 @@ const HeaderImg = styled.div(({imgSrc}: {imgSrc: string}) => {
         },
         ['@media only screen and (min-width: 170ch)']: {
             padding: '20px 20px 30px 70px',
-
         },
     }
 })
 
 const StyledTransparentHeader = styled(Header)({
-    position:'absolute',
+    position: 'absolute',
     top: '0px',
     right: '0px',
     left: '0px',
@@ -51,18 +54,18 @@ const StyledTransparentHeader = styled(Header)({
 })
 
 const Description = styled(P)({
-    textAlign: 'center', 
-    color: colors.white, 
+    textAlign: 'center',
+    color: colors.white,
     gridArea: 'description',
     textOverflow: 'ellipsis',
     display: '-webkit-box',
     WebkitLineClamp: 3,
-    lineClamp: 3, 
+    lineClamp: 3,
     WebkitBoxOrient: 'vertical',
     overflow: 'hidden',
     ['@media only screen and (min-width: 90ch)']: {
         WebkitLineClamp: 4,
-        lineClamp: 4, 
+        lineClamp: 4,
         textAlign: 'start',
     },
 })
@@ -70,82 +73,98 @@ const FullScreenRecipe = styled.div({
     position: 'relative',
 })
 const StyledInvisibleLink = styled(InvisibleLink)({
-    justifySelf: 'center', 
+    justifySelf: 'center',
     gridArea: 'button',
     ['@media only screen and (min-width: 90ch)']: {
-        justifySelf: 'start', 
+        justifySelf: 'start',
     },
 })
 
 type LatestQuery = {
     allWpRecept: {
         nodes: {
-            id: string,
-            uri: string,
-            title:string,
+            id: string
+            uri: string
+            title: string
 
             singlePaketAfc: {
-                tidFormat: string,
-                tid: number,
-                kortBeskrivning: string;
-                images: 
-                    {
-                        localFile: {
-                            childrenImageSharp: [
-                                {
-                                    original: {
-                                        src: string
-                                    },
-                                    fixed: {
-                                        src: string
-                                    }
+                tidFormat: string
+                tid: number
+                kortBeskrivning: string
+                images: {
+                    localFile: {
+                        childrenImageSharp: [
+                            {
+                                original: {
+                                    src: string
                                 }
-                            ]
-                        }
-                    }[]
+                                fixed: {
+                                    src: string
+                                }
+                            }
+                        ]
+                    }
+                }[]
             }
         }[]
     }
 }
 
 const HeaderHome = () => {
-    const data: LatestQuery = useStaticQuery(graphql`{
-        allWpRecept(sort: { fields: [date] order: DESC}) {
-          nodes {
-            id
-            uri
-            title
-            singlePaketAfc {
-              tidFormat
-              tid
-              kortBeskrivning
-              images {
-                localFile {
-                  childrenImageSharp {
-                    original {
-                      src
+    const data: LatestQuery = useStaticQuery(graphql`
+        {
+            allWpRecept(sort: { fields: [date], order: DESC }) {
+                nodes {
+                    id
+                    uri
+                    title
+                    singlePaketAfc {
+                        tidFormat
+                        tid
+                        kortBeskrivning
+                        images {
+                            localFile {
+                                childImageSharp {
+                                    gatsbyImageData
+                                }
+                            }
+                        }
                     }
-                    fixed(width: 400, height: 400) {
-                      src
-                    }
-                  }
                 }
-              }
             }
-          }
         }
-      }`)
-    const recipies = data.allWpRecept.nodes.filter(node => node.singlePaketAfc.images?.[0].localFile.childrenImageSharp?.[0].original).slice(0, 3)
+    `)
+    const recipies = data.allWpRecept.nodes
+        .filter(
+            node =>
+                node.singlePaketAfc.images?.[0].localFile
+                    .childrenImageSharp?.[0].original
+        )
+        .slice(0, 3)
 
     return (
         <FullScreenRecipe>
             <StyledTransparentHeader />
             <Slider>
-                {recipies.map((node) => {
+                {recipies.map(node => {
                     return (
-                        <HeaderImg key={node.id} imgSrc={node.singlePaketAfc.images?.[0].localFile.childrenImageSharp?.[0].original.src}>
-                            <H1 style={{ color: colors.white, gridArea: 'header', margin: '0px 0px 20px 0px' }} >{node.title}</H1>
-                            <Description >
+                        <HeaderImg
+                            key={node.id}
+                            imgSrc={
+                                node.singlePaketAfc.images?.[0].localFile
+                                    .childrenImageSharp?.[0].original.src
+                            }
+                        >
+                            <H1
+                                style={{
+                                    color: colors.white,
+                                    gridArea: 'header',
+                                    margin: '0px 0px 20px 0px',
+                                }}
+                            >
+                                {node.title}
+                            </H1>
+                            <Description>
                                 {node.singlePaketAfc.kortBeskrivning}
                             </Description>
                             <StyledInvisibleLink to={node.uri}>

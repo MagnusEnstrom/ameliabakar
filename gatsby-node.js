@@ -56,13 +56,8 @@ const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
                         kortBeskrivning
                         images {
                             localFile {
-                                childrenImageSharp {
-                                    original {
-                                        src
-                                    }
-                                    fixed(width: 400, height: 400) {
-                                        src
-                                    }
+                                childImageSharp {
+                                    gatsbyImageData
                                 }
                             }
                         }
@@ -75,7 +70,7 @@ const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
         reporter.error('There was an error fetching posts', result.errors)
     }
 
-    const { allWpRecept, allRating } = result.data;
+    const { allWpRecept, allRating } = result.data
 
     allWpRecept.nodes = allWpRecept.nodes.map(recept => {
         const rating = allRating?.nodes?.find(
@@ -138,13 +133,8 @@ const createHomePage = async ({ actions, graphql, reporter }) => {
                         kortBeskrivning
                         images {
                             localFile {
-                                childrenImageSharp {
-                                    original {
-                                        src
-                                    }
-                                    fixed(width: 400, height: 400) {
-                                        src
-                                    }
+                                childImageSharp {
+                                    gatsbyImageData
                                 }
                             }
                         }
@@ -166,10 +156,10 @@ const createHomePage = async ({ actions, graphql, reporter }) => {
         const rating = allRating?.nodes?.find(
             rating => rating.parent?.id === recept.id
         )
-        return ({
+        return {
             ...recept,
             rating: rating ? rating : null,
-        })
+        }
     })
 
     actions.createPage({
@@ -207,13 +197,8 @@ const createReceptPage = async ({ actions, graphql, reporter }) => {
                         tid
                         images {
                             localFile {
-                                childrenImageSharp {
-                                    original {
-                                        src
-                                    }
-                                    fixed(width: 400, height: 400) {
-                                        src
-                                    }
+                                childImageSharp {
+                                    gatsbyImageData
                                 }
                             }
                         }
@@ -235,10 +220,10 @@ const createReceptPage = async ({ actions, graphql, reporter }) => {
         const rating = allRating?.nodes?.find(
             rating => rating.parent?.id === recept.id
         )
-        return ({
+        return {
             ...recept,
             rating: rating ? rating : null,
-        })
+        }
     })
 
     actions.createPage({
@@ -277,13 +262,8 @@ const createSavedReceptPage = async ({ actions, graphql, reporter }) => {
                         tid
                         images {
                             localFile {
-                                childrenImageSharp {
-                                    original {
-                                        src
-                                    }
-                                    fixed(width: 400, height: 400) {
-                                        src
-                                    }
+                                childImageSharp {
+                                    gatsbyImageData
                                 }
                             }
                         }
@@ -305,10 +285,10 @@ const createSavedReceptPage = async ({ actions, graphql, reporter }) => {
         const rating = allRating?.nodes?.find(
             rating => rating.parent?.id === recept.id
         )
-        return ({
+        return {
             ...recept,
             rating: rating ? rating : null,
-        })
+        }
     })
 
     actions.createPage({
@@ -337,15 +317,10 @@ const createTipsPage = async ({ actions, graphql, reporter }) => {
                 nodes {
                     title
                     tips {
-                        image {
+                        images {
                             localFile {
                                 childImageSharp {
-                                    original {
-                                        src
-                                    }
-                                    fixed {
-                                        src
-                                    }
+                                    gatsbyImageData
                                 }
                             }
                         }

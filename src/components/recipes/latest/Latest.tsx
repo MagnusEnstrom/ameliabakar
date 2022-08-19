@@ -89,13 +89,8 @@ const Latest = ({
                         kortBeskrivning
                         images {
                             localFile {
-                                childrenImageSharp {
-                                    original {
-                                        src
-                                    }
-                                    fixed(width: 400, height: 400) {
-                                        src
-                                    }
+                                childImageSharp {
+                                    gatsbyImageData
                                 }
                             }
                         }
