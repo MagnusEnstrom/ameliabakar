@@ -317,7 +317,7 @@ const createTipsPage = async ({ actions, graphql, reporter }) => {
                 nodes {
                     title
                     tips {
-                        images {
+                        image {
                             localFile {
                                 childImageSharp {
                                     gatsbyImageData

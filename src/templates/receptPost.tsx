@@ -196,7 +196,6 @@ type Props = {
 }
 const receptPost = ({ pageContext }: Props) => {
     const { allWpRecept, recept } = pageContext
-    console.log('pageContext', pageContext)
     const images = recept?.singlePaketAfc?.images?.map(img => {
         return img.localFile.childrenImageSharp[0].original.src
     })
