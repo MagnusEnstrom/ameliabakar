@@ -1,16 +1,18 @@
-import React, { FC } from 'react'
-import { Link, useStaticQuery, graphql } from 'gatsby'
+import React, { FC, ReactNode } from 'react'
 import Header from './header/Header'
 import HeaderImgs from './header/HeaderImgs'
 import Footer from './footer/Footer'
 import HeaderHome from './header/HeaderHome'
 import Instagram from './instagram/instagram'
+import { IGatsbyImageData } from 'gatsby-plugin-image'
 
-const Layout: FC<{ isHomePage?: boolean; navImgs?: string[] }> = ({
-    isHomePage,
-    navImgs,
-    children,
-}) => {
+type Props = {
+    isHomePage?: boolean
+    navImgs?: IGatsbyImageData[]
+    children: ReactNode
+}
+
+const Layout = ({ isHomePage, navImgs, children }: Props) => {
     return (
         <div data-is-root-path={isHomePage} style={{ overflowY: 'hidden' }}>
             {isHomePage ? (
@@ -22,7 +24,6 @@ const Layout: FC<{ isHomePage?: boolean; navImgs?: string[] }> = ({
             )}
             <main>{children}</main>
 
-            {/* Render instagram */}
             <Instagram />
             <Footer />
         </div>

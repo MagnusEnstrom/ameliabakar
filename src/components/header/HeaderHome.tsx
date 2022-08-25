@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { graphql, useStaticQuery } from 'gatsby'
+import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image'
 import React, { useEffect } from 'react'
 import colors from '../../lib/colors'
 import HomePage from '../buttons/homepage/HomePage'
@@ -9,18 +10,16 @@ import H1 from '../typography/h1/H1'
 import P from '../typography/p/P'
 import Header from './Header'
 
-const HeaderImg = styled.div(({ imgSrc }: { imgSrc: string }) => {
+const HeaderImg = styled.div(() => {
     return {
         height: [
             '100vh',
             '-webkit-fill-available',
             'calc(var(--vh, 1vh) * 100)',
         ],
-        backgroundImage: `url(${imgSrc})`,
         padding: '20px 20px 30px 20px',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
         display: 'grid !important',
+        position: 'relative',
         placeItems: 'end center',
         gridTemplateRows: '1fr min-content min-content min-content',
         gridTemplateAreas: `
@@ -41,6 +40,15 @@ const HeaderImg = styled.div(({ imgSrc }: { imgSrc: string }) => {
         },
         ['@media only screen and (min-width: 170ch)']: {
             padding: '20px 20px 30px 70px',
+        },
+
+        '.header-img': {
+            width: '100%',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
         },
     }
 })
@@ -93,16 +101,9 @@ type LatestQuery = {
                 kortBeskrivning: string
                 images: {
                     localFile: {
-                        childrenImageSharp: [
-                            {
-                                original: {
-                                    src: string
-                                }
-                                fixed: {
-                                    src: string
-                                }
-                            }
-                        ]
+                        childImageSharp: {
+                            gatsbyImageData: ImageDataLike
+                        }
                     }
                 }[]
             }
@@ -134,27 +135,32 @@ const HeaderHome = () => {
             }
         }
     `)
-    const recipies = data.allWpRecept.nodes
-        .filter(
+    console.log(
+        'images',
+        data.allWpRecept.nodes.map(
             node =>
-                node.singlePaketAfc.images?.[0].localFile
-                    .childrenImageSharp?.[0].original
+                node.singlePaketAfc.images?.[0].localFile.childImageSharp
+                    ?.gatsbyImageData
         )
-        .slice(0, 3)
+    )
+    const recipies = data.allWpRecept.nodes.slice(0, 3)
 
     return (
         <FullScreenRecipe>
             <StyledTransparentHeader />
             <Slider>
                 {recipies.map(node => {
+                    const image = getImage(
+                        node.singlePaketAfc.images[0].localFile.childImageSharp
+                    )
                     return (
-                        <HeaderImg
-                            key={node.id}
-                            imgSrc={
-                                node.singlePaketAfc.images?.[0].localFile
-                                    .childrenImageSharp?.[0].original.src
-                            }
-                        >
+                        <HeaderImg key={node.id}>
+                            <GatsbyImage
+                                image={image}
+                                alt={node.title || ''}
+                                className="header-img"
+                                objectFit="cover"
+                            />
                             <H1
                                 style={{
                                     color: colors.white,

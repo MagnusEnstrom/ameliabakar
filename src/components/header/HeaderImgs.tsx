@@ -1,24 +1,20 @@
 import styled from '@emotion/styled'
+import { GatsbyImage, IGatsbyImageData } from 'gatsby-plugin-image'
 import React from 'react'
 import Slider from '../slider/Slider'
 import Header from './Header'
 
-const HeaderImg = styled.div(({ imgSrc }: { imgSrc: string }) => {
+const HeaderImg = styled.div(() => {
     return {
-        height: '70vh',
-        backgroundImage: `url(${imgSrc})`,
-        padding: '20px 20px 30px 20px',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
+        height: ['70vh', 'calc(var(--vh, 1vh) * 70)'],
         display: 'grid !important',
-        placeItems: 'end center',
-        gridTemplateRows: '1fr min-content min-content min-content',
-        gridTemplateAreas: `
-            "...."
-            "header"
-            "description"
-            "button"
-        `,
+
+        '.header-img': {
+            width: '100%',
+            maxWidth: '100vh',
+            height: '100%',
+            zIndex: '-1',
+        },
     }
 })
 
@@ -49,37 +45,7 @@ const FullScreenRecipe = styled.div({
     },
 })
 
-type LatestQuery = {
-    allWpRecept: {
-        nodes: {
-            id: string
-            uri: string
-            title: string
-
-            singlePaketAfc: {
-                tidFormat: string
-                tid: number
-                kortBeskrivning: string
-                images: {
-                    localFile: {
-                        childrenImageSharp: [
-                            {
-                                original: {
-                                    src: string
-                                }
-                                fixed: {
-                                    src: string
-                                }
-                            }
-                        ]
-                    }
-                }[]
-            }
-        }[]
-    }
-}
-
-const HeaderImgs = ({ images, ...rest }: { images: string[] }) => {
+const HeaderImgs = ({ images, ...rest }: { images?: IGatsbyImageData[] }) => {
     const settings = {
         appendDots: dots => (
             <StyledDotsContainer>
@@ -92,8 +58,7 @@ const HeaderImgs = ({ images, ...rest }: { images: string[] }) => {
                         padding: '10px',
                     }}
                 >
-                    {' '}
-                    {dots}{' '}
+                    {dots}
                 </ul>
             </StyledDotsContainer>
         ),
@@ -103,8 +68,17 @@ const HeaderImgs = ({ images, ...rest }: { images: string[] }) => {
         <FullScreenRecipe {...rest}>
             <StyledTransparentHeader />
             <Slider customSettings={settings}>
-                {images.map((src, i) => {
-                    return <HeaderImg key={src + i} imgSrc={src} />
+                {images.map((image, i) => {
+                    return (
+                        <HeaderImg key={image.images.fallback.src + i}>
+                            <GatsbyImage
+                                image={image}
+                                alt={' '}
+                                className="gatsby-img"
+                                objectFit="cover"
+                            />
+                        </HeaderImg>
+                    )
                 })}
             </Slider>
         </FullScreenRecipe>

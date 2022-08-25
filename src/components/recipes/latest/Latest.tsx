@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { graphql, useStaticQuery } from 'gatsby'
+import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image'
 import React, { useState } from 'react'
 import Secondary from '../../buttons/secondary/Secondary'
 import ResipeCard from '../../recipeCard/ResipeCard'
@@ -40,16 +41,9 @@ type LatestQuery = {
                 kortBeskrivning: string
                 images: {
                     localFile: {
-                        childrenImageSharp: [
-                            {
-                                original: {
-                                    src: string
-                                }
-                                fixed: {
-                                    src: string
-                                }
-                            }
-                        ]
+                        childImageSharp: {
+                            gatsbyImageData: ImageDataLike
+                        }
                     }
                 }[]
             }
@@ -128,6 +122,10 @@ const Latest = ({
         <Wrapper>
             <RecipeGrid {...rest}>
                 {recipies.map(recipe => {
+                    const image = getImage(
+                        recipe.singlePaketAfc.images[0].localFile
+                            .childImageSharp
+                    )
                     return (
                         <ResipeCard
                             kortBeskrivning={
@@ -144,11 +142,14 @@ const Latest = ({
                             tid={recipe.singlePaketAfc.tid}
                             tidFormat={recipe.singlePaketAfc.tidFormat}
                             title={recipe.title}
-                            url={
-                                recipe.singlePaketAfc.images?.[0]?.localFile
-                                    .childrenImageSharp?.[0]?.original.src
-                            }
-                        />
+                        >
+                            <GatsbyImage
+                                image={image}
+                                alt={recipe.title}
+                                className="gatsby-img"
+                                objectFit="cover"
+                            />
+                        </ResipeCard>
                     )
                 })}
             </RecipeGrid>

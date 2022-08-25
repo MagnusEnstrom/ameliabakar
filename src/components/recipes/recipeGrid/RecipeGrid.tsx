@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import React, { useState } from 'react'
 import { ReceptPageQuery } from '../../../graphql/types/ReceptContentType'
 import Secondary from '../../buttons/secondary/Secondary'
@@ -50,6 +51,10 @@ const RecipeGrid = ({
         <Wrapper>
             <StyledRecipeGrid {...rest}>
                 {recipies.map(recipe => {
+                    const image = getImage(
+                        recipe.singlePaketAfc.images[0].localFile
+                            .childImageSharp
+                    )
                     return (
                         <ResipeCard
                             uri={recipe.uri}
@@ -62,11 +67,14 @@ const RecipeGrid = ({
                             tid={recipe.singlePaketAfc.tid}
                             tidFormat={recipe.singlePaketAfc.tidFormat}
                             title={recipe.title}
-                            url={
-                                recipe.singlePaketAfc.images?.[0]?.localFile
-                                    .childrenImageSharp?.[0]?.original.src
-                            }
-                        />
+                        >
+                            <GatsbyImage
+                                image={image}
+                                alt={recipe.title}
+                                className="gatsby-img"
+                                objectFit="cover"
+                            />
+                        </ResipeCard>
                     )
                 })}
             </StyledRecipeGrid>

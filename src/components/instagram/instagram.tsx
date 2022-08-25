@@ -11,6 +11,7 @@ import InstagramIcon from '../../assets/instagram.svg'
 import InvisibleLink from '../Links/InvisibleLink'
 import typography from '../../lib/typography'
 import colors from '../../lib/colors'
+import { GatsbyImage, getImage, ImageDataLike } from 'gatsby-plugin-image'
 
 type InstagramData = {
     allInstagramContent: {
@@ -19,9 +20,7 @@ type InstagramData = {
             permalink: string
             localFile: {
                 childImageSharp: {
-                    fixed: {
-                        src: string
-                    }
+                    gatsbyImageData: ImageDataLike
                 }
             }
         }[]
@@ -40,12 +39,6 @@ const InstagramGrid = styled.section({
     ['@media only screen and (min-width: 170ch)']: {
         gap: '30px',
     },
-})
-
-const InstagramImage = styled.img({
-    width: '100%',
-    maxWidth: '300px',
-    maxHeight: '300px',
 })
 
 const Wrapper = styled.div({
@@ -121,6 +114,12 @@ const StyledInvisibleLink = styled.a({
     border: 'none',
     backgroundColor: 'inherit',
     textDecoration: 'none',
+    position: 'relative',
+    '.gatsby-img': {
+        maxWidth: '100%',
+        height: '100%',
+        maxHeight: '300px',
+    },
 })
 
 const FollowArea = styled.div({
@@ -179,9 +178,7 @@ const Instagram = () => {
                     permalink
                     localFile {
                         childImageSharp {
-                            fixed(width: 300, height: 300) {
-                                src
-                            }
+                            gatsbyImageData
                         }
                     }
                 }
@@ -209,13 +206,18 @@ const Instagram = () => {
             </FollowArea>
             <InstagramGrid>
                 {instagramData.map(node => {
+                    console.log('node.localFile', node.localFile)
+                    const image = getImage(node.localFile.childImageSharp)
                     return (
                         <StyledInvisibleLink
                             key={node.id}
                             href={node.permalink}
                         >
-                            <InstagramImage
-                                src={node.localFile.childImageSharp.fixed.src}
+                            <GatsbyImage
+                                image={image}
+                                alt={' '}
+                                className="gatsby-img"
+                                objectFit="cover"
                             />
                         </StyledInvisibleLink>
                     )

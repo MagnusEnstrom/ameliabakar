@@ -1,3 +1,5 @@
+import { ImageDataLike } from 'gatsby-plugin-image'
+
 export type ReceptContent = {
     id: string
     uri: string
@@ -21,14 +23,9 @@ export type ReceptContent = {
         kortBeskrivning: string
         images: {
             localFile: {
-                childrenImageSharp: {
-                    original: {
-                        src: string
-                    }
-                    fixed: {
-                        src: string
-                    }
-                }[]
+                childImageSharp: {
+                    gatsbyImageData: ImageDataLike
+                }
             }
         }[]
     }
@@ -55,14 +52,9 @@ export type ReceptPageQuery = {
             svarighetsgrad: 'Lätt' | 'Medel' | 'Svår'
             images: {
                 localFile: {
-                    childrenImageSharp: {
-                        original: {
-                            src: string
-                        }
-                        fixed: {
-                            src: string
-                        }
-                    }[]
+                    childImageSharp: {
+                        gatsbyImageData: ImageDataLike
+                    }
                 }
             }[]
         }
@@ -78,12 +70,7 @@ export type TipsPageQuery = {
             image: {
                 localFile: {
                     childImageSharp: {
-                        original: {
-                            src: string
-                        }
-                        fixed: {
-                            src: string
-                        }
+                        gatsbyImageData: ImageDataLike
                     }
                 }
             }
@@ -130,16 +117,9 @@ type LatestQuery = {
                 kortBeskrivning: string
                 images: {
                     localFile: {
-                        childrenImageSharp: [
-                            {
-                                original: {
-                                    src: string
-                                }
-                                fixed: {
-                                    src: string
-                                }
-                            }
-                        ]
+                        childImageSharp: {
+                            gatsbyImageData: ImageDataLike
+                        }
                     }
                 }[]
             }

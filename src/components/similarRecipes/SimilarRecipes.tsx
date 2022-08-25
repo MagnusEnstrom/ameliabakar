@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import React, { useState } from 'react'
 import { AllWpRecept } from '../../graphql/types/ReceptContentType'
 import Secondary from '../buttons/secondary/Secondary'
@@ -57,6 +58,10 @@ const SimilarRecipes = ({
         <Wrapper>
             <RecipeGrid {...rest}>
                 {recipies.map(recipe => {
+                    const image = getImage(
+                        recipe.singlePaketAfc.images[0].localFile
+                            .childImageSharp
+                    )
                     return (
                         <ResipeCard
                             kortBeskrivning={
@@ -73,11 +78,14 @@ const SimilarRecipes = ({
                             tid={recipe.singlePaketAfc.tid}
                             tidFormat={recipe.singlePaketAfc.tidFormat}
                             title={recipe.title}
-                            url={
-                                recipe.singlePaketAfc.images?.[0]?.localFile
-                                    .childrenImageSharp?.[0]?.original.src
-                            }
-                        />
+                        >
+                            <GatsbyImage
+                                image={image}
+                                alt={recipe.title}
+                                className="gatsby-img"
+                                objectFit="cover"
+                            />
+                        </ResipeCard>
                     )
                 })}
             </RecipeGrid>

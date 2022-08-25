@@ -9,6 +9,8 @@ import P from '../typography/p/P'
 import Header from './Header'
 import HeaderImgs from './HeaderImgs'
 import Breadcrumbs from '../breadcrumbs/Breadcrumbs'
+import { GatsbyImage, IGatsbyImageData } from 'gatsby-plugin-image'
+import Slider from '../slider/Slider'
 
 const TimeText = styled.span({
     ...typography.note,
@@ -19,31 +21,28 @@ const Wrapper = styled.div(() => ({
     textDecoration: 'none',
     display: 'block',
     marginTop: '20px',
+    maxHeight: '450px',
 
     ['@media only screen and (min-width: 170ch)']: {
         marginTop: '0px',
-        gridTemplateColumns: '6fr 7fr',
+        gridTemplateColumns: '500px 1fr',
         display: 'grid',
         backgroundColor: colors.cultured,
     },
 }))
-const Card = styled.div(({ imgUrl }: { imgUrl: string }) => {
+const Card = styled.div(() => {
     return {
-        minHeight: '220px',
-        backgroundColor: colors.jet,
-        backgroundImage: `url(${imgUrl})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
+        overflow: 'hidden',
+        width: '100%',
         display: 'none',
-        gridTemplateRows: '1fr min-content',
-        gridTemplateAreas: `
-        "Like"
-        "content"
-        `,
-        aspectRatio: '33/25',
+
+        '.gatsby-img': {
+            height: '450px',
+            top: 0,
+            bottom: 0,
+        },
         ['@media only screen and (min-width: 170ch)']: {
-            display: 'grid',
+            display: 'block',
         },
     }
 })
@@ -141,8 +140,7 @@ type Props = {
     rating: number
     svarighetsgrad: 'Lätt' | 'Medel' | 'Svår'
     kortBeskrivning?: string
-    imgUrl: string
-    images?: string[]
+    images?: IGatsbyImageData[]
     recipeId: string
 } & React.HTMLAttributes<HTMLDivElement>
 
@@ -154,14 +152,13 @@ const RecipeCardHeader = ({
     title,
     svarighetsgrad,
     kortBeskrivning,
-    imgUrl,
     images,
     recipeId,
     ...rest
 }: Props) => {
     return (
         <div>
-            <StyledHeader onlynav={true} alwaysShow={!images} />
+            <StyledHeader onlynav={true} />
             {images && <StyledHeaderImgs images={images} />}
             <StyledBreadcrumbs
                 crumbs={[
@@ -192,7 +189,24 @@ const RecipeCardHeader = ({
                     </OverveiwWrapper>
                     <Description>{kortBeskrivning}</Description>
                 </StyledTextArea>
-                <Card imgUrl={imgUrl} aria-label={'recept'} />
+                <Card aria-label={'recept'}>
+                    <Slider>
+                        {images &&
+                            images.map(image => (
+                                <div
+                                    key={image.placeholder.fallback}
+                                    style={{ maxHeight: '100%' }}
+                                >
+                                    <GatsbyImage
+                                        image={image}
+                                        alt={title}
+                                        className="gatsby-img"
+                                        objectFit="cover"
+                                    />
+                                </div>
+                            ))}
+                    </Slider>
+                </Card>
             </Wrapper>
         </div>
     )

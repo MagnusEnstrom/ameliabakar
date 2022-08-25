@@ -21,6 +21,7 @@ import useSaveRecipe from '../hooks/useSaveRecipe'
 import useIsRecipeSaved from '../hooks/useIsRecipeSaved'
 import SimilarRecipes from '../components/similarRecipes/SimilarRecipes'
 import colors from '../lib/colors'
+import { getImage } from 'gatsby-plugin-image'
 
 const ChipArea = styled.div({
     display: 'flex',
@@ -197,7 +198,7 @@ type Props = {
 const receptPost = ({ pageContext }: Props) => {
     const { allWpRecept, recept } = pageContext
     const images = recept?.singlePaketAfc?.images?.map(img => {
-        return img.localFile.childrenImageSharp[0].original.src
+        return getImage(img.localFile.childImageSharp)
     })
 
     const toggleRecipe = useSaveRecipe()
@@ -225,10 +226,6 @@ const receptPost = ({ pageContext }: Props) => {
                 tidFormat={recept.singlePaketAfc.tidFormat}
                 kortBeskrivning={recept.singlePaketAfc.kortBeskrivning}
                 title={recept.title}
-                imgUrl={
-                    recept.singlePaketAfc?.images?.[0]?.localFile
-                        ?.childrenImageSharp?.[0]?.original?.src
-                }
                 images={images}
                 style={{
                     maxWidth: '1360px',

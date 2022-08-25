@@ -52,30 +52,32 @@ const StyledLink = styled(Link)(({ variant }: { variant?: Variant }) => ({
         display: variant === 'vert' ? 'grid' : 'block',
     },
 }))
-const Card = styled.div(
-    ({ imgUrl, variant }: { imgUrl: string; variant?: Variant }) => {
-        // 29 / 44
-        return {
-            aspectRatio: '2/3',
-            minHeight: '220px',
-            backgroundColor: colors.jet,
-            backgroundImage: `url(${imgUrl})`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            display: 'grid',
-            gridTemplateRows: '1fr min-content',
-            gridTemplateAreas: `
-        "Like"
-        "content"
-        `,
-
-            ['@media only screen and (min-width: 90ch)']: {
-                aspectRatio: variant === 'vert' ? '33/25' : '2/3',
-            },
-        }
+const Card = styled.div(({ variant }: { variant?: Variant }) => {
+    // 29 / 44
+    return {
+        aspectRatio: '2/3',
+        minHeight: '220px',
+        display: 'grid',
+        gridTemplateRows: '1fr min-content',
+        gridTemplateAreas: `
+                 "Like"
+                "content"
+            `,
+        ['@media only screen and (min-width: 90ch)']: {
+            aspectRatio: variant === 'vert' ? '33/25' : '2/3',
+        },
+        position: 'relative',
+        '.gatsby-img': {
+            width: '100%',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: -1,
+        },
     }
-)
+})
 
 const Content = styled.div(({ variant }: { variant?: Variant }) => ({
     padding: '12px 20px',
@@ -177,7 +179,6 @@ const Description = styled(P)({
 type Variant = 'card' | 'vert'
 
 type Props = {
-    url: string
     title: string
     tid: number
     tidFormat: string
@@ -187,6 +188,7 @@ type Props = {
     svarighetsgrad: 'Lätt' | 'Medel' | 'Svår'
     variant?: Variant
     kortBeskrivning?: string
+    children: React.ReactNode
 }
 
 const ResipeCard = ({
@@ -194,12 +196,12 @@ const ResipeCard = ({
     rating,
     tid,
     title,
-    url,
     uri,
     id,
     svarighetsgrad,
     variant = 'card',
     kortBeskrivning,
+    children,
 }: Props) => {
     const toggleRecipe = useSaveRecipe()
     const [checked, setChecked] = useState<boolean>()
@@ -216,7 +218,7 @@ const ResipeCard = ({
     if (variant === 'card') {
         return (
             <StyledLink to={uri}>
-                <Card aria-label={'recept'} imgUrl={url}>
+                <Card aria-label={'recept'}>
                     <HeartButton
                         data-cy="heartButton"
                         onClick={e => handleClick(e)}
@@ -241,6 +243,7 @@ const ResipeCard = ({
                             rating={rating}
                         />
                     </Content>
+                    {children}
                 </Card>
             </StyledLink>
         )
@@ -248,7 +251,8 @@ const ResipeCard = ({
     if (variant === 'vert') {
         return (
             <StyledLink variant="vert" to={uri}>
-                <Card variant="vert" aria-label={'recept'} imgUrl={url}>
+                <Card variant="vert" aria-label={'recept'}>
+                    {children}
                     <HeartButton
                         data-cy="heartButton"
                         onClick={e => handleClick(e)}
