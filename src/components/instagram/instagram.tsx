@@ -206,7 +206,6 @@ const Instagram = () => {
             </FollowArea>
             <InstagramGrid>
                 {instagramData.map(node => {
-                    console.log('node.localFile', node.localFile)
                     const image = getImage(node.localFile.childImageSharp)
                     return (
                         <StyledInvisibleLink
