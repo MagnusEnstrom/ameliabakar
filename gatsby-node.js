@@ -101,71 +101,13 @@ const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
     }
 }
 
-const createHomePage = async ({ actions, graphql, reporter }) => {
-    const result = await graphql(`
-        {
-            allRating {
-                nodes {
-                    id
-                    avgRating
-                    numRatings
-                    parent {
-                        id
-                    }
-                }
-            }
-            allWpRecept {
-                nodes {
-                    id
-                    uri
-                    title
-                    content
-                    tags {
-                        nodes {
-                            name
-                        }
-                    }
-                    singlePaketAfc {
-                        tidFormat
-                        tid
-                        svarighetsgrad
-                        saHarGorDu
-                        kortBeskrivning
-                        images {
-                            localFile {
-                                childImageSharp {
-                                    gatsbyImageData
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    `)
-    if (result.errors) {
-        reporter.error('There was an error fetching posts', result.errors)
-    }
-
-    const { allWpRecept, allRating } = result.data
-
-    // Define the template to use
+const createHomePage = async ({ actions }) => {
     const home = require.resolve(`./src/templates/home.tsx`)
-
-    allWpRecept.nodes = allWpRecept.nodes.map(recept => {
-        const rating = allRating?.nodes?.find(
-            rating => rating.parent?.id === recept.id
-        )
-        return {
-            ...recept,
-            rating: rating ? rating : null,
-        }
-    })
 
     actions.createPage({
         path: '/',
         component: home,
-        context: allWpRecept,
+        context: {},
     })
 }
 
@@ -212,7 +154,10 @@ const createReceptPage = async ({ actions, graphql, reporter }) => {
     }
 
     const { allWpRecept, allRating } = result.data
-
+    allWpRecept.nodes.map(recept => {
+        recept.singlePaketAfc.images = [recept.singlePaketAfc.images[0]]
+        return recept
+    })
     // Define the template to use
     const recept = require.resolve(`./src/templates/recept.tsx`)
 

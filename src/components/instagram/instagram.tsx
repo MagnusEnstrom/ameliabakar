@@ -171,7 +171,7 @@ const Instagram = () => {
         {
             allInstagramContent(
                 sort: { fields: [timestamp], order: DESC }
-                limit: 100
+                limit: 40
             ) {
                 nodes {
                     id
