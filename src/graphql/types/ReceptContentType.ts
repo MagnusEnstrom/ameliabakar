@@ -69,7 +69,7 @@ export type TipsPageQuery = {
         tips: {
             image: {
                 localFile: {
-                    childImageSharp: {
+                    childrenImageSharp: {
                         gatsbyImageData: ImageDataLike
                     }
                 }

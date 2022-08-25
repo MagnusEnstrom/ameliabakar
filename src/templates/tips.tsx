@@ -89,7 +89,7 @@ type Props = { pageContext: TipsPageQuery }
 
 const tips = ({ pageContext }: Props) => {
     const tipsContent = pageContext.nodes.map(tip => {
-        const image = getImage(tip.tips.image.localFile.childImageSharp)
+        const image = getImage(tip.tips.image.localFile.childrenImageSharp)
         return (
             <StyledArticle key={tip.id}>
                 <StyledImg>
