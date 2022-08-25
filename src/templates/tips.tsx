@@ -28,12 +28,12 @@ const StyledArticle = styled.article({
     display: 'grid',
     textAlign: 'center',
     width: '100%',
+    gridTemplateAreas: `
+        "img text"
+    `,
 
     ['@media only screen and (min-width: 90ch)']: {
         gridTemplateColumns: '1fr 1fr',
-        gridTemplateAreas: `
-            "img text"
-        `,
     },
 })
 const StyledMain = styled.main({
@@ -48,12 +48,12 @@ const StyledMain = styled.main({
             gridTemplateAreas: `
                 "text img"
             `,
-            'div:first-of-type': {
+            'div:last-of-type': {
                 paddingRight: '50px',
             },
         },
         'article:nth-of-type(odd)': {
-            'div:first-of-type': {
+            'div:last-of-type': {
                 paddingLeft: '50px',
             },
         },
@@ -89,7 +89,7 @@ type Props = { pageContext: TipsPageQuery }
 
 const tips = ({ pageContext }: Props) => {
     const tipsContent = pageContext.nodes.map(tip => {
-        const image = getImage(tip.tips.image.localFile.childrenImageSharp)
+        const image = getImage(tip.tips.image.localFile.childImageSharp)
         return (
             <StyledArticle key={tip.id}>
                 <StyledImg>

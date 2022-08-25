@@ -260,11 +260,12 @@ const createTipsPage = async ({ actions, graphql, reporter }) => {
         {
             allWpTip {
                 nodes {
+                    id
                     title
                     tips {
                         image {
                             localFile {
-                                childrenImageSharp {
+                                childImageSharp {
                                     gatsbyImageData
                                 }
                             }
