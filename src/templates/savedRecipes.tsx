@@ -10,6 +10,7 @@ import { PageProps } from 'gatsby'
 import P from '../components/typography/p/P'
 import InvisibleLink from '../components/Links/InvisibleLink'
 import typography from '../lib/typography'
+import useGetRecepies from '../hooks/useGetRecipes'
 
 const RecipeWrapper = styled.div({
     margin: '0px 10px 30px 10px',
@@ -42,17 +43,17 @@ const StyledP = styled(P)({
         marginBottom: '40px',
     },
 })
-type Props = { pageContext: ReceptPageQuery }
-const savedRecipes = ({ pageContext, location }: Props & PageProps) => {
+const savedRecipes = () => {
+    const recipes = useGetRecepies()
     const [filteredRecipes, setFilteredRecipes] = useState<
-        ReceptPageQuery['nodes']
+        ReturnType<typeof useGetRecepies>
     >([])
     useEffect(() => {
         const storageString = localStorage.getItem('savedRecipes')
         if (!storageString) return
         const savedRecipes = JSON.parse(storageString) as string[]
         setFilteredRecipes(
-            pageContext.nodes.filter(node => savedRecipes.includes(node.id))
+            recipes.filter(node => savedRecipes.includes(node.id))
         )
     }, [])
 
