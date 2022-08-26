@@ -111,137 +111,28 @@ const createHomePage = async ({ actions }) => {
     })
 }
 
-const createReceptPage = async ({ actions, graphql, reporter }) => {
-    const result = await graphql(`
-        {
-            allRating {
-                nodes {
-                    id
-                    avgRating
-                    numRatings
-                    parent {
-                        id
-                    }
-                }
-            }
-            allWpRecept(sort: { fields: [date], order: DESC }) {
-                nodes {
-                    id
-                    uri
-                    title
-                    tags {
-                        nodes {
-                            name
-                        }
-                    }
-                    singlePaketAfc {
-                        tidFormat
-                        tid
-                        images {
-                            localFile {
-                                childImageSharp {
-                                    gatsbyImageData
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    `)
-    if (result.errors) {
-        reporter.error('There was an error fetching posts', result.errors)
-    }
-
-    const { allWpRecept, allRating } = result.data
-    allWpRecept.nodes.map(recept => {
-        recept.singlePaketAfc.images = [recept.singlePaketAfc.images[0]]
-        return recept
-    })
+const createReceptPage = async ({ actions }) => {
     // Define the template to use
     const recept = require.resolve(`./src/templates/recept.tsx`)
-
-    allWpRecept.nodes = allWpRecept.nodes.map(recept => {
-        const rating = allRating?.nodes?.find(
-            rating => rating.parent?.id === recept.id
-        )
-        return {
-            ...recept,
-            rating: rating ? rating : null,
-        }
-    })
 
     actions.createPage({
         // It's best practice to use the uri field from WPGraphQL nodes when
         // building
         path: '/recept',
         component: recept,
-        context: allWpRecept,
+        context: {},
     })
 }
 const createSavedReceptPage = async ({ actions, graphql, reporter }) => {
-    const result = await graphql(`
-        {
-            allRating {
-                nodes {
-                    id
-                    avgRating
-                    numRatings
-                    parent {
-                        id
-                    }
-                }
-            }
-            allWpRecept(sort: { fields: [date], order: DESC }) {
-                nodes {
-                    id
-                    uri
-                    title
-                    tags {
-                        nodes {
-                            name
-                        }
-                    }
-                    singlePaketAfc {
-                        tidFormat
-                        tid
-                        images {
-                            localFile {
-                                childImageSharp {
-                                    gatsbyImageData
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    `)
-    if (result.errors) {
-        reporter.error('There was an error fetching posts', result.errors)
-    }
-
-    const { allWpRecept, allRating } = result.data
-
     // Define the template to use
     const savedRecipes = require.resolve(`./src/templates/savedRecipes.tsx`)
-
-    allWpRecept.nodes = allWpRecept.nodes.map(recept => {
-        const rating = allRating?.nodes?.find(
-            rating => rating.parent?.id === recept.id
-        )
-        return {
-            ...recept,
-            rating: rating ? rating : null,
-        }
-    })
 
     actions.createPage({
         // It's best practice to use the uri field from WPGraphQL nodes when
         // building
         path: '/mina-recept',
         component: savedRecipes,
-        context: allWpRecept,
+        context: {},
     })
 }
 const createAboutMePage = async ({ actions, graphql, reporter }) => {

@@ -32,34 +32,32 @@ export type ReceptContent = {
 }
 
 export type ReceptPageQuery = {
-    nodes: {
-        id: string
-        uri: string
-        title: string
-        date: string
-        rating?: {
-            avgRating: number
-            numRatings: number
-        } | null
-        tags: {
-            nodes: {
-                name: string
-            }[]
-        }
-        singlePaketAfc: {
-            tidFormat: 'min' | 'h'
-            tid: number
-            svarighetsgrad: 'Lätt' | 'Medel' | 'Svår'
-            images: {
-                localFile: {
-                    childImageSharp: {
-                        gatsbyImageData: ImageDataLike
-                    }
+    id: string
+    uri: string
+    title: string
+    date: string
+    rating?: {
+        avgRating: number
+        numRatings: number
+    } | null
+    tags: {
+        nodes: {
+            name: string
+        }[]
+    }
+    singlePaketAfc: {
+        tidFormat: 'min' | 'h'
+        tid: number
+        svarighetsgrad: 'Lätt' | 'Medel' | 'Svår'
+        images: {
+            localFile: {
+                childImageSharp: {
+                    gatsbyImageData: ImageDataLike
                 }
-            }[]
-        }
-    }[]
-}
+            }
+        }[]
+    }
+}[]
 
 export type TipsPageQuery = {
     nodes: {

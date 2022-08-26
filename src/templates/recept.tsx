@@ -17,6 +17,7 @@ import { PageProps } from 'gatsby'
 import typography from '../lib/typography'
 import Chip from '../components/chips/Chip'
 import Vector from '../assets/Vector.svg'
+import useGetRecepies from '../hooks/useGetRecipes'
 
 const RecipeWrapper = styled.div({
     margin: '10px 10px 30px 10px',
@@ -140,10 +141,10 @@ const StyledRecipeFilter = styled(RecipeFilter)({
 })
 
 const filterRecipes = (
-    pageContext: ReceptPageQuery,
+    recipes: ReturnType<typeof useGetRecepies>,
     activeFilters: string[]
 ) => {
-    let afterFilter = pageContext.nodes
+    let afterFilter = recipes
 
     activeFilters.forEach(filterTag => {
         afterFilter = afterFilter.filter(recipe => {
@@ -154,12 +155,12 @@ const filterRecipes = (
 
     return afterFilter
 }
-type Props = { pageContext: ReceptPageQuery }
-const recept = ({ pageContext, location }: Props & PageProps) => {
+const recept = ({ location }: PageProps) => {
+    const recipes = useGetRecepies()
     const [expanded, setExpanded] = useState(false)
     const [deskExpanded, setDeskExpanded] = useState(false)
 
-    const [filteredRecipes, setFilteredRecipes] = useState(pageContext.nodes)
+    const [filteredRecipes, setFilteredRecipes] = useState(recipes)
     const [activeFilters, setActiveFilters] = useState<string[]>([])
     const [searchData, setSearchData] = useState<string[]>([])
     const [value, setValue] = useState(
@@ -180,7 +181,7 @@ const recept = ({ pageContext, location }: Props & PageProps) => {
     }
 
     useEffect(() => {
-        const afterFilter = filterRecipes(pageContext, activeFilters)
+        const afterFilter = filterRecipes(recipes, activeFilters)
         setFilteredRecipes(afterFilter)
         if (!searchData.length && !value) return setFilteredRecipes(afterFilter)
         const found = afterFilter.filter(recipe =>
