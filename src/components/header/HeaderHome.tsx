@@ -12,11 +12,10 @@ import Header from './Header'
 
 const HeaderImg = styled.div(() => {
     return {
-        height: [
-            '100vh',
-            '-webkit-fill-available',
-            'calc(var(--vh, 1vh) * 100)',
-        ],
+        gridArea: '1/1',
+        background: 'transparent',
+        height: '100%',
+        overflow: 'hidden',
         padding: '20px 20px 30px 20px',
         display: 'grid !important',
         position: 'relative',
@@ -41,16 +40,13 @@ const HeaderImg = styled.div(() => {
         ['@media only screen and (min-width: 170ch)']: {
             padding: '20px 20px 30px 70px',
         },
-
-        '.header-img': {
-            width: '100%',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-        },
     }
+})
+
+const HeaderWrapper = styled.div({
+    height: ['100vh', '-webkit-fill-available', 'calc(var(--vh, 1vh) * 100)'],
+    width: '100%',
+    display: 'grid !important',
 })
 
 const StyledTransparentHeader = styled(Header)({
@@ -114,7 +110,7 @@ type LatestQuery = {
 const HeaderHome = () => {
     const data: LatestQuery = useStaticQuery(graphql`
         {
-            allWpRecept(sort: { fields: [date], order: DESC }) {
+            allWpRecept(sort: { fields: [date], order: DESC }, limit: 6) {
                 nodes {
                     id
                     uri
@@ -154,29 +150,38 @@ const HeaderHome = () => {
                         node.singlePaketAfc.images[0].localFile.childImageSharp
                     )
                     return (
-                        <HeaderImg key={node.id}>
+                        <HeaderWrapper key={node.id}>
                             <GatsbyImage
                                 image={image}
                                 alt={node.title || ''}
-                                className="header-img"
                                 objectFit="cover"
-                            />
-                            <H1
                                 style={{
-                                    color: colors.white,
-                                    gridArea: 'header',
-                                    margin: '0px 0px 20px 0px',
+                                    gridArea: '1/1',
+                                    maxHeight: '100%',
+                                    maxWidth: '100%',
+
+                                    // You can set a maximum height for the image, if you wish.
+                                    // maxHeight: 600,
                                 }}
-                            >
-                                {node.title}
-                            </H1>
-                            <Description>
-                                {node.singlePaketAfc.kortBeskrivning}
-                            </Description>
-                            <StyledInvisibleLink to={node.uri}>
-                                <HomePage>Till Recept</HomePage>
-                            </StyledInvisibleLink>
-                        </HeaderImg>
+                            />
+                            <HeaderImg>
+                                <H1
+                                    style={{
+                                        color: colors.white,
+                                        gridArea: 'header',
+                                        margin: '0px 0px 20px 0px',
+                                    }}
+                                >
+                                    {node.title}
+                                </H1>
+                                <Description>
+                                    {node.singlePaketAfc.kortBeskrivning}
+                                </Description>
+                                <StyledInvisibleLink to={node.uri}>
+                                    <HomePage>Till Recept</HomePage>
+                                </StyledInvisibleLink>
+                            </HeaderImg>
+                        </HeaderWrapper>
                     )
                 })}
             </Slider>
