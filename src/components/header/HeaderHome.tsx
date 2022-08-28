@@ -47,6 +47,21 @@ const HeaderWrapper = styled.div({
     height: ['100vh', '-webkit-fill-available', 'calc(var(--vh, 1vh) * 100)'],
     width: '100%',
     display: 'grid !important',
+
+    '.image has-horizontal': {
+        ['@media only screen and (min-width: 90ch)']: {
+            display: 'none',
+        },
+    },
+    '.image-horizontal': {
+        display: 'none',
+        ['@media only screen and (min-width: 90ch)']: {
+            display: 'block',
+        },
+        ['@media only screen and (min-width: 170ch)']: {
+            display: 'block',
+        },
+    },
 })
 
 const StyledTransparentHeader = styled(Header)({
@@ -102,6 +117,13 @@ type LatestQuery = {
                         }
                     }
                 }[]
+                horizontalImage?: {
+                    localFile: {
+                        childImageSharp: {
+                            gatsbyImageData: ImageDataLike
+                        }
+                    }
+                } | null
             }
         }[]
     }
@@ -119,6 +141,13 @@ const HeaderHome = () => {
                         tidFormat
                         tid
                         kortBeskrivning
+                        horizontalImage {
+                            localFile {
+                                childImageSharp {
+                                    gatsbyImageData
+                                }
+                            }
+                        }
                         images {
                             localFile {
                                 childImageSharp {
@@ -131,14 +160,6 @@ const HeaderHome = () => {
             }
         }
     `)
-    console.log(
-        'images',
-        data.allWpRecept.nodes.map(
-            node =>
-                node.singlePaketAfc.images?.[0].localFile.childImageSharp
-                    ?.gatsbyImageData
-        )
-    )
     const recipies = data.allWpRecept.nodes.slice(0, 3)
 
     return (
@@ -149,6 +170,12 @@ const HeaderHome = () => {
                     const image = getImage(
                         node.singlePaketAfc.images[0].localFile.childImageSharp
                     )
+                    const horizontalImage =
+                        node.singlePaketAfc.horizontalImage &&
+                        getImage(
+                            node.singlePaketAfc.horizontalImage?.localFile
+                                .childImageSharp
+                        )
                     return (
                         <HeaderWrapper key={node.id}>
                             <GatsbyImage
@@ -163,7 +190,26 @@ const HeaderHome = () => {
                                     // You can set a maximum height for the image, if you wish.
                                     // maxHeight: 600,
                                 }}
+                                className={`image ${
+                                    horizontalImage ? 'has-horizontal' : ''
+                                }`}
                             />
+                            {horizontalImage && (
+                                <GatsbyImage
+                                    image={horizontalImage}
+                                    alt={node.title || ''}
+                                    objectFit="cover"
+                                    style={{
+                                        gridArea: '1/1',
+                                        maxHeight: '100%',
+                                        maxWidth: '100%',
+
+                                        // You can set a maximum height for the image, if you wish.
+                                        // maxHeight: 600,
+                                    }}
+                                    className={`image-horizontal `}
+                                />
+                            )}
                             <HeaderImg>
                                 <H1
                                     style={{
