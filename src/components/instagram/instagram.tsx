@@ -116,8 +116,8 @@ const StyledInvisibleLink = styled.a({
     textDecoration: 'none',
     position: 'relative',
     '.gatsby-img': {
+        aspectRatio: '1/1',
         maxWidth: '100%',
-        height: '100%',
         maxHeight: '300px',
     },
 })
