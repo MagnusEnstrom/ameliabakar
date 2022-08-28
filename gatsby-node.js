@@ -21,6 +21,7 @@ exports.createPages = async gatsbyUtilities => {
     await createReceptPage(gatsbyUtilities)
     await createTipsPage(gatsbyUtilities)
     await createSavedReceptPage(gatsbyUtilities)
+    await ordersPage(gatsbyUtilities)
 }
 
 const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
@@ -107,6 +108,16 @@ const createHomePage = async ({ actions }) => {
     actions.createPage({
         path: '/',
         component: home,
+        context: {},
+    })
+}
+
+const ordersPage = async ({ actions }) => {
+    const orders = require.resolve(`./src/templates/orders.tsx`)
+
+    actions.createPage({
+        path: '/bestallningar',
+        component: orders,
         context: {},
     })
 }
