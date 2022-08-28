@@ -49,15 +49,12 @@ const HeaderWrapper = styled.div({
     display: 'grid !important',
 
     '.image has-horizontal': {
-        ['@media only screen and (min-width: 90ch)']: {
+        ['@media only screen and (min-width: 170ch)']: {
             display: 'none',
         },
     },
     '.image-horizontal': {
         display: 'none',
-        ['@media only screen and (min-width: 90ch)']: {
-            display: 'block',
-        },
         ['@media only screen and (min-width: 170ch)']: {
             display: 'block',
         },
