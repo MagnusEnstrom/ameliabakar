@@ -83,7 +83,7 @@ const orders = () => {
             <Breadcrumbs
                 crumbs={[
                     { name: 'Hem', to: '/' },
-                    { name: 'Recept', to: '/recept' },
+                    { name: 'Beställningar', to: '/bestallningar' },
                 ]}
                 style={{
                     width: '100%',
