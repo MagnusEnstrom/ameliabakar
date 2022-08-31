@@ -1,17 +1,22 @@
-import styled from '@emotion/styled';
-import React from 'react';
+import { StaticImage } from 'gatsby-plugin-image'
+import React, { FC } from 'react'
 
-const StyledAvatar = styled.img({
-    width: '200px',
-    height: '200px',
-    borderRadius: '50%',
-    objectPosition: '0px -15px',
-    objectFit: 'cover',
+const Avatar: FC<React.HtmlHTMLAttributes<HTMLDivElement>> = ({ ...rest }) => {
+    return (
+        <div {...rest}>
+            <StaticImage
+                alt={'Amelia'}
+                src={'./amelia.png'}
+                objectFit={'cover'}
+                objectPosition={'0px -13px'}
+                style={{
+                    width: '200px',
+                    height: '200px',
+                    borderRadius: '50%',
+                }}
+            />
+        </div>
+    )
+}
 
-})
-
-const Avatar = ({...rest}: React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>) => {
-  return <StyledAvatar {...rest} src={'/img/amelia.png'} />;
-};
-
-export default Avatar;
+export default Avatar
