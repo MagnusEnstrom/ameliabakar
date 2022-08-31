@@ -254,6 +254,19 @@ const NavLink = styled(Link)({
 
 const SearchForm = styled.form({
     gridArea: 'search',
+    '&.desktop': {
+        display: 'none',
+    },
+    ['@media only screen and (min-width: 90ch)']: {
+        '&.desktop': {
+            display: 'block',
+        },
+        '&.search': {
+            display: 'none',
+        },
+        //gridArea: 'icons',
+        placeSelf: 'center end',
+    },
     ['@media only screen and (min-width: 170ch)']: {
         //gridArea: 'icons',
         placeSelf: 'center end',
@@ -352,6 +365,22 @@ const Header = ({ transparent, onlynav, ...rest }: Props) => {
             <InvinsibleLink style={{ gridArea: 'logo' }} to={'/'}>
                 <Logo className={onlynav ? 'noimg' : ''} />
             </InvinsibleLink>
+
+            {navStatus === 'search' && (
+                <SearchForm
+                    onSubmit={handleSearchSubmit}
+                    role={'search'}
+                    className={navStatus}
+                >
+                    <StyledSearchInput
+                        value={query}
+                        onChange={e => setQuery(e.target.value)}
+                        aria-label="search"
+                        name={'search'}
+                        placeholder={'sök...'}
+                    />
+                </SearchForm>
+            )}
             <IconWrapper>
                 {navStatus === 'closed' && (
                     <SearchButton
@@ -362,7 +391,11 @@ const Header = ({ transparent, onlynav, ...rest }: Props) => {
                     </SearchButton>
                 )}
                 {navStatus === 'search' && (
-                    <SearchForm onSubmit={handleSearchSubmit} role={'search'}>
+                    <SearchForm
+                        onSubmit={handleSearchSubmit}
+                        role={'search'}
+                        className={'desktop'}
+                    >
                         <StyledSearchInput
                             value={query}
                             onChange={e => setQuery(e.target.value)}
