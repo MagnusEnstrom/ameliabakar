@@ -353,7 +353,7 @@ const home = () => {
                 </UtbudWrapper>
 
                 <Link
-                    to={'/om-bestallningar'}
+                    to={'/bestallningar'}
                     style={{
                         justifySelf: 'center',
                         margin: '30px 0px 50px 0px',
