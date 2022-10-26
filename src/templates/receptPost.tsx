@@ -22,6 +22,7 @@ import useIsRecipeSaved from '../hooks/useIsRecipeSaved'
 import SimilarRecipes from '../components/similarRecipes/SimilarRecipes'
 import colors from '../lib/colors'
 import { getImage } from 'gatsby-plugin-image'
+import toast, { Toaster } from 'react-hot-toast'
 
 const ChipArea = styled.div({
     display: 'flex',
@@ -287,7 +288,18 @@ const receptPost = ({ pageContext }: Props) => {
                         )}
                         <FabText>Spara</FabText>
                     </FabWrapper>
-                    <FabWrapper>
+                    <FabWrapper
+                        onClick={() => {
+                            // save url to clipboard
+                            navigator.clipboard
+                                .writeText(window.location.href)
+                                .then(() => {
+                                    toast.success(
+                                        'Länken har sparats till urklipp'
+                                    )
+                                })
+                        }}
+                    >
                         <Fab variant={'share'} />
                         <FabText>Dela</FabText>
                     </FabWrapper>
@@ -316,6 +328,7 @@ const receptPost = ({ pageContext }: Props) => {
             </div>
             <Instagram />
             <Footer />
+            <Toaster />
         </div>
     )
 }
