@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import LogoUrl from '../../assets/logo-oneline.svg'
+import LogoUrl from '../../assets/logo-footer.svg'
 import InstagramIcon from '../../assets/instagram.svg'
 import EmailIcon from '../../assets/email.svg'
 import colors from '../../lib/colors'
@@ -10,7 +10,6 @@ import { Link } from 'gatsby'
 
 const Logo = styled(LogoUrl)({
     border: 'none',
-    height: '30px',
     gridArea: 'logo',
     placeSelf: 'center',
     marginBottom: '40px',

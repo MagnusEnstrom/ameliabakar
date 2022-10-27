@@ -1,5 +1,5 @@
-const headerFontFamily = "'Lusitana', serif"; 
-const textFontFamily = "'Nunito', sans-serif"; 
+const headerFontFamily = "'Lora Bold', serif"
+const textFontFamily = "'Nunito', sans-serif"
 
 const h1Mobile = {
     fontWeight: 700,
@@ -22,37 +22,37 @@ const cardMobile = {
     fontFamily: textFontFamily,
 }
 
-const badge  = {
+const badge = {
     fontWeight: 800,
     fontSize: '10px',
     lineHeight: '100%',
     fontFamily: textFontFamily,
 }
-const note  = {
+const note = {
     fontWeight: 600,
     fontSize: '12px',
     lineHeight: '100%',
     fontFamily: textFontFamily,
 }
-const p  = {
+const p = {
     fontWeight: 300,
     fontSize: '16px',
     lineHeight: '140%',
     fontFamily: textFontFamily,
 }
-const nav  = {
+const nav = {
     fontWeight: 400,
     fontSize: '18px',
     lineHeight: '100%',
     fontFamily: textFontFamily,
 }
-const button  = {
+const button = {
     fontWeight: 700,
     fontSize: '15px',
     lineHeight: '100%',
     fontFamily: textFontFamily,
 }
-const card  = {
+const card = {
     fontWeight: 700,
     fontSize: '16px',
     lineHeight: '120%',
@@ -113,7 +113,7 @@ const typography = {
     h3,
     h4,
     h5,
-    h6
+    h6,
 }
 
-export default typography;
+export default typography
