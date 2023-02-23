@@ -23,6 +23,7 @@ import SimilarRecipes from '../components/similarRecipes/SimilarRecipes'
 import colors from '../lib/colors'
 import { getImage } from 'gatsby-plugin-image'
 import toast, { Toaster } from 'react-hot-toast'
+import Seo from 'gatsby-plugin-wpgraphql-seo'
 
 const ChipArea = styled.div({
     display: 'flex',
@@ -218,118 +219,121 @@ const receptPost = ({ pageContext }: Props) => {
 
     const [activeNav, setActiveNav] = useState<ActiveNav>('ingredienser')
     return (
-        <div>
-            <RecipeCardHeader
-                rating={recept?.rating?.avgRating}
-                recipeId={recept.id}
-                svarighetsgrad={recept.singlePaketAfc.svarighetsgrad}
-                tid={recept.singlePaketAfc.tid}
-                tidFormat={recept.singlePaketAfc.tidFormat}
-                kortBeskrivning={recept.singlePaketAfc.kortBeskrivning}
-                title={recept.title}
-                images={images}
-                style={{
-                    maxWidth: '1360px',
-                    margin: '0px auto',
-                }}
-            />
+        <>
+            <Seo post={recept} />
+            <div>
+                <RecipeCardHeader
+                    rating={recept?.rating?.avgRating}
+                    recipeId={recept.id}
+                    svarighetsgrad={recept.singlePaketAfc.svarighetsgrad}
+                    tid={recept.singlePaketAfc.tid}
+                    tidFormat={recept.singlePaketAfc.tidFormat}
+                    kortBeskrivning={recept.singlePaketAfc.kortBeskrivning}
+                    title={recept.title}
+                    images={images}
+                    style={{
+                        maxWidth: '1360px',
+                        margin: '0px auto',
+                    }}
+                />
 
-            {/* Betygsätt */}
-            <ContentArea>
-                <StyleRateRecipe pageContext={recept} />
-                <StyledContentNavWrapper>
-                    <ContentNavItem
-                        text={'Ingredienser'}
-                        onClick={() => setActiveNav('ingredienser')}
-                        active={activeNav === 'ingredienser'}
+                {/* Betygsätt */}
+                <ContentArea>
+                    <StyleRateRecipe pageContext={recept} />
+                    <StyledContentNavWrapper>
+                        <ContentNavItem
+                            text={'Ingredienser'}
+                            onClick={() => setActiveNav('ingredienser')}
+                            active={activeNav === 'ingredienser'}
+                        />
+                        <ContentNavItem
+                            text={'Gör såhär'}
+                            onClick={() => setActiveNav('detail')}
+                            active={activeNav === 'detail'}
+                        />
+                    </StyledContentNavWrapper>
+                    <StyledH3Recipe>
+                        <IconSpan>
+                            <StyledSpoon />
+                        </IconSpan>
+                        Ingredienser
+                    </StyledH3Recipe>
+                    <StyledIngredients
+                        activeNav={activeNav}
+                        content={recept.content}
                     />
-                    <ContentNavItem
-                        text={'Gör såhär'}
-                        onClick={() => setActiveNav('detail')}
-                        active={activeNav === 'detail'}
+                    <StyledH3DoLikeTHis>
+                        <IconSpan>
+                            <StyledGlove />
+                        </IconSpan>
+                        Gör så här
+                    </StyledH3DoLikeTHis>
+                    <StyledDoLikeThis
+                        activeNav={activeNav}
+                        saHarGorDu={recept.singlePaketAfc.saHarGorDu}
                     />
-                </StyledContentNavWrapper>
-                <StyledH3Recipe>
-                    <IconSpan>
-                        <StyledSpoon />
-                    </IconSpan>
-                    Ingredienser
-                </StyledH3Recipe>
-                <StyledIngredients
-                    activeNav={activeNav}
-                    content={recept.content}
-                />
-                <StyledH3DoLikeTHis>
-                    <IconSpan>
-                        <StyledGlove />
-                    </IconSpan>
-                    Gör så här
-                </StyledH3DoLikeTHis>
-                <StyledDoLikeThis
-                    activeNav={activeNav}
-                    saHarGorDu={recept.singlePaketAfc.saHarGorDu}
-                />
-                <ChipArea>
-                    {recept.tags.nodes.map(tag => (
-                        <InvisibleLink
-                            key={tag.name}
-                            to={`/recept?q=${tag.name}`}
+                    <ChipArea>
+                        {recept.tags.nodes.map(tag => (
+                            <InvisibleLink
+                                key={tag.name}
+                                to={`/recept?q=${tag.name}`}
+                            >
+                                <Chip key={tag.name} text={tag.name} />
+                            </InvisibleLink>
+                        ))}
+                    </ChipArea>
+                    <FabArea>
+                        <FabWrapper onClick={e => handleClick(e)}>
+                            {isChecked ? (
+                                <Fab variant={'saved'} />
+                            ) : (
+                                <Fab variant={'save'} />
+                            )}
+                            <FabText>Spara</FabText>
+                        </FabWrapper>
+                        <FabWrapper
+                            onClick={() => {
+                                // save url to clipboard
+                                navigator.clipboard
+                                    .writeText(window.location.href)
+                                    .then(() => {
+                                        toast.success(
+                                            'Länken har sparats till urklipp'
+                                        )
+                                    })
+                            }}
                         >
-                            <Chip key={tag.name} text={tag.name} />
-                        </InvisibleLink>
-                    ))}
-                </ChipArea>
-                <FabArea>
-                    <FabWrapper onClick={e => handleClick(e)}>
-                        {isChecked ? (
-                            <Fab variant={'saved'} />
-                        ) : (
-                            <Fab variant={'save'} />
-                        )}
-                        <FabText>Spara</FabText>
-                    </FabWrapper>
-                    <FabWrapper
-                        onClick={() => {
-                            // save url to clipboard
-                            navigator.clipboard
-                                .writeText(window.location.href)
-                                .then(() => {
-                                    toast.success(
-                                        'Länken har sparats till urklipp'
-                                    )
-                                })
-                        }}
-                    >
-                        <Fab variant={'share'} />
-                        <FabText>Dela</FabText>
-                    </FabWrapper>
-                    <FabWrapper onClick={() => window.print()}>
-                        <Fab variant={'print'} />
-                        <FabText>Skriv ut</FabText>
-                    </FabWrapper>
-                </FabArea>
-            </ContentArea>
+                            <Fab variant={'share'} />
+                            <FabText>Dela</FabText>
+                        </FabWrapper>
+                        <FabWrapper onClick={() => window.print()}>
+                            <Fab variant={'print'} />
+                            <FabText>Skriv ut</FabText>
+                        </FabWrapper>
+                    </FabArea>
+                </ContentArea>
 
-            <div
-                style={{
-                    width: '100%',
-                    display: 'grid',
-                    justifyContent: 'center',
-                }}
-            >
-                <StyledH2>Du kanske också gillar...</StyledH2>
-                <StyledSimilarRecipes
-                    tags={recept.tags.nodes.map(tag => tag.name)}
-                    show={4}
-                    allWpRecept={allWpRecept.filter(
-                        wpRecept => wpRecept.id !== recept.id
-                    )}
-                />
+                <div
+                    style={{
+                        width: '100%',
+                        display: 'grid',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <StyledH2>Du kanske också gillar...</StyledH2>
+                    <StyledSimilarRecipes
+                        tags={recept.tags.nodes.map(tag => tag.name)}
+                        show={4}
+                        allWpRecept={allWpRecept.filter(
+                            wpRecept => wpRecept.id !== recept.id
+                        )}
+                    />
+                </div>
+                <Instagram />
+                <Footer />
+                <Toaster />
             </div>
-            <Instagram />
-            <Footer />
-            <Toaster />
-        </div>
+        </>
     )
 }
 

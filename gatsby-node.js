@@ -39,6 +39,46 @@ const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
             }
             allWpRecept(sort: { fields: [date], order: DESC }) {
                 nodes {
+                    seo {
+                        breadcrumbs {
+                            text
+                            url
+                        }
+                        canonical
+                        cornerstone
+                        focuskw
+                        metaDesc
+                        fullHead
+                        metaKeywords
+                        metaRobotsNofollow
+                        metaRobotsNoindex
+                        opengraphAuthor
+                        opengraphDescription
+                        opengraphModifiedTime
+                        opengraphPublishedTime
+                        opengraphPublisher
+                        opengraphSiteName
+                        opengraphUrl
+                        opengraphTitle
+                        opengraphType
+                        readingTime
+                        schema {
+                            articleType
+                            pageType
+                            raw
+                        }
+                        title
+                        twitterDescription
+                        twitterTitle
+                        opengraphImage {
+                            altText
+                            link
+                            mimeType
+                            mediaType
+                            modified
+                            slug
+                        }
+                    }
                     id
                     uri
                     title

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { GatsbyImage, getImage } from 'gatsby-plugin-image'
+import SEO from 'gatsby-plugin-wpgraphql-seo/dist/Seo'
 import React from 'react'
 import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
 import Layout from '../components/layout'
@@ -109,29 +110,31 @@ const tips = ({ pageContext }: Props) => {
     })
 
     return (
-        <Layout>
-            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                <Breadcrumbs
-                    style={{ margin: '20px 10px 0px 10px' }}
-                    crumbs={[
-                        { name: 'Hem', to: '/' },
-                        { name: 'Tips', to: '/tips' },
-                    ]}
-                />
-            </div>
-            <StyledMain>
-                <H1 style={{ textAlign: 'center', margin: '20px 0px' }}>
-                    Tips
-                </H1>
-                <StyledP data-cy="description">
-                    Har du någon gång undrat hur den där ... blev till? Här
-                    samlar jag lite tips och trix som kan vara bra och kul att
-                    känna till!
-                </StyledP>
+        <>
+            <Layout>
+                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                    <Breadcrumbs
+                        style={{ margin: '20px 10px 0px 10px' }}
+                        crumbs={[
+                            { name: 'Hem', to: '/' },
+                            { name: 'Tips', to: '/tips' },
+                        ]}
+                    />
+                </div>
+                <StyledMain>
+                    <H1 style={{ textAlign: 'center', margin: '20px 0px' }}>
+                        Tips
+                    </H1>
+                    <StyledP data-cy="description">
+                        Har du någon gång undrat hur den där ... blev till? Här
+                        samlar jag lite tips och trix som kan vara bra och kul
+                        att känna till!
+                    </StyledP>
 
-                {tipsContent}
-            </StyledMain>
-        </Layout>
+                    {tipsContent}
+                </StyledMain>
+            </Layout>
+        </>
     )
 }
 
