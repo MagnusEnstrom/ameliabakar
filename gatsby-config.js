@@ -35,6 +35,7 @@ module.exports = {
                 },
             },
         },
+        'gatsby-plugin-react-helmet',
         `gatsby-transformer-sharp`, // Needed for dynamic images,
         `gatsby-plugin-image`,
         {

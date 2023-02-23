@@ -5,6 +5,8 @@ import Footer from './footer/Footer'
 import HeaderHome from './header/HeaderHome'
 import Instagram from './instagram/instagram'
 import { IGatsbyImageData } from 'gatsby-plugin-image'
+import { SEOContext } from 'gatsby-plugin-wpgraphql-seo'
+import { graphql, useStaticQuery } from 'gatsby'
 
 type Props = {
     isHomePage?: boolean
@@ -13,7 +15,84 @@ type Props = {
 }
 
 const Layout = ({ isHomePage, navImgs, children }: Props) => {
+    // const {
+    //     wp: { seo },
+    // } = useStaticQuery(graphql`
+    //     query SiteInfoQuery {
+    //         wp {
+    //             seo {
+    //                 contentTypes {
+    //                     post {
+    //                         title
+    //                         schemaType
+    //                         metaRobotsNoindex
+    //                         metaDesc
+    //                     }
+    //                     page {
+    //                         metaDesc
+    //                         metaRobotsNoindex
+    //                         schemaType
+    //                         title
+    //                     }
+    //                 }
+    //                 webmaster {
+    //                     googleVerify
+    //                     yandexVerify
+    //                     msVerify
+    //                     baiduVerify
+    //                 }
+    //                 schema {
+    //                     companyName
+    //                     personName
+    //                     companyOrPerson
+    //                     wordpressSiteName
+    //                     siteUrl
+    //                     siteName
+    //                     inLanguage
+    //                     logo {
+    //                         sourceUrl
+    //                         mediaItemUrl
+    //                         altText
+    //                     }
+    //                 }
+    //                 social {
+    //                     facebook {
+    //                         url
+    //                         defaultImage {
+    //                             sourceUrl
+    //                             mediaItemUrl
+    //                         }
+    //                     }
+    //                     instagram {
+    //                         url
+    //                     }
+    //                     linkedIn {
+    //                         url
+    //                     }
+    //                     mySpace {
+    //                         url
+    //                     }
+    //                     pinterest {
+    //                         url
+    //                         metaTag
+    //                     }
+    //                     twitter {
+    //                         username
+    //                         cardType
+    //                     }
+    //                     wikipedia {
+    //                         url
+    //                     }
+    //                     youTube {
+    //                         url
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // `)
     return (
+        // <SEOContext.Provider value={{ global: seo }}>
         <div data-is-root-path={isHomePage} style={{ overflowY: 'hidden' }}>
             {isHomePage ? (
                 <HeaderHome />
@@ -27,6 +106,7 @@ const Layout = ({ isHomePage, navImgs, children }: Props) => {
             <Instagram />
             <Footer />
         </div>
+        // </SEOContext.Provider>
     )
 }
 
