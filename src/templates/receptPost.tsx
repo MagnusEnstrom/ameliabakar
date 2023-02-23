@@ -203,8 +203,6 @@ const receptPost = ({ pageContext }: Props) => {
         return getImage(img.localFile.childImageSharp)
     })
 
-    console.log('seo', recept?.seo)
-
     const toggleRecipe = useSaveRecipe()
     const [checked, setChecked] = useState<boolean>()
     const handleClick = (
