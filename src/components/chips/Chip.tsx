@@ -45,7 +45,7 @@ const StyledChip = styled.button(() => {
 })
 
 type Props = {
-    text?: string
+    text?: React.ReactNode
     selected?: boolean
 } & React.ButtonHTMLAttributes<HTMLButtonElement>
 const Chip: FC<Props> = ({ text, selected, children, ...rest }) => {

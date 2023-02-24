@@ -2,6 +2,9 @@ import styled from '@emotion/styled'
 import React, { FC } from 'react'
 import { ReceptPageQuery } from '../../graphql/types/ReceptContentType'
 import Chip from '../chips/Chip'
+import Flash from '../../assets/flash.svg'
+
+const FlashSvg = styled(Flash)({})
 
 const FilterList = styled.div({
     display: 'flex',
@@ -37,16 +40,38 @@ const RecipeFilter: FC<Props> = ({
         .slice(0, amount ? amount : -1)
     return (
         <FilterList {...rest}>
-            {tags.map(tag => (
+            {tags.includes('fast') && (
                 <Chip
-                    key={tag}
-                    onClick={() => handleFilterClick(tag)}
-                    selected={activeFilters.includes(tag)}
+                    onClick={() => handleFilterClick('fast')}
+                    selected={activeFilters.includes('fast')}
                     style={{ placeSelf: 'start' }}
-                    text={tag}
                     data-cy={'filterButton'}
+                    text={
+                        <span
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '1ch',
+                            }}
+                        >
+                            snabb
+                            <FlashSvg />
+                        </span>
+                    }
                 />
-            ))}
+            )}
+            {tags
+                .filter(tag => tag !== 'fast')
+                .map(tag => (
+                    <Chip
+                        key={tag}
+                        onClick={() => handleFilterClick(tag)}
+                        selected={activeFilters.includes(tag)}
+                        style={{ placeSelf: 'start' }}
+                        text={tag}
+                        data-cy={'filterButton'}
+                    />
+                ))}
             {children}
         </FilterList>
     )

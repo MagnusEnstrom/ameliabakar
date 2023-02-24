@@ -1,6 +1,18 @@
 import { graphql, useStaticQuery } from 'gatsby'
 import { ImageDataLike } from 'gatsby-plugin-image'
 
+const isFast = (recipe: ReturnType<typeof useGetRecepies>[0]) => {
+    if (recipe.singlePaketAfc.tidFormat === 'min') {
+        return recipe.singlePaketAfc.tid <= 60
+    }
+
+    if (recipe.singlePaketAfc.tidFormat === 'h') {
+        return recipe.singlePaketAfc.tid <= 1
+    }
+
+    return false
+}
+
 const useGetRecepies = () => {
     const { allWpRecept, allRating } = useStaticQuery<{
         allRating: {
@@ -83,6 +95,10 @@ const useGetRecepies = () => {
         const rating = allRating?.nodes?.find(
             rating => rating.parent?.id === recept.id
         )
+
+        if (isFast(recept)) {
+            recept.tags.nodes.push({ name: 'fast' })
+        }
         return {
             ...recept,
             rating: rating ? rating : null,
