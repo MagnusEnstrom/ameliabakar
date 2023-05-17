@@ -1,19 +1,12 @@
-import { doc, setDoc } from 'firebase/firestore'
 import { useMutation } from 'react-query'
-import { useFirebaseAuthContext } from '../context/FirebaseAuthContext'
-import { db } from '../lib/firebase/firebase'
+import addToMailchimp from 'gatsby-plugin-mailchimp'
 
-const subscribe = async (email: string, uid: string) => {
-    const response = await setDoc(doc(db, 'emails', uid), {
-        email: email,
-    })
-
-    return response
+const subscribe = async (email: string) => {
+    return addToMailchimp(email)
 }
 
 const useSubscribe = () => {
-    const { user } = useFirebaseAuthContext()
-    return useMutation((email: string) => subscribe(email, user?.uid))
+    return useMutation((email: string) => subscribe(email))
 }
 
 export default useSubscribe
