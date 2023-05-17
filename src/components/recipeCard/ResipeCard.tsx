@@ -9,8 +9,11 @@ import ClockIcon from '../../assets/clock-white.svg'
 import ClockIconBlack from '../../assets/clock.svg'
 import Rating from '../rating/Rating'
 import { Link } from 'gatsby'
-import useSaveRecipe from '../../hooks/useSaveRecipe'
-import useIsRecipeSaved from '../../hooks/useIsRecipeSaved'
+
+import {
+    useIsRecipeSaved,
+    useToggleRecipe,
+} from '../../hooks/savedRecipeQueries'
 import Difficulty from '../difficulty/Difficulty'
 import P from '../typography/p/P'
 
@@ -203,17 +206,15 @@ const ResipeCard = ({
     kortBeskrivning,
     children,
 }: Props) => {
-    const toggleRecipe = useSaveRecipe()
-    const [checked, setChecked] = useState<boolean>()
+    const toggleRecipe = useToggleRecipe()
+    const isSaved = useIsRecipeSaved(id)
     const handleClick = (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
         e.stopPropagation()
         e.preventDefault()
-        setChecked(toggleRecipe(id))
+        toggleRecipe(id)
     }
-
-    const isSaved = useIsRecipeSaved(id)
 
     if (variant === 'card') {
         return (
@@ -222,9 +223,7 @@ const ResipeCard = ({
                     <HeartButton
                         data-cy="heartButton"
                         onClick={e => handleClick(e)}
-                        aria-selected={
-                            typeof checked !== 'undefined' ? checked : isSaved
-                        }
+                        aria-selected={isSaved}
                     >
                         <HeartIcon />
                     </HeartButton>
@@ -256,9 +255,7 @@ const ResipeCard = ({
                     <HeartButton
                         data-cy="heartButton"
                         onClick={e => handleClick(e)}
-                        aria-selected={
-                            typeof checked !== 'undefined' ? checked : isSaved
-                        }
+                        aria-selected={isSaved}
                     >
                         <HeartIcon />
                     </HeartButton>

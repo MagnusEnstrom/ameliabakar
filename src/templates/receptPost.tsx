@@ -17,13 +17,13 @@ import Instagram from '../components/instagram/instagram'
 import Footer from '../components/footer/Footer'
 import RecipeCardHeader from '../components/header/RecipeCardHeader'
 import RateRecipe from '../components/rateRecipe/RateRecipe'
-import useSaveRecipe from '../hooks/useSaveRecipe'
 import useIsRecipeSaved from '../hooks/useIsRecipeSaved'
 import SimilarRecipes from '../components/similarRecipes/SimilarRecipes'
 import colors from '../lib/colors'
 import { getImage } from 'gatsby-plugin-image'
 import toast, { Toaster } from 'react-hot-toast'
 import Seo from 'gatsby-plugin-wpgraphql-seo'
+import { useToggleRecipe } from '../hooks/savedRecipeQueries'
 
 const ChipArea = styled.div({
     display: 'flex',
@@ -203,19 +203,15 @@ const receptPost = ({ pageContext }: Props) => {
         return getImage(img.localFile.childImageSharp)
     })
 
-    const toggleRecipe = useSaveRecipe()
-    const [checked, setChecked] = useState<boolean>()
+    const toggleRecipe = useToggleRecipe()
+    const isSaved = useIsRecipeSaved(recept.id)
     const handleClick = (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
         e.stopPropagation()
         e.preventDefault()
-        setChecked(toggleRecipe(recept.id))
+        toggleRecipe(recept.id)
     }
-
-    const isSaved = useIsRecipeSaved(recept.id)
-
-    const isChecked = typeof checked !== 'undefined' ? checked : isSaved
 
     const [activeNav, setActiveNav] = useState<ActiveNav>('ingredienser')
     return (
@@ -284,7 +280,7 @@ const receptPost = ({ pageContext }: Props) => {
                     </ChipArea>
                     <FabArea>
                         <FabWrapper onClick={e => handleClick(e)}>
-                            {isChecked ? (
+                            {isSaved ? (
                                 <Fab variant={'saved'} />
                             ) : (
                                 <Fab variant={'save'} />
