@@ -1,7 +1,8 @@
-import styled from '@emotion/styled';
-import React, { useEffect, useState } from 'react';
-import colors from '../../lib/colors';
-import typography from '../../lib/typography';
+import styled from '@emotion/styled'
+import React, { useEffect, useState } from 'react'
+import colors from '../../lib/colors'
+import typography from '../../lib/typography'
+import { useGetCountOfSavedRecipes } from '../../hooks/savedRecipeQueries'
 
 const StyledCounter = styled.div({
     ...typography.badge,
@@ -15,21 +16,16 @@ const StyledCounter = styled.div({
     backgroundColor: colors.red,
     lineHeight: '18px',
     verticalAlign: 'middle',
-});
+})
 
-const SavedCounter = ({...rest}: React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>) => {
-    const [ amount, setAmount ] = useState(0);
-    useEffect(() => {
-        const storageString = localStorage.getItem('savedRecipes');
-        if(!storageString) return;
-        const savedRecipes = JSON.parse(storageString) as string[];
-        setAmount(savedRecipes.length);
-    }, [])
-    return amount ? (
-        <StyledCounter {...rest}>
-            {amount}
-        </StyledCounter>) 
-        : null;
-};
+const SavedCounter = ({
+    ...rest
+}: React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+>) => {
+    const amount = useGetCountOfSavedRecipes()
+    return amount ? <StyledCounter {...rest}>{amount}</StyledCounter> : null
+}
 
-export default SavedCounter;
+export default SavedCounter

@@ -1,12 +1,11 @@
 import styled from '@emotion/styled'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Breadcrumbs from '../components/breadcrumbs/Breadcrumbs'
 import Primary from '../components/buttons/primary/Primary'
 import Layout from '../components/layout'
 import RecipeGrid from '../components/recipes/recipeGrid/RecipeGrid'
 import H1 from '../components/typography/h1/H1'
-import { ReceptPageQuery } from '../graphql/types/ReceptContentType'
-import { PageProps } from 'gatsby'
+import { useGetSavedRecipes } from '../hooks/savedRecipeQueries'
 import P from '../components/typography/p/P'
 import InvisibleLink from '../components/Links/InvisibleLink'
 import typography from '../lib/typography'
@@ -45,17 +44,11 @@ const StyledP = styled(P)({
 })
 const savedRecipes = () => {
     const recipes = useGetRecepies()
-    const [filteredRecipes, setFilteredRecipes] = useState<
-        ReturnType<typeof useGetRecepies>
-    >([])
-    useEffect(() => {
-        const storageString = localStorage.getItem('savedRecipes')
-        if (!storageString) return
-        const savedRecipes = JSON.parse(storageString) as string[]
-        setFilteredRecipes(
-            recipes.filter(node => savedRecipes.includes(node.id))
-        )
-    }, [])
+    const { data: savedRecipeIds } = useGetSavedRecipes()
+
+    const filteredRecipes = recipes.filter(node =>
+        savedRecipeIds?.includes(node.id)
+    )
 
     return (
         <Layout>
