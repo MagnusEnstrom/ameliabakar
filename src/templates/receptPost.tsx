@@ -17,13 +17,12 @@ import Instagram from '../components/instagram/instagram'
 import Footer from '../components/footer/Footer'
 import RecipeCardHeader from '../components/header/RecipeCardHeader'
 import RateRecipe from '../components/rateRecipe/RateRecipe'
-import useIsRecipeSaved from '../hooks/useIsRecipeSaved'
 import SimilarRecipes from '../components/similarRecipes/SimilarRecipes'
 import colors from '../lib/colors'
 import { getImage } from 'gatsby-plugin-image'
 import toast, { Toaster } from 'react-hot-toast'
 import Seo from 'gatsby-plugin-wpgraphql-seo'
-import { useToggleRecipe } from '../hooks/savedRecipeQueries'
+import { useToggleRecipe, useIsRecipeSaved } from '../hooks/savedRecipeQueries'
 
 const ChipArea = styled.div({
     display: 'flex',

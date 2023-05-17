@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 
+const savedRecipesStorageKey = 'savedRecipes'
+
 const savedRecipesKeys = {
     all: ['savedRecipes'] as const,
     list: () => [...savedRecipesKeys.all, 'list'] as const,
@@ -13,15 +15,21 @@ const useToggleRecipe = () => {
     const save = (recipeId: string, recipes: string[]) => {
         const recipesToSave = [...recipes, recipeId]
 
-        localStorage.setItem('savedRecipes', JSON.stringify(recipesToSave))
+        localStorage.setItem(
+            savedRecipesStorageKey,
+            JSON.stringify(recipesToSave)
+        )
     }
     const remove = (recipeId: string, recipes: string[]) => {
         const recipesToSave = [...recipes].filter(recipe => recipe !== recipeId)
-        localStorage.setItem('savedRecipes', JSON.stringify(recipesToSave))
+        localStorage.setItem(
+            savedRecipesStorageKey,
+            JSON.stringify(recipesToSave)
+        )
     }
 
     const toggleSavedRecipe = async (recipeId: string) => {
-        const savedRecipesString = localStorage.getItem('savedRecipes')
+        const savedRecipesString = localStorage.getItem(savedRecipesStorageKey)
         let recipes: string[] = []
         if (savedRecipesString) {
             recipes = JSON.parse(savedRecipesString) as string[]
@@ -42,7 +50,7 @@ const useToggleRecipe = () => {
 }
 
 const getSavedRecipesIds = () => {
-    const storageString = localStorage.getItem('savedRecipes')
+    const storageString = localStorage.getItem(savedRecipesStorageKey)
     if (!storageString) return []
     return JSON.parse(storageString) as string[]
 }

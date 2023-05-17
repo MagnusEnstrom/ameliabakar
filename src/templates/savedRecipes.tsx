@@ -47,7 +47,7 @@ const savedRecipes = () => {
     const { data: savedRecipeIds } = useGetSavedRecipes()
 
     const filteredRecipes = recipes.filter(node =>
-        savedRecipeIds.includes(node.id)
+        savedRecipeIds?.includes(node.id)
     )
 
     return (
