@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import React, { useState } from 'react'
 import colors from '../../lib/colors'
 import typography from '../../lib/typography'
 import Primary from '../buttons/primary/Primary'
@@ -9,6 +9,7 @@ import TextArea from '../Form/TextArea'
 import H1 from '../typography/h1/H1'
 import P from '../typography/p/P'
 import EmailIcon from '../../assets/email.svg'
+import InvisibleLink from '../Links/InvisibleLink'
 
 const ContactContainer = styled.div({
     ...typography.p,
@@ -28,7 +29,7 @@ const StyledLabel = styled(Label)({
     display: 'block',
     textAlign: 'start',
     paddingLeft: '22px',
-    marginBottom: '5px'
+    marginBottom: '5px',
 })
 
 const StyledInput = styled(Input)({
@@ -41,7 +42,7 @@ const StyledTextArea = styled(TextArea)({
 const Email = styled(EmailIcon)({
     border: 'none',
     height: '24px',
-    marginRight: '12px'
+    marginRight: '12px',
 })
 
 const StyledA = styled.a({
@@ -52,8 +53,8 @@ const StyledA = styled.a({
     textDecoration: 'none',
     '&:hover': {
         color: colors.silver,
-    }
-});
+    },
+})
 
 const StyledContactArea = styled.aside({
     display: 'grid',
@@ -63,7 +64,7 @@ const StyledContactArea = styled.aside({
     marginBottom: '50px',
     maxWidth: '1200px',
     margin: '0px auto 50px auto',
-    
+
     ['@media only screen and (min-width: 90ch)']: {
         padding: '50px 10px',
         margin: '0px auto 70px auto',
@@ -76,10 +77,9 @@ const StyledContactArea = styled.aside({
         `,
         gap: '150px',
         padding: '50px 100px',
-        
     },
 })
-const StyledForm = styled.form({
+const StyledForm = styled.div({
     maxWidth: '350px',
     justifySelf: 'center',
     width: '100%',
@@ -91,9 +91,8 @@ const ParagraphContainer = styled.div({
         maxWidth: '560px',
         margin: '0px auto',
     },
-    ['@media only screen and (min-width: 170ch)']: {
-    },
-});
+    ['@media only screen and (min-width: 170ch)']: {},
+})
 
 const TextContainer = styled.div({
     ['@media only screen and (min-width: 170ch)']: {
@@ -117,40 +116,68 @@ const StyledH1 = styled(H1)({
         textAlign: 'start',
     },
 })
-const Contact = ({...rest}) => {
+const Contact = ({ ...rest }) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+        e.preventDefault()
     }
+    const about = `Undrar du över något? Hur gjorde jag den där kupolen av granatäpple-pannacotta? Eller vill du ha hjälp med något inom bakning eller samarbeta med mig?`
 
+    const [body, setBody] = useState('')
+    const [subject, setSubject] = useState('')
     return (
         <StyledContactArea id={'kontakt'} {...rest}>
             <TextContainer>
                 <StyledH1>Kontakt</StyledH1>
                 <ParagraphContainer>
-                    <P>Undrar du över något? Hur gjorde jag den där kupolen av granatäpple-pannacotta? Eller vill du ha hjälp med något inom bakning eller samarbeta    med mig?</P>
-                    <P style={{ marginBottom: '30px'}}>Tveka inte att höra av dig!</P>
+                    <P>{about}</P>
+                    <P style={{ marginBottom: '30px' }}>
+                        Tveka inte att höra av dig!
+                    </P>
                 </ParagraphContainer>
             </TextContainer>
             <RightSideContainer>
                 <ContactContainer>
                     <Email />
-                    <StyledA href={'mailto:contact@ameliabakar.se'}>contact@ameliabakar.se</StyledA>
+                    <StyledA href={'mailto:contact@ameliabakar.se'}>
+                        contact@ameliabakar.se
+                    </StyledA>
                 </ContactContainer>
-                <StyledForm onSubmit={handleSubmit}>
-                <div>
-                    <StyledLabel htmlFor={'name'} >Namn</StyledLabel>
-                    <StyledInput id={'name'} name={'name'} />
-                </div>
-                <div style={{ marginTop: '22px' }}>
-                    <StyledLabel htmlFor={'email'} >Email</StyledLabel>
-                    <StyledInput placeholder={'example@email.com'} type={'email'} id={'email'} name={'email'} />
-                </div>
-                <div style={{ marginTop: '22px' }}>
-                    <StyledLabel htmlFor={'question'} >Fråga</StyledLabel>
-                    <StyledTextArea placeholder={'Skriv vad du vill diskutera'} rows={6} id={'question'} name={'question'} />
-                </div>
+                <StyledForm>
+                    <div>
+                        <StyledLabel htmlFor={'name'}>Namn</StyledLabel>
+                        <StyledInput
+                            id={'name'}
+                            name={'name'}
+                            onChange={e => setSubject(e.target.value)}
+                            value={subject}
+                        />
+                    </div>
+                    <div style={{ marginTop: '22px' }}>
+                        <StyledLabel htmlFor={'question'}>Fråga</StyledLabel>
+                        <StyledTextArea
+                            onChange={e => setBody(e.target.value)}
+                            value={body}
+                            placeholder={'Skriv vad du vill diskutera'}
+                            rows={6}
+                            id={'question'}
+                            name={'question'}
+                        />
+                    </div>
 
-                    <Primary type={'submit'} style={{ width: '100%', marginTop: '30px', marginBottom: '0px'}}>Skicka</Primary>
+                    <a
+                        href={`mailto:contact@ameliabakar.se?subject=${subject}&body=${body}`}
+                    >
+                        <Primary
+                            type={'submit'}
+                            style={{
+                                width: '100%',
+                                marginTop: '30px',
+                                marginBottom: '0px',
+                            }}
+                        >
+                            Skicka
+                        </Primary>
+                    </a>
                 </StyledForm>
             </RightSideContainer>
         </StyledContactArea>
