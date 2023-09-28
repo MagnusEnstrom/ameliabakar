@@ -10,6 +10,7 @@
   "dependencies": {
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
+    "@netlify/gatsby-runner": "^1.1.14",
     "@svgr/webpack": "^5.5.0",
     "axios": "^0.26.1",
     "firebase": "^9.6.10",
@@ -81,7 +82,7 @@
     "url": "git+https://github.com/Papput/ameliabakar"
   },
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby-runner",
     "develop": "gatsby develop -p 8001",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",

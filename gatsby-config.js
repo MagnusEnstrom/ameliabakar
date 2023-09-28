@@ -84,7 +84,7 @@ module.exports = {
             options: {
                 // the only required plugin option for WordPress is the GraphQL url.
                 url:
-                    process.env.WPGRAPHQL_URL ||
+                    process.env.WPGRAPHQL_URL || 
                     `http://localhost:8000/graphql`,
                 schema: {
                     timeout: 9000000,
