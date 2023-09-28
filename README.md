@@ -1,5 +1,5 @@
-## 🚀 [View page](https://ameliabakardev.gatsbyjs.io/)
-[https://ameliabakardev.gatsbyjs.io/](https://ameliabakardev.gatsbyjs.io/)
+## 🚀 [View page](https://ameliabakar.netlify.app/)
+[https://ameliabakar.netlify.app/](https://ameliabakar.netlify.app/)
 
 ## 🧐 What's inside?
 
