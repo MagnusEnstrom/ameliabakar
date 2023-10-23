@@ -30,7 +30,15 @@ exports.sourceNodes = async (
     { credentials }
 ) => {
     // Your web app's Firebase configuration
-    const firebaseConfig = credentials
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOdEVSLwHozBlafQp0f8DbX_Pv_2P9IKk",
+      authDomain: "ameliabakar-b63e6.firebaseapp.com",
+      projectId: "ameliabakar-b63e6",
+      storageBucket: "ameliabakar-b63e6.appspot.com",
+      messagingSenderId: "381053915945",
+      appId: "1:381053915945:web:36955d0bf1d5f387dedd38",
+      measurementId: "G-3QZ63D2V8Q"
+    }
     console.log(`firebaseConfig: ${firebaseConfig}`)
     // Initialize Firebase
     const app = initializeApp(firebaseConfig)
