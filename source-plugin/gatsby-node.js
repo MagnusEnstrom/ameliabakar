@@ -30,16 +30,9 @@ exports.sourceNodes = async (
     { credentials }
 ) => {
     // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyCOdEVSLwHozBlafQp0f8DbX_Pv_2P9IKk",
-      authDomain: "ameliabakar-b63e6.firebaseapp.com",
-      projectId: "ameliabakar-b63e6",
-      storageBucket: "ameliabakar-b63e6.appspot.com",
-      messagingSenderId: "381053915945",
-      appId: "1:381053915945:web:36955d0bf1d5f387dedd38",
-      measurementId: "G-3QZ63D2V8Q"
-    }
-    console.log(`firebaseConfig: ${firebaseConfig}`)
+    try {
+    const firebaseConfig = credentials;
+    process.stdout.write(`${'firebaseConfig', JSON.stringify(credentials, null, 4)}`)
     // Initialize Firebase
     const app = initializeApp(firebaseConfig)
     const db = getFirestore(app)
@@ -64,6 +57,9 @@ exports.sourceNodes = async (
             },
         })
     })
+    } catch (err) {
+        process.stdout.write(`${'gatsby-starter-plugin firebase error', JSON.stringify(err, null, 4)}`)
+    }
 
     return
 }
