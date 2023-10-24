@@ -32,8 +32,6 @@ exports.sourceNodes = async (
     // Your web app's Firebase configuration
     try {
     const firebaseConfig = credentials;
-    process.stdout.write(`${'firebaseConfig', JSON.stringify(credentials, null, 4)}`)
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig)
     const db = getFirestore(app)
 
