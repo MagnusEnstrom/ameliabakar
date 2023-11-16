@@ -46,9 +46,7 @@
     "react-use-flexsearch": "^0.1.1",
     "slick-carousel": "^1.8.1",
     "typeface-merriweather": "1.1.13",
-    "typeface-montserrat": "1.1.13"
-  },
-  "devDependencies": {
+    "typeface-montserrat": "1.1.13",
     "@babel/core": "^7.15.8",
     "@storybook/addon-actions": "^6.3.12",
     "@storybook/addon-essentials": "^6.3.12",
@@ -70,6 +68,8 @@
     "prettier": "^2.5.1",
     "start-server-and-test": "^1.14.0",
     "typescript": "^4.5.2"
+  },
+  "devDependencies": {
   },
   "homepage": "https://www.ameliabakar.se",
   "keywords": [
