@@ -167,6 +167,7 @@ const InstagramIco = styled(InstagramIcon)({
 })
 
 const Instagram = () => {
+    return <></>
     const data = useStaticQuery<InstagramData>(graphql`
         {
             allInstagramContent(
