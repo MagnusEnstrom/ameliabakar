@@ -168,78 +168,78 @@ const InstagramIco = styled(InstagramIcon)({
 
 const Instagram = () => {
     return <></>
-    const data = useStaticQuery<InstagramData>(graphql`
-        {
-            allInstagramContent(
-                sort: { fields: [timestamp], order: DESC }
-                limit: 40
-            ) {
-                nodes {
-                    id
-                    permalink
-                    localFile {
-                        childImageSharp {
-                            gatsbyImageData
-                        }
-                    }
-                }
-            }
-        }
-    `)
+    // const data = useStaticQuery<InstagramData>(graphql`
+    //     {
+    //         allInstagramContent(
+    //             sort: { fields: [timestamp], order: DESC }
+    //             limit: 40
+    //         ) {
+    //             nodes {
+    //                 id
+    //                 permalink
+    //                 localFile {
+    //                     childImageSharp {
+    //                         gatsbyImageData
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // `)
 
-    const [amount, setAmount] = useState(9)
+    // const [amount, setAmount] = useState(9)
 
-    const onClick = () => {
-        setAmount(prev => prev + 9)
-    }
-    const allInstagram = data.allInstagramContent.nodes
-    const instagramData = allInstagram.slice(0, amount)
-    return (
-        <Wrapper>
-            <FollowArea>
-                <InstagramIco />
-                <FollowMeOnInsta
-                    href="https://www.instagram.com/ameliabakar.se/"
-                    target={'_blank'}
-                >
-                    Följ mig på instagram @ameliabakar.se
-                </FollowMeOnInsta>
-            </FollowArea>
-            <InstagramGrid>
-                {instagramData.map(node => {
-                    const image = getImage(node.localFile.childImageSharp)
-                    return (
-                        <StyledInvisibleLink
-                            key={node.id}
-                            href={node.permalink}
-                        >
-                            <GatsbyImage
-                                image={image}
-                                alt={' '}
-                                className="gatsby-img"
-                                objectFit="cover"
-                            />
-                        </StyledInvisibleLink>
-                    )
-                })}
-            </InstagramGrid>
+    // const onClick = () => {
+    //     setAmount(prev => prev + 9)
+    // }
+    // const allInstagram = data.allInstagramContent.nodes
+    // const instagramData = allInstagram.slice(0, amount)
+    // return (
+    //     <Wrapper>
+    //         <FollowArea>
+    //             <InstagramIco />
+    //             <FollowMeOnInsta
+    //                 href="https://www.instagram.com/ameliabakar.se/"
+    //                 target={'_blank'}
+    //             >
+    //                 Följ mig på instagram @ameliabakar.se
+    //             </FollowMeOnInsta>
+    //         </FollowArea>
+    //         <InstagramGrid>
+    //             {instagramData.map(node => {
+    //                 const image = getImage(node.localFile.childImageSharp)
+    //                 return (
+    //                     <StyledInvisibleLink
+    //                         key={node.id}
+    //                         href={node.permalink}
+    //                     >
+    //                         <GatsbyImage
+    //                             image={image}
+    //                             alt={' '}
+    //                             className="gatsby-img"
+    //                             objectFit="cover"
+    //                         />
+    //                     </StyledInvisibleLink>
+    //                 )
+    //             })}
+    //         </InstagramGrid>
 
-            {amount < allInstagram.length && (
-                <LoadMoreWrapper>
-                    <BigLeft />
-                    <SmallLeft />
-                    <Secondary
-                        style={{ placeSelf: 'center' }}
-                        onClick={onClick}
-                    >
-                        Ladda fler
-                    </Secondary>
-                    <SmallRight />
-                    <BigRight />
-                </LoadMoreWrapper>
-            )}
-        </Wrapper>
-    )
+    //         {amount < allInstagram.length && (
+    //             <LoadMoreWrapper>
+    //                 <BigLeft />
+    //                 <SmallLeft />
+    //                 <Secondary
+    //                     style={{ placeSelf: 'center' }}
+    //                     onClick={onClick}
+    //                 >
+    //                     Ladda fler
+    //                 </Secondary>
+    //                 <SmallRight />
+    //                 <BigRight />
+    //             </LoadMoreWrapper>
+    //         )}
+    //     </Wrapper>
+    // )
 }
 
 export default Instagram
