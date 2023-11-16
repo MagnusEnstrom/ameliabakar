@@ -13,12 +13,7 @@
  */
 
 const { initializeApp } = require('firebase/app')
-const {
-    getFirestore,
-    getDocs,
-    doc,
-    collection,
-} = require('firebase/firestore')
+const { getFirestore, getDocs, doc, collection } = require('firebase/firestore')
 
 exports.onPreInit = () => console.log('Loaded gatsby-starter-plugin firebase')
 
@@ -31,32 +26,38 @@ exports.sourceNodes = async (
 ) => {
     // Your web app's Firebase configuration
     try {
-    const firebaseConfig = credentials;
-    const app = initializeApp(firebaseConfig)
-    const db = getFirestore(app)
+        console.log('credentials', credentials)
+        const firebaseConfig = credentials
+        const app = initializeApp(firebaseConfig)
+        const db = getFirestore(app)
 
-    const { createNode } = actions
+        const { createNode } = actions
 
-    const recipesRef = await collection(db, 'recipes')
-    const recipeRatingDocs = await getDocs(recipesRef)
+        const recipesRef = await collection(db, 'recipes')
+        const recipeRatingDocs = await getDocs(recipesRef)
 
-    // loop through data and create Gatsby nodes
-    recipeRatingDocs.docs.forEach(ratingDoc => {
-        const recipeRating = ratingDoc.data()
-        createNode({
-            ...recipeRating,
-            id: createNodeId(`${ratingDoc.id}`),
-            parent: ratingDoc.id,
-            children: [],
-            internal: {
-                type: RATING_NODE_TYPE,
-                content: JSON.stringify(recipeRating),
-                contentDigest: createContentDigest(recipeRating),
-            },
+        // loop through data and create Gatsby nodes
+        recipeRatingDocs.docs.forEach(ratingDoc => {
+            const recipeRating = ratingDoc.data()
+            createNode({
+                ...recipeRating,
+                id: createNodeId(`${ratingDoc.id}`),
+                parent: ratingDoc.id,
+                children: [],
+                internal: {
+                    type: RATING_NODE_TYPE,
+                    content: JSON.stringify(recipeRating),
+                    contentDigest: createContentDigest(recipeRating),
+                },
+            })
         })
-    })
     } catch (err) {
-        process.stdout.write(`${'gatsby-starter-plugin firebase error', JSON.stringify(err, null, 4)}`)
+        process.stdout.write(
+            `${
+                ('gatsby-starter-plugin firebase error',
+                JSON.stringify(err, null, 4))
+            }`
+        )
     }
 
     return
