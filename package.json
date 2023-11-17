@@ -30,7 +30,7 @@
     "gatsby-plugin-wpgraphql-seo": "^1.4.2",
     "gatsby-source-filesystem": "^4.21.1",
     "gatsby-source-instagram-all": "^5.2.1",
-    "gatsby-source-wordpress": "^6.3.0",
+    "gatsby-source-wordpress": "^7.12.3",
     "gatsby-transformer-sharp": "^4.21.0",
     "html-react-parser": "^1.1.1",
     "lodash": "^4.17.20",

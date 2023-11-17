@@ -206,12 +206,12 @@ module.exports = {
                     })),
             },
         },
-        // {
-        //     resolve: `gatsby-source-instagram-all`,
-        //     options: {
-        //         access_token: process.env.ACCESS_TOKEN,
-        //     },
-        // },
+        {
+            resolve: `gatsby-source-instagram-all`,
+            options: {
+                access_token: process.env.ACCESS_TOKEN,
+            },
+        },
         {
             resolve: 'gatsby-plugin-mailchimp',
             options: {
