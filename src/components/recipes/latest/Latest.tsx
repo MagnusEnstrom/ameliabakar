@@ -71,7 +71,7 @@ const Latest = ({
                     }
                 }
             }
-            allWpRecept(sort: { fields: [date], order: DESC }, limit: 20) {
+            allWpRecept(sort: { date: DESC }, limit: 20) {
                 nodes {
                     id
                     uri

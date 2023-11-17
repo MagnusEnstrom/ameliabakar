@@ -37,7 +37,7 @@ const createRecipeDetailPage = async ({ actions, graphql, reporter }) => {
                     }
                 }
             }
-            allWpRecept(sort: { fields: [date], order: DESC }) {
+            allWpRecept(sort: { date: DESC }) {
                 nodes {
                     seo {
                         breadcrumbs {

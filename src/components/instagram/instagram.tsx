@@ -169,10 +169,7 @@ const InstagramIco = styled(InstagramIcon)({
 const Instagram = () => {
     const data = useStaticQuery<InstagramData>(graphql`
         {
-            allInstagramContent(
-                sort: { fields: [timestamp], order: DESC }
-                limit: 40
-            ) {
+            allInstagramContent(sort: { timestamp: DESC }, limit: 40) {
                 nodes {
                     id
                     permalink

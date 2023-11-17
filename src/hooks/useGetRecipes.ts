@@ -60,7 +60,7 @@ const useGetRecepies = () => {
                     }
                 }
             }
-            allWpRecept(sort: { fields: [date], order: DESC }) {
+            allWpRecept(sort: { date: DESC }) {
                 nodes {
                     id
                     uri

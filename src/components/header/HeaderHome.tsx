@@ -129,7 +129,7 @@ type LatestQuery = {
 const HeaderHome = () => {
     const data: LatestQuery = useStaticQuery(graphql`
         {
-            allWpRecept(sort: { fields: [date], order: DESC }, limit: 6) {
+            allWpRecept(sort: { date: DESC }, limit: 6) {
                 nodes {
                     id
                     uri
