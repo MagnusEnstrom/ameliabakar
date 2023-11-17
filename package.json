@@ -82,7 +82,7 @@
     "url": "git+https://github.com/Papput/ameliabakar"
   },
   "scripts": {
-    "build": "gatsby-runner",
+    "build": "gatsby build",
     "develop": "gatsby develop -p 8001",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
