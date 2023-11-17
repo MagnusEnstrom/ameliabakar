@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query'
+import { useMutation } from '@tanstack/react-query'
 import addToMailchimp from 'gatsby-plugin-mailchimp'
 
 const subscribe = async (email: string) => {
@@ -6,7 +6,9 @@ const subscribe = async (email: string) => {
 }
 
 const useSubscribe = () => {
-    return useMutation((email: string) => subscribe(email))
+    return useMutation({
+        mutationFn: (email: string) => subscribe(email),
+    })
 }
 
 export default useSubscribe

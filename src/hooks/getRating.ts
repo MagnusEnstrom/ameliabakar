@@ -1,5 +1,5 @@
 import { doc, getDoc } from 'firebase/firestore'
-import { useMutation, useQueries, useQuery } from 'react-query'
+import { useMutation, useQueries, useQuery } from '@tanstack/react-query'
 import { useFirebaseAuthContext } from '../context/FirebaseAuthContext'
 import { db } from '../lib/firebase/firebase'
 
@@ -42,13 +42,11 @@ const getRating = async (recipeId: string, uid: string) => {
 const useGetRating = (recipeId: string) => {
     const { user } = useFirebaseAuthContext()
 
-    return useQuery(
-        getRatingQuerykeyFactory.id(recipeId, user?.uid),
-        () => getRating(recipeId, user?.uid),
-        {
-            enabled: !!user?.uid,
-        }
-    )
+    return useQuery({
+        queryKey: getRatingQuerykeyFactory.id(recipeId, user?.uid),
+        queryFn: () => getRating(recipeId, user?.uid),
+        enabled: !!user?.uid,
+    })
 }
 
 export default useGetRating

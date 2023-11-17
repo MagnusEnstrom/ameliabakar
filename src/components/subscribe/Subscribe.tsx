@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
-import { UseMutateFunction } from 'react-query'
+import { UseMutateFunction } from '@tanstack/react-query'
 import Newsletter from '../../assets/newsletter.svg'
 import useSubscribe from '../../hooks/subscribe'
 import colors from '../../lib/colors'

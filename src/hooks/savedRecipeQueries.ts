@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 const savedRecipesStorageKey = 'savedRecipes'
 
@@ -42,7 +42,7 @@ const useToggleRecipe = () => {
     const { mutate: toggle } = useMutation({
         mutationFn: toggleSavedRecipe,
         onSettled: () => {
-            queryClient.invalidateQueries(savedRecipesKeys.all)
+            queryClient.invalidateQueries({ queryKey: savedRecipesKeys.all })
         },
     })
 

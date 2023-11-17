@@ -1,5 +1,5 @@
 import { collection, getDocs } from 'firebase/firestore'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { db } from '../lib/firebase/firebase'
 
 const getRatings = async () => {
@@ -10,8 +10,11 @@ const getRatings = async () => {
 }
 
 const useGetRatings = () => {
-    return useQuery('ratings', () => {
-        return getRatings()
+    return useQuery({
+        queryKey: ['ratings'],
+        queryFn: () => {
+            return getRatings()
+        },
     })
 }
 

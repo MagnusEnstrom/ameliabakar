@@ -1,5 +1,5 @@
 import { doc, setDoc } from 'firebase/firestore'
-import { useMutation, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useFirebaseAuthContext } from '../context/FirebaseAuthContext'
 import { db } from '../lib/firebase/firebase'
 import { getRatingsQuerykey } from './getRatings'

@@ -1,6 +1,6 @@
 import { collection, getDocs, onSnapshot, query } from 'firebase/firestore'
 import { useEffect } from 'react'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { db } from '../lib/firebase/firebase'
 
 type RecipeRating = {
@@ -45,7 +45,10 @@ const useGetRatings = (id?: string) => {
                     id: change.doc.id,
                 })
 
-                client.setQueriesData(getRatingsQuerykey, newRatings)
+                client.setQueriesData(
+                    { queryKey: getRatingsQuerykey },
+                    newRatings
+                )
             })
         })
 
@@ -53,7 +56,9 @@ const useGetRatings = (id?: string) => {
             unsubscribe()
         }
     }, [])
-    return useQuery(getRatingsQuerykey, () => getRatings(), {
+    return useQuery({
+        queryKey: getRatingsQuerykey,
+        queryFn: () => getRatings(),
         select: data => data?.find(rating => rating.id === id),
     })
 }
