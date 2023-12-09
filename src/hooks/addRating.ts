@@ -23,15 +23,13 @@ const addRating = async (variables: AddRating, uid: string) => {
 const useAddRating = () => {
     const { user } = useFirebaseAuthContext()
     const client = useQueryClient()
-    return useMutation(
-        (variables: AddRating) => addRating(variables, user?.uid),
-        {
-            onSuccess: (data, variables) => {
-                client.invalidateQueries(getRatingsQuerykey)
-                client.invalidateQueries(getRatingQuerykeyFactory.all)
-            },
-        }
-    )
+    return useMutation({
+        mutationFn: (variables: AddRating) => addRating(variables, user?.uid),
+        onSuccess: (data, variables) => {
+            client.invalidateQueries({ queryKey: getRatingsQuerykey })
+            client.invalidateQueries({ queryKey: getRatingQuerykeyFactory.all })
+        },
+    })
 }
 
 export default useAddRating

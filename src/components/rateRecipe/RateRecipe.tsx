@@ -84,7 +84,7 @@ const RateRecipe = ({ pageContext, ...rest }: Props) => {
                 },
                 onSuccess: () => {
                     setHasVoted(true)
-                    client.invalidateQueries(['recipe'])
+                    client.invalidateQueries({ queryKey: ['recipe'] })
                 },
                 onError: () => {
                     setError('Något gick fel')

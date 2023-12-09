@@ -204,6 +204,7 @@ const receptPost = ({ pageContext }: Props) => {
 
     const toggleRecipe = useToggleRecipe()
     const isSaved = useIsRecipeSaved(recept.id)
+
     const handleClick = (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
@@ -211,7 +212,6 @@ const receptPost = ({ pageContext }: Props) => {
         e.preventDefault()
         toggleRecipe(recept.id)
     }
-
     const [activeNav, setActiveNav] = useState<ActiveNav>('ingredienser')
     return (
         <>

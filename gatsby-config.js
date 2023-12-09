@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config({
     path: process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : '.env',
 })
@@ -85,7 +86,7 @@ module.exports = {
             options: {
                 // the only required plugin option for WordPress is the GraphQL url.
                 url:
-                    process.env.WPGRAPHQL_URL || 
+                    process.env.WPGRAPHQL_URL ||
                     `http://localhost:8000/graphql`,
                 schema: {
                     timeout: 9000000,
@@ -215,7 +216,7 @@ module.exports = {
         {
             resolve: 'gatsby-plugin-mailchimp',
             options: {
-                endpoint:  process.env.MAILCHIMP_ENDPOINT, // string; add your MC list endpoint here; see instructions below
+                endpoint: process.env.MAILCHIMP_ENDPOINT, // string; add your MC list endpoint here; see instructions below
                 timeout: 3500, // number; the amount of time, in milliseconds, that you want to allow mailchimp to respond to your request before timing out. defaults to 3500
             },
         },

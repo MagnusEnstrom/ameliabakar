@@ -2,6 +2,7 @@ import { signInAnonymously, User } from 'firebase/auth'
 import React, {
     createContext,
     FC,
+    ReactNode,
     useContext,
     useEffect,
     useState,
@@ -11,7 +12,7 @@ type ContextState = { user: User }
 
 const FirebaseAuthContext = createContext<ContextState | undefined>(undefined)
 
-const FirebaseAuthProvider: FC = ({ children }) => {
+const FirebaseAuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User>(null)
     const value = { user }
 

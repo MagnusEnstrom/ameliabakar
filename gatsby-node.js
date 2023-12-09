@@ -1,6 +1,5 @@
-const path = require(`path`)
-const chunk = require(`lodash/chunk`)
-
+// require(`path`)
+// require(`lodash/chunk`)
 // This is a simple debugging tool
 // dd() will prettily dump to the terminal and kill the process
 // const { dd } = require(`dumper.js`)
