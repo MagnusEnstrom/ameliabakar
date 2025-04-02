@@ -1,6 +1,6 @@
-"use client";
-import styles from "./PreviewNotice.module.css";
-import { usePathname } from "next/navigation";
+'use client';
+import styles from './PreviewNotice.module.css';
+import { usePathname } from 'next/navigation';
 
 export const PreviewNotice = () => {
   const pathname = usePathname();

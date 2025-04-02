@@ -1,5 +1,5 @@
-import type { CodegenConfig } from "@graphql-codegen/cli";
-import { loadEnvConfig } from "@next/env";
+import type { CodegenConfig } from '@graphql-codegen/cli';
+import { loadEnvConfig } from '@next/env';
 
 const projectDir = process.cwd();
 loadEnvConfig(projectDir);
@@ -9,16 +9,16 @@ const config: CodegenConfig = {
   schema: {
     [`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/graphql`]: {
       headers: {
-        "User-Agent": "Codegen",
+        'User-Agent': 'Codegen',
       },
     },
   },
   generates: {
-    "src/gql/": {
-      preset: "client",
+    'src/gql/': {
+      preset: 'client',
     },
-    "src/gql/schema.gql": {
-      plugins: ["schema-ast"],
+    'src/gql/schema.gql': {
+      plugins: ['schema-ast'],
     },
   },
 };

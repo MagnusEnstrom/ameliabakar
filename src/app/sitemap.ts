@@ -1,4 +1,4 @@
-import { MetadataRoute } from "next";
+import { MetadataRoute } from 'next';
 
 export const revalidate = 0;
 
@@ -10,7 +10,7 @@ async function getTotalCounts() {
   if (!data) return [];
   const propertyNames = Object.keys(data);
 
-  const excludeItems = ["page", "user", "category", "tag"];
+  const excludeItems = ['page', 'user', 'category', 'tag'];
   let totalArray = propertyNames
     .filter((name) => !excludeItems.includes(name))
     .map((name) => {
@@ -42,7 +42,7 @@ async function getPostsUrls({
       url: `${process.env.NEXT_PUBLIC_BASE_URL}${post.url}`,
       lastModified: new Date(post.post_modified_date)
         .toISOString()
-        .split("T")[0],
+        .split('T')[0],
     };
   });
 

@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const PageQuery = gql`
   query PageQuery($id: ID!, $preview: Boolean = false) {

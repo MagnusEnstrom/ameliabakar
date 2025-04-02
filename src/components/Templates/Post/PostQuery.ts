@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const PostQuery = gql`
   query PostQuery($id: ID!, $preview: Boolean = false) {
