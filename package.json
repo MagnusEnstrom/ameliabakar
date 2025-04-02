@@ -19,10 +19,8 @@
     "graphql": "^16.10.0",
     "graphql-tag": "^2.12.6",
     "next": "^15.2.3",
-    "postcss": "^8.5.3",
     "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "tailwindcss": "^4.1.1"
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.0",
@@ -32,12 +30,15 @@
     "@types/node": "^20.17.30",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.21",
     "eslint": "^9.23.0",
     "eslint-config-next": "latest",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.5",
     "eslint-plugin-react": "^7.37.4",
+    "postcss": "^8.5.3",
     "prettier": "^3.5.3",
+    "tailwindcss": "^4.1.1",
     "typescript": "^5.8.2"
   },
   "pnpm": {
@@ -54,7 +55,8 @@
     ],
     "onlyBuiltDependencies": [
       "@firebase/util",
-      "protobufjs"
+      "protobufjs",
+      "sharp"
     ]
   }
 }

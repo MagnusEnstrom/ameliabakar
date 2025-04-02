@@ -973,6 +973,9 @@ input BestallningToCategoryConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -1253,6 +1256,9 @@ input BestallningToTagConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -1378,6 +1384,9 @@ input BestallningToTermNodeConnectionWhereArgs {
 
   """The Taxonomy to filter terms by"""
   taxonomies: [TaxonomyEnum]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
 
   """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
@@ -2009,6 +2018,9 @@ input CategoryToCategoryConnectionWhereArgs {
 
   """Array of slugs to return term(s) for. Default empty."""
   slug: [String]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
 
   """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
@@ -2781,6 +2793,9 @@ input CommentToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
+  """Comment status to limit results by."""
+  status: String
+
   """One or more Comment Statuses to limit results by"""
   statusIn: [CommentStatusEnum]
 
@@ -2927,6 +2942,9 @@ input CommentToParentCommentConnectionWhereArgs {
 
   """Search term(s) to retrieve matching comments for."""
   search: String
+
+  """Comment status to limit results by."""
+  status: String
 
   """One or more Comment Statuses to limit results by"""
   statusIn: [CommentStatusEnum]
@@ -3901,6 +3919,9 @@ type CreateCategoryPayload {
 
 """Input for the createComment mutation."""
 input CreateCommentInput {
+  """The approval status of the comment."""
+  approved: String
+
   """The name of the comment's author."""
   author: String
 
@@ -6278,6 +6299,9 @@ input MediaItemToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
+  """Comment status to limit results by."""
+  status: String
+
   """One or more Comment Statuses to limit results by"""
   statusIn: [CommentStatusEnum]
 
@@ -7781,6 +7805,9 @@ input PageToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
+  """Comment status to limit results by."""
+  status: String
+
   """One or more Comment Statuses to limit results by"""
   statusIn: [CommentStatusEnum]
 
@@ -9243,6 +9270,9 @@ input PostToCategoryConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -9378,6 +9408,9 @@ input PostToCommentConnectionWhereArgs {
 
   """Search term(s) to retrieve matching comments for."""
   search: String
+
+  """Comment status to limit results by."""
+  status: String
 
   """One or more Comment Statuses to limit results by"""
   statusIn: [CommentStatusEnum]
@@ -9555,6 +9588,9 @@ input PostToPostFormatConnectionWhereArgs {
 
   """Array of slugs to return term(s) for. Default empty."""
   slug: [String]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
 
   """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
@@ -9842,6 +9878,9 @@ input PostToTagConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -9969,6 +10008,9 @@ input PostToTermNodeConnectionWhereArgs {
   taxonomies: [TaxonomyEnum]
 
   """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -10053,6 +10095,7 @@ type PostTypeLabelDetails {
   viewItems: String
 }
 
+""""""
 type PostTypeSEO {
   """"""
   breadcrumbs: [SEOPostTypeBreadcrumbs]
@@ -10709,6 +10752,9 @@ input ReceptToCategoryConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -11028,6 +11074,9 @@ input ReceptToTagConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -11153,6 +11202,9 @@ input ReceptToTermNodeConnectionWhereArgs {
 
   """The Taxonomy to filter terms by"""
   taxonomies: [TaxonomyEnum]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
 
   """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
@@ -12870,6 +12922,9 @@ input RootQueryToCategoryConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -13005,6 +13060,9 @@ input RootQueryToCommentConnectionWhereArgs {
 
   """Search term(s) to retrieve matching comments for."""
   search: String
+
+  """Comment status to limit results by."""
+  status: String
 
   """One or more Comment Statuses to limit results by"""
   statusIn: [CommentStatusEnum]
@@ -13879,6 +13937,9 @@ input RootQueryToPostFormatConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -14234,6 +14295,9 @@ input RootQueryToTagConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -14398,6 +14462,9 @@ input RootQueryToTermNodeConnectionWhereArgs {
 
   """The Taxonomy to filter terms by"""
   taxonomies: [TaxonomyEnum]
+
+  """Array of term taxonomy IDs, to match when querying terms."""
+  termTaxonomId: [ID]
 
   """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
@@ -14916,6 +14983,7 @@ type SEOPageInfoSchema {
   raw: String
 }
 
+""""""
 type SEOPostTypeBreadcrumbs {
   """"""
   text: String
@@ -15023,6 +15091,7 @@ type SEOSocial {
   youTube: SEOSocialYoutube
 }
 
+""""""
 type SEOSocialFacebook {
   """"""
   defaultImage: MediaItem
@@ -15031,21 +15100,25 @@ type SEOSocialFacebook {
   url: String
 }
 
+""""""
 type SEOSocialInstagram {
   """"""
   url: String
 }
 
+""""""
 type SEOSocialLinkedIn {
   """"""
   url: String
 }
 
+""""""
 type SEOSocialMySpace {
   """"""
   url: String
 }
 
+""""""
 type SEOSocialPinterest {
   """"""
   metaTag: String
@@ -15054,6 +15127,7 @@ type SEOSocialPinterest {
   url: String
 }
 
+""""""
 type SEOSocialTwitter {
   """"""
   cardType: SEOCardType
@@ -15062,11 +15136,13 @@ type SEOSocialTwitter {
   username: String
 }
 
+""""""
 type SEOSocialWikipedia {
   """"""
   url: String
 }
 
+""""""
 type SEOSocialYoutube {
   """"""
   url: String
@@ -15078,6 +15154,7 @@ type SEOTaxonomySchema {
   raw: String
 }
 
+""""""
 type SEOUser {
   """"""
   breadcrumbTitle: String
@@ -15143,6 +15220,7 @@ type SEOUserSchema {
   raw: String
 }
 
+""""""
 type SEOUserSocial {
   """"""
   facebook: String
@@ -16244,6 +16322,7 @@ enum TaxonomyIdTypeEnum {
   NAME
 }
 
+""""""
 type TaxonomySEO {
   """"""
   breadcrumbs: [SEOPostTypeBreadcrumbs]
@@ -17408,6 +17487,9 @@ type UpdateCategoryPayload {
 
 """Input for the updateComment mutation."""
 input UpdateCommentInput {
+  """The approval status of the comment."""
+  approved: String
+
   """The name of the comment's author."""
   author: String
 
@@ -18582,6 +18664,9 @@ input UserToCommentConnectionWhereArgs {
 
   """Search term(s) to retrieve matching comments for."""
   search: String
+
+  """Comment status to limit results by."""
+  status: String
 
   """One or more Comment Statuses to limit results by"""
   statusIn: [CommentStatusEnum]
