@@ -1,38 +1,44 @@
 import Link from 'next/link';
 import { print } from 'graphql/language/printer';
-
+import SearchForm from '@/components/Globals/Navigation/SearchForm';
 import styles from './Navigation.module.css';
 
 import { MenuItem, RootQueryToMenuItemConnection } from '@/gql/graphql';
 import { fetchGraphQL } from '@/utils/fetchGraphQL';
 import gql from 'graphql-tag';
 
-async function getData() {
-  const menuQuery = gql`
-    query MenuQuery {
-      menuItems(where: { location: PRIMARY_MENU }) {
-        nodes {
-          uri
-          target
-          label
-        }
-      }
-    }
-  `;
-
-  const { menuItems } = await fetchGraphQL<{
-    menuItems: RootQueryToMenuItemConnection;
-  }>(print(menuQuery));
-
-  if (menuItems === null) {
-    throw new Error('Failed to fetch data');
-  }
-
-  return menuItems;
-}
+//async function getData() {
+//  const menuQuery = gql`
+//    query MenuQuery {
+//      menuItems(where: { location: PRIMARY_MENU }) {
+//        nodes {
+//          uri
+//          target
+//          label
+//        }
+//      }
+//    }
+//  `;
+//
+//  const { menuItems } = await fetchGraphQL<{
+//    menuItems: RootQueryToMenuItemConnection;
+//  }>(print(menuQuery));
+//
+//  if (menuItems === null) {
+//    throw new Error('Failed to fetch data');
+//  }
+//
+//  return menuItems;
+//}
 
 export default async function Navigation() {
-  const menuItems = await getData();
+  //const menuItems = await getData();
+  const menuItems: any = [
+    { uri: '/recept', label: 'Recept' },
+    { uri: '/om-mig', label: 'Om mig' },
+    { uri: '/tips', label: 'Tips' },
+    { uri: '/bestallnigar', label: 'Beställningar' }
+  ];
 
   return (
     <nav
@@ -41,7 +47,7 @@ export default async function Navigation() {
       itemScope
       itemType='http://schema.org/SiteNavigationElement'
     >
-      {menuItems.nodes.map((item: MenuItem, index: number) => {
+      {menuItems.map((item: MenuItem, index: number) => {
         if (!item.uri) return null;
 
         return (
@@ -55,6 +61,7 @@ export default async function Navigation() {
           </Link>
         );
       })}
+      <SearchForm />
     </nav>
   );
 }

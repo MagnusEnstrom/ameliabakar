@@ -31,5 +31,8 @@ export default async function NotFound() {
     id: notFoundPageWordPressId,
   });
 
+  if (!page)
+    return <div dangerouslySetInnerHTML={{ __html: ' ' }} />;
+
   return <div dangerouslySetInnerHTML={{ __html: page.content || ' ' }} />;
 }
