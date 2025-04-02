@@ -1,8 +1,3 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d9290941-8d67-4e02-b003-08e396c230ea/deploy-status)](https://app.netlify.com/sites/ameliabakar/deploys)
-
-## 🚀 [View page](https://ameliabakar.netlify.app/)
-[https://ameliabakar.netlify.app/](https://ameliabakar.netlify.app/)
-
 ## 🧐 What's inside?
 
 A quick look at the top-level files and directories you'll see in a Gatsby project.
