@@ -63,6 +63,8 @@ export default async function Page(props: { params: Params, searchParams: Search
 
   if (!contentNode) return notFound();
 
+  console.log(contentNode);
+
   switch (contentNode.contentTypeName) {
     case 'page':
       return <PageTemplate node={contentNode} />;

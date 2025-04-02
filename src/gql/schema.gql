@@ -17,6 +17,25 @@ type ActionMonitorAction implements ContentNode & DatabaseIdentifier & Node & No
   """The type of action (CREATE, UPDATE, DELETE)"""
   actionType: String
 
+  """The ancestors of the content node."""
+  ancestors(
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+  ): ActionMonitorActionToActionMonitorActionConnection @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
   """The content of the post."""
   content(
     """Format of the field output"""
@@ -94,11 +113,23 @@ type ActionMonitorAction implements ContentNode & DatabaseIdentifier & Node & No
   """
   guid: String
 
+  """Whether the action_monitor object is password protected."""
+  hasPassword: Boolean
+
   """The globally unique identifier of the action_monitor object."""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is a node in the preview state"""
   isPreview: Boolean
@@ -124,6 +155,12 @@ type ActionMonitorAction implements ContentNode & DatabaseIdentifier & Node & No
   The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
   """
   modifiedGmt: String
+
+  """The parent of the content node."""
+  parent: ActionMonitorActionToParentConnectionEdge @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+
+  """The password for the action_monitor object."""
+  password: String
 
   """
   Connection between the ActionMonitorAction type and the ActionMonitorAction type
@@ -243,6 +280,64 @@ enum ActionMonitorActionIdType {
 """
 Connection between the ActionMonitorAction type and the ActionMonitorAction type
 """
+type ActionMonitorActionToActionMonitorActionConnection implements ActionMonitorActionConnection & Connection {
+  """
+  Edges for the ActionMonitorActionToActionMonitorActionConnection connection
+  """
+  edges: [ActionMonitorActionToActionMonitorActionConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [ActionMonitorAction!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: ActionMonitorActionToActionMonitorActionConnectionPageInfo!
+}
+
+"""An edge in a connection"""
+type ActionMonitorActionToActionMonitorActionConnectionEdge implements ActionMonitorActionConnectionEdge & Edge {
+  """A cursor for use in pagination"""
+  cursor: String @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
+  """The item at the end of the edge"""
+  node: ActionMonitorAction! @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+}
+
+"""
+Page Info on the &quot;ActionMonitorActionToActionMonitorActionConnection&quot;
+"""
+type ActionMonitorActionToActionMonitorActionConnectionPageInfo implements ActionMonitorActionConnectionPageInfo & PageInfo & WPPageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """Raw schema for page"""
+  seo: SEOPostTypePageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""
+Connection between the ActionMonitorAction type and the ActionMonitorAction type
+"""
+type ActionMonitorActionToParentConnectionEdge implements ActionMonitorActionConnectionEdge & Edge & OneToOneConnection {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The node of the connection, without the edges"""
+  node: ActionMonitorAction! @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+}
+
+"""
+Connection between the ActionMonitorAction type and the ActionMonitorAction type
+"""
 type ActionMonitorActionToPreviewConnectionEdge implements ActionMonitorActionConnectionEdge & Edge & OneToOneConnection {
   """
   Opaque reference to the nodes position in the connection. Value can be used with pagination args.
@@ -316,6 +411,25 @@ enum AvatarRatingEnum {
 
 """The Bestallning type"""
 type Bestallning implements ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithRevisions & NodeWithTemplate & Previewable & UniformResourceIdentifiable {
+  """The ancestors of the content node."""
+  ancestors(
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+  ): BestallningToBestallningConnection @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
   """The id field matches the WP_Post-&gt;ID field."""
   bestallningId: Int! @deprecated(reason: "Deprecated in favor of the databaseId field")
 
@@ -412,11 +526,23 @@ type Bestallning implements ContentNode & DatabaseIdentifier & MenuItemLinkable 
   """
   guid: String
 
+  """Whether the bestallning object is password protected."""
+  hasPassword: Boolean
+
   """The globally unique identifier of the bestallning object."""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is a node in the preview state"""
   isPreview: Boolean
@@ -450,6 +576,12 @@ type Bestallning implements ContentNode & DatabaseIdentifier & MenuItemLinkable 
   Added to the GraphQL Schema because the ACF Field Group &quot;Beställning&quot; was set to Show in GraphQL.
   """
   orderAFC: Bestallning_Orderafc
+
+  """The parent of the content node."""
+  parent: BestallningToParentConnectionEdge @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+
+  """The password for the bestallning object."""
+  password: String
 
   """Connection between the Bestallning type and the Bestallning type"""
   preview: BestallningToPreviewConnectionEdge
@@ -681,6 +813,45 @@ input BestallningTagsNodeInput {
   slug: String
 }
 
+"""Connection between the Bestallning type and the Bestallning type"""
+type BestallningToBestallningConnection implements BestallningConnection & Connection {
+  """Edges for the BestallningToBestallningConnection connection"""
+  edges: [BestallningToBestallningConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [Bestallning!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: BestallningToBestallningConnectionPageInfo!
+}
+
+"""An edge in a connection"""
+type BestallningToBestallningConnectionEdge implements BestallningConnectionEdge & Edge {
+  """A cursor for use in pagination"""
+  cursor: String @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
+  """The item at the end of the edge"""
+  node: Bestallning! @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+}
+
+"""Page Info on the &quot;BestallningToBestallningConnection&quot;"""
+type BestallningToBestallningConnectionPageInfo implements BestallningConnectionPageInfo & PageInfo & WPPageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """Raw schema for page"""
+  seo: SEOPostTypePageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
 """Connection between the Bestallning type and the category type"""
 type BestallningToCategoryConnection implements CategoryConnection & Connection {
   """Edges for the BestallningToCategoryConnection connection"""
@@ -802,13 +973,21 @@ input BestallningToCategoryConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
   updateTermMetaCache: Boolean
+}
+
+"""Connection between the Bestallning type and the Bestallning type"""
+type BestallningToParentConnectionEdge implements BestallningConnectionEdge & Edge & OneToOneConnection {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The node of the connection, without the edges"""
+  node: Bestallning! @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
 }
 
 """Connection between the Bestallning type and the Bestallning type"""
@@ -1074,9 +1253,6 @@ input BestallningToTagConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -1202,9 +1378,6 @@ input BestallningToTermNodeConnectionWhereArgs {
 
   """The Taxonomy to filter terms by"""
   taxonomies: [TaxonomyEnum]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
 
   """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
@@ -1390,8 +1563,17 @@ type Category implements DatabaseIdentifier & HierarchicalNode & HierarchicalTer
   """The globally unique ID for the object"""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is restricted from the current viewer"""
   isRestricted: Boolean
@@ -1829,9 +2011,6 @@ input CategoryToCategoryConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -2239,7 +2418,7 @@ type CategoryToTaxonomyConnectionEdge implements Edge & OneToOneConnection & Tax
 }
 
 """A Comment object"""
-type Comment implements DatabaseIdentifier & Node {
+type Comment implements DatabaseIdentifier & Node & UniformResourceIdentifiable {
   """
   User agent used to post the comment. This field is equivalent to WP_Comment-&gt;comment_agent and the value matching the &quot;comment_agent&quot; column in SQL.
   """
@@ -2254,9 +2433,9 @@ type Comment implements DatabaseIdentifier & Node {
   author: CommentToCommenterConnectionEdge
 
   """
-  IP address for the author. This field is equivalent to WP_Comment-&gt;comment_author_IP and the value matching the &quot;comment_author_IP&quot; column in SQL.
+  IP address for the author at the time of commenting. This field is equivalent to WP_Comment-&gt;comment_author_IP and the value matching the &quot;comment_author_IP&quot; column in SQL.
   """
-  authorIp: String
+  authorIp: String @deprecated(reason: "Use the ipAddress field on the edge between the comment and author")
 
   """ID for the comment, unique among comments."""
   commentId: Int @deprecated(reason: "Deprecated in favor of databaseId")
@@ -2288,13 +2467,31 @@ type Comment implements DatabaseIdentifier & Node {
   """The globally unique identifier for the comment object"""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
+  """Whether the node is a Content Node"""
+  isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
+
   """Whether the object is restricted from the current viewer"""
   isRestricted: Boolean
+
+  """Whether the node is a Term"""
+  isTermNode: Boolean!
 
   """
   Karma value for the comment. This field is equivalent to WP_Comment-&gt;comment_karma and the value matching the &quot;comment_karma&quot; column in SQL.
   """
   karma: Int
+
+  """The permalink of the comment"""
+  link: String
 
   """Connection between the Comment type and the Comment type"""
   parent(
@@ -2341,6 +2538,9 @@ type Comment implements DatabaseIdentifier & Node {
   Type of comment. This field is equivalent to WP_Comment-&gt;comment_type and the value matching the &quot;comment_type&quot; column in SQL.
   """
   type: String
+
+  """The unique resource identifier path"""
+  uri: String
 }
 
 """A Comment Author object"""
@@ -2581,8 +2781,8 @@ input CommentToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
@@ -2595,8 +2795,22 @@ type CommentToCommenterConnectionEdge implements CommenterConnectionEdge & Edge 
   """
   cursor: String
 
+  """The email address representing the author for this particular comment"""
+  email: String
+
+  """
+  IP address of the author at the time of making this comment. This field is equivalent to WP_Comment-&gt;comment_author_IP and the value matching the &quot;comment_author_IP&quot; column in SQL.
+  """
+  ipAddress: String
+
+  """The display name of the comment author for this particular comment"""
+  name: String
+
   """The node of the connection, without the edges"""
   node: Commenter!
+
+  """The url entered for the comment author on this particular comment"""
+  url: String
 }
 
 """Connection between the Comment type and the ContentNode type"""
@@ -2714,8 +2928,8 @@ input CommentToParentCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
@@ -2903,8 +3117,17 @@ interface ContentNode implements Node & UniformResourceIdentifiable {
   """The globally unique ID for the object"""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is a node in the preview state"""
   isPreview: Boolean
@@ -3212,6 +3435,9 @@ type ContentType implements Node & UniformResourceIdentifiable {
 
   """The globally unique identifier of the post-type object."""
   id: ID!
+
+  """Whether the node is a Comment"""
+  isComment: Boolean!
 
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
@@ -3646,7 +3872,14 @@ input CreateCategoryInput {
   """The name of the category object to mutate"""
   name: String!
 
-  """The ID of the category that should be set as the parent"""
+  """
+  The database ID of the category that should be set as the parent. This field cannot be used in conjunction with parentId
+  """
+  parentDatabaseId: Int
+
+  """
+  The ID of the category that should be set as the parent. This field cannot be used in conjunction with parentDatabaseId
+  """
   parentId: ID
 
   """
@@ -3668,9 +3901,6 @@ type CreateCategoryPayload {
 
 """Input for the createComment mutation."""
 input CreateCommentInput {
-  """The approval status of the comment."""
-  approved: String
-
   """The name of the comment's author."""
   author: String
 
@@ -4617,6 +4847,9 @@ interface EnqueuedAsset {
   """Extra information needed for the script"""
   extra: String @deprecated(reason: "Use `EnqueuedScript.extraData` instead.")
 
+  """The loading group to which this asset belongs."""
+  group: Int
+
   """The handle of the enqueued asset"""
   handle: String
 
@@ -4654,6 +4887,12 @@ type EnqueuedScript implements EnqueuedAsset & Node {
 
   """Extra data supplied to the enqueued script"""
   extraData: String
+
+  """The loading group to which this asset belongs."""
+  group: Int
+
+  """The location where this script should be loaded"""
+  groupLocation: ScriptLoadingGroupLocationEnum
 
   """The handle of the enqueued asset"""
   handle: String
@@ -4735,6 +4974,9 @@ type EnqueuedStylesheet implements EnqueuedAsset & Node {
 
   """Extra information needed for the script"""
   extra: String @deprecated(reason: "Use `EnqueuedScript.extraData` instead.")
+
+  """The loading group to which this asset belongs."""
+  group: Int
 
   """The handle of the enqueued asset"""
   handle: String
@@ -5004,8 +5246,17 @@ interface HierarchicalContentNode implements ContentNode & DatabaseIdentifier & 
   """The globally unique ID for the object"""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is a node in the preview state"""
   isPreview: Boolean
@@ -5361,8 +5612,17 @@ interface HierarchicalTermNode implements DatabaseIdentifier & HierarchicalNode 
   """The globally unique ID for the object"""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is restricted from the current viewer"""
   isRestricted: Boolean
@@ -5402,6 +5662,9 @@ interface HierarchicalTermNode implements DatabaseIdentifier & HierarchicalNode 
 type MediaDetails {
   """The filename of the mediaItem"""
   file: String
+
+  """The path to the mediaItem relative to the uploads directory"""
+  filePath: String
 
   """The height of the mediaItem"""
   height: Int
@@ -5592,6 +5855,20 @@ type MediaItem implements ContentNode & DatabaseIdentifier & HierarchicalContent
     last: Int
   ): ContentNodeToEnqueuedStylesheetConnection
 
+  """
+  The filename of the mediaItem for the specified size (default size is full)
+  """
+  file(
+    """Size of the MediaItem to return"""
+    size: MediaItemSizeEnum
+  ): String
+
+  """The path to the original file relative to the uploads directory"""
+  filePath(
+    """Size of the MediaItem to return"""
+    size: MediaItemSizeEnum
+  ): String
+
   """The filesize in bytes of the resource"""
   fileSize(
     """Size of the MediaItem to return"""
@@ -5603,11 +5880,23 @@ type MediaItem implements ContentNode & DatabaseIdentifier & HierarchicalContent
   """
   guid: String
 
+  """Whether the attachment object is password protected."""
+  hasPassword: Boolean
+
   """The globally unique identifier of the attachment object."""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is a node in the preview state"""
   isPreview: Boolean
@@ -5657,6 +5946,9 @@ type MediaItem implements ContentNode & DatabaseIdentifier & HierarchicalContent
 
   """The globally unique identifier of the parent node."""
   parentId: ID
+
+  """The password for the attachment object."""
+  password: String
 
   """The database id of the preview node"""
   previewRevisionDatabaseId: Int
@@ -5986,8 +6278,8 @@ input MediaItemToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
@@ -5997,6 +6289,9 @@ input MediaItemToCommentConnectionWhereArgs {
 type MediaSize {
   """The filename of the referenced size"""
   file: String
+
+  """The path of the file for the referenced size (default size is full)"""
+  filePath: String
 
   """The filesize of the resource"""
   fileSize: Int
@@ -6251,8 +6546,17 @@ interface MenuItemLinkable implements DatabaseIdentifier & Node & UniformResourc
   """The globally unique ID for the object"""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the node is a Term"""
   isTermNode: Boolean!
@@ -7146,8 +7450,14 @@ type Page implements ContentNode & DatabaseIdentifier & HierarchicalContentNode 
   """
   guid: String
 
+  """Whether the page object is password protected."""
+  hasPassword: Boolean
+
   """The globally unique identifier of the page object."""
   id: ID!
+
+  """Whether the node is a Comment"""
+  isComment: Boolean!
 
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
@@ -7205,6 +7515,9 @@ type Page implements ContentNode & DatabaseIdentifier & HierarchicalContentNode 
 
   """The globally unique identifier of the parent node."""
   parentId: ID
+
+  """The password for the page object."""
+  password: String
 
   """Connection between the Page type and the page type"""
   preview: PageToPreviewConnectionEdge
@@ -7468,8 +7781,8 @@ input PageToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
@@ -7700,6 +8013,25 @@ enum PluginStatusEnum {
 
 """The post type"""
 type Post implements ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithAuthor & NodeWithComments & NodeWithContentEditor & NodeWithExcerpt & NodeWithFeaturedImage & NodeWithRevisions & NodeWithTemplate & NodeWithTitle & NodeWithTrackbacks & Previewable & UniformResourceIdentifiable {
+  """The ancestors of the content node."""
+  ancestors(
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+  ): PostToPostConnection @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
   """Connection between the NodeWithAuthor type and the User type"""
   author: NodeWithAuthorToUserConnectionEdge
 
@@ -7857,11 +8189,23 @@ type Post implements ContentNode & DatabaseIdentifier & MenuItemLinkable & Node 
   """
   guid: String
 
+  """Whether the post object is password protected."""
+  hasPassword: Boolean
+
   """The globally unique identifier of the post object."""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is a node in the preview state"""
   isPreview: Boolean
@@ -7893,6 +8237,12 @@ type Post implements ContentNode & DatabaseIdentifier & MenuItemLinkable & Node 
   The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
   """
   modifiedGmt: String
+
+  """The parent of the content node."""
+  parent: PostToParentConnectionEdge @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+
+  """The password for the post object."""
+  password: String
 
   """Whether the pings are open or closed for this particular post."""
   pingStatus: String
@@ -8187,8 +8537,17 @@ type PostFormat implements DatabaseIdentifier & Node & TermNode & UniformResourc
   """The globally unique ID for the object"""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is restricted from the current viewer"""
   isRestricted: Boolean
@@ -8884,9 +9243,6 @@ input PostToCategoryConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -9023,11 +9379,61 @@ input PostToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
+}
+
+"""Connection between the Post type and the post type"""
+type PostToParentConnectionEdge implements Edge & OneToOneConnection & PostConnectionEdge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The node of the connection, without the edges"""
+  node: Post! @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+}
+
+"""Connection between the Post type and the post type"""
+type PostToPostConnection implements Connection & PostConnection {
+  """Edges for the PostToPostConnection connection"""
+  edges: [PostToPostConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [Post!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: PostToPostConnectionPageInfo!
+}
+
+"""An edge in a connection"""
+type PostToPostConnectionEdge implements Edge & PostConnectionEdge {
+  """A cursor for use in pagination"""
+  cursor: String @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
+  """The item at the end of the edge"""
+  node: Post! @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+}
+
+"""Page Info on the &quot;PostToPostConnection&quot;"""
+type PostToPostConnectionPageInfo implements PageInfo & PostConnectionPageInfo & WPPageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """Raw schema for page"""
+  seo: SEOPostTypePageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
 }
 
 """Connection between the Post type and the postFormat type"""
@@ -9149,9 +9555,6 @@ input PostToPostFormatConnectionWhereArgs {
 
   """Array of slugs to return term(s) for. Default empty."""
   slug: [String]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
 
   """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
@@ -9439,9 +9842,6 @@ input PostToTagConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -9569,9 +9969,6 @@ input PostToTermNodeConnectionWhereArgs {
   taxonomies: [TaxonomyEnum]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -9656,7 +10053,6 @@ type PostTypeLabelDetails {
   viewItems: String
 }
 
-""""""
 type PostTypeSEO {
   """"""
   breadcrumbs: [SEOPostTypeBreadcrumbs]
@@ -9763,6 +10159,25 @@ type ReadingSettings {
 
 """The Recept type"""
 type Recept implements ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithRevisions & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable {
+  """The ancestors of the content node."""
+  ancestors(
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+  ): ReceptToReceptConnection @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
   """Connection between the Recept type and the category type"""
   categories(
     """
@@ -9875,11 +10290,23 @@ type Recept implements ContentNode & DatabaseIdentifier & MenuItemLinkable & Nod
   """
   guid: String
 
+  """Whether the recept object is password protected."""
+  hasPassword: Boolean
+
   """The globally unique identifier of the recept object."""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is a node in the preview state"""
   isPreview: Boolean
@@ -9908,6 +10335,12 @@ type Recept implements ContentNode & DatabaseIdentifier & MenuItemLinkable & Nod
   The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
   """
   modifiedGmt: String
+
+  """The parent of the content node."""
+  parent: ReceptToParentConnectionEdge @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+
+  """The password for the recept object."""
+  password: String
 
   """Connection between the Recept type and the Recept type"""
   preview: ReceptToPreviewConnectionEdge
@@ -10276,13 +10709,21 @@ input ReceptToCategoryConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
   updateTermMetaCache: Boolean
+}
+
+"""Connection between the Recept type and the Recept type"""
+type ReceptToParentConnectionEdge implements Edge & OneToOneConnection & ReceptConnectionEdge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The node of the connection, without the edges"""
+  node: Recept! @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
 }
 
 """Connection between the Recept type and the Recept type"""
@@ -10294,6 +10735,45 @@ type ReceptToPreviewConnectionEdge implements Edge & OneToOneConnection & Recept
 
   """The node of the connection, without the edges"""
   node: Recept!
+}
+
+"""Connection between the Recept type and the Recept type"""
+type ReceptToReceptConnection implements Connection & ReceptConnection {
+  """Edges for the ReceptToReceptConnection connection"""
+  edges: [ReceptToReceptConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [Recept!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: ReceptToReceptConnectionPageInfo!
+}
+
+"""An edge in a connection"""
+type ReceptToReceptConnectionEdge implements Edge & ReceptConnectionEdge {
+  """A cursor for use in pagination"""
+  cursor: String @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
+  """The item at the end of the edge"""
+  node: Recept! @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+}
+
+"""Page Info on the &quot;ReceptToReceptConnection&quot;"""
+type ReceptToReceptConnectionPageInfo implements PageInfo & ReceptConnectionPageInfo & WPPageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """Raw schema for page"""
+  seo: SEOPostTypePageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
 }
 
 """Connection between the Recept type and the Recept type"""
@@ -10548,9 +11028,6 @@ input ReceptToTagConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -10676,9 +11153,6 @@ input ReceptToTermNodeConnectionWhereArgs {
 
   """The Taxonomy to filter terms by"""
   taxonomies: [TaxonomyEnum]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
 
   """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
@@ -12396,9 +12870,6 @@ input RootQueryToCategoryConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -12535,8 +13006,8 @@ input RootQueryToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
@@ -13408,9 +13879,6 @@ input RootQueryToPostFormatConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -13766,9 +14234,6 @@ input RootQueryToTagConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -13933,9 +14398,6 @@ input RootQueryToTermNodeConnectionWhereArgs {
 
   """The Taxonomy to filter terms by"""
   taxonomies: [TaxonomyEnum]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
 
   """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
@@ -14454,7 +14916,6 @@ type SEOPageInfoSchema {
   raw: String
 }
 
-""""""
 type SEOPostTypeBreadcrumbs {
   """"""
   text: String
@@ -14562,7 +15023,6 @@ type SEOSocial {
   youTube: SEOSocialYoutube
 }
 
-""""""
 type SEOSocialFacebook {
   """"""
   defaultImage: MediaItem
@@ -14571,25 +15031,21 @@ type SEOSocialFacebook {
   url: String
 }
 
-""""""
 type SEOSocialInstagram {
   """"""
   url: String
 }
 
-""""""
 type SEOSocialLinkedIn {
   """"""
   url: String
 }
 
-""""""
 type SEOSocialMySpace {
   """"""
   url: String
 }
 
-""""""
 type SEOSocialPinterest {
   """"""
   metaTag: String
@@ -14598,7 +15054,6 @@ type SEOSocialPinterest {
   url: String
 }
 
-""""""
 type SEOSocialTwitter {
   """"""
   cardType: SEOCardType
@@ -14607,13 +15062,11 @@ type SEOSocialTwitter {
   username: String
 }
 
-""""""
 type SEOSocialWikipedia {
   """"""
   url: String
 }
 
-""""""
 type SEOSocialYoutube {
   """"""
   url: String
@@ -14625,7 +15078,6 @@ type SEOTaxonomySchema {
   raw: String
 }
 
-""""""
 type SEOUser {
   """"""
   breadcrumbTitle: String
@@ -14691,7 +15143,6 @@ type SEOUserSchema {
   raw: String
 }
 
-""""""
 type SEOUserSocial {
   """"""
   facebook: String
@@ -14734,6 +15185,17 @@ type SEOWebmaster {
 
   """"""
   yandexVerify: String
+}
+
+"""Location in the document where the script to be loaded"""
+enum ScriptLoadingGroupLocationEnum {
+  """
+  A script to be loaded in document at right before the closing `<body>` tag
+  """
+  FOOTER
+
+  """A script to be loaded in document `<head>` tag"""
+  HEADER
 }
 
 """The strategy to use when loading the script"""
@@ -14925,8 +15387,17 @@ type Tag implements DatabaseIdentifier & MenuItemLinkable & Node & TermNode & Un
   """The globally unique ID for the object"""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is restricted from the current viewer"""
   isRestricted: Boolean
@@ -15773,7 +16244,6 @@ enum TaxonomyIdTypeEnum {
   NAME
 }
 
-""""""
 type TaxonomySEO {
   """"""
   breadcrumbs: [SEOPostTypeBreadcrumbs]
@@ -16004,8 +16474,17 @@ interface TermNode implements Node & UniformResourceIdentifiable {
   """The globally unique ID for the object"""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is restricted from the current viewer"""
   isRestricted: Boolean
@@ -16299,6 +16778,25 @@ interface ThemeConnectionPageInfo implements PageInfo & WPPageInfo {
 
 """The Tip type"""
 type Tip implements ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithRevisions & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable {
+  """The ancestors of the content node."""
+  ancestors(
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+  ): TipToTipConnection @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
   """The content of the post."""
   content(
     """Format of the field output"""
@@ -16389,11 +16887,23 @@ type Tip implements ContentNode & DatabaseIdentifier & MenuItemLinkable & Node &
   """
   guid: String
 
+  """Whether the tips object is password protected."""
+  hasPassword: Boolean
+
   """The globally unique identifier of the tips object."""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is a node in the preview state"""
   isPreview: Boolean
@@ -16422,6 +16932,12 @@ type Tip implements ContentNode & DatabaseIdentifier & MenuItemLinkable & Node &
   The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
   """
   modifiedGmt: String
+
+  """The parent of the content node."""
+  parent: TipToParentConnectionEdge @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+
+  """The password for the tips object."""
+  password: String
 
   """Connection between the Tip type and the Tip type"""
   preview: TipToPreviewConnectionEdge
@@ -16554,6 +17070,17 @@ enum TipIdType {
 }
 
 """Connection between the Tip type and the Tip type"""
+type TipToParentConnectionEdge implements Edge & OneToOneConnection & TipConnectionEdge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The node of the connection, without the edges"""
+  node: Tip! @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+}
+
+"""Connection between the Tip type and the Tip type"""
 type TipToPreviewConnectionEdge implements Edge & OneToOneConnection & TipConnectionEdge {
   """
   Opaque reference to the nodes position in the connection. Value can be used with pagination args.
@@ -16661,6 +17188,45 @@ input TipToRevisionConnectionWhereArgs {
   title: String
 }
 
+"""Connection between the Tip type and the Tip type"""
+type TipToTipConnection implements Connection & TipConnection {
+  """Edges for the TipToTipConnection connection"""
+  edges: [TipToTipConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [Tip!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: TipToTipConnectionPageInfo!
+}
+
+"""An edge in a connection"""
+type TipToTipConnectionEdge implements Edge & TipConnectionEdge {
+  """A cursor for use in pagination"""
+  cursor: String @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
+  """The item at the end of the edge"""
+  node: Tip! @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+}
+
+"""Page Info on the &quot;TipToTipConnection&quot;"""
+type TipToTipConnectionPageInfo implements PageInfo & TipConnectionPageInfo & WPPageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """Raw schema for page"""
+  seo: SEOPostTypePageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
 """Field Group"""
 type Tip_Tips implements AcfFieldGroup {
   """The name of the ACF Field Group"""
@@ -16675,8 +17241,17 @@ interface UniformResourceIdentifiable implements Node {
   """The globally unique ID for the object"""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the node is a Term"""
   isTermNode: Boolean!
@@ -16804,7 +17379,14 @@ input UpdateCategoryInput {
   """The name of the category object to mutate"""
   name: String
 
-  """The ID of the category that should be set as the parent"""
+  """
+  The database ID of the category that should be set as the parent. This field cannot be used in conjunction with parentId
+  """
+  parentDatabaseId: Int
+
+  """
+  The ID of the category that should be set as the parent. This field cannot be used in conjunction with parentDatabaseId
+  """
   parentId: ID
 
   """
@@ -16826,9 +17408,6 @@ type UpdateCategoryPayload {
 
 """Input for the updateComment mutation."""
 input UpdateCommentInput {
-  """The approval status of the comment."""
-  approved: String
-
   """The name of the comment's author."""
   author: String
 
@@ -17539,8 +18118,17 @@ type User implements Commenter & DatabaseIdentifier & Node & UniformResourceIden
   """The globally unique identifier for the user object."""
   id: ID!
 
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
   """Whether the node is a Content Node"""
   isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
 
   """Whether the object is restricted from the current viewer"""
   isRestricted: Boolean
@@ -17995,8 +18583,8 @@ input UserToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID

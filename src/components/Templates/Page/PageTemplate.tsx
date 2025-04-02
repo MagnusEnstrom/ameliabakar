@@ -12,5 +12,8 @@ export default async function PageTemplate({ node }: TemplateProps) {
     id: node.databaseId,
   });
 
-  return <div dangerouslySetInnerHTML={{ __html: page?.content || '' }} />;
+
+  console.log(page);
+
+  return <div dangerouslySetInnerHTML={{ __html: page?.content || '<p>Innehållet inte tillgängligt!</p>' }} />;
 }

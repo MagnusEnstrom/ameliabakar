@@ -31,6 +31,11 @@ export type ActionMonitorAction = ContentNode & DatabaseIdentifier & Node & Node
   actionMonitorActionId: Scalars['Int']['output'];
   /** The type of action (CREATE, UPDATE, DELETE) */
   actionType?: Maybe<Scalars['String']['output']>;
+  /**
+   * The ancestors of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  ancestors?: Maybe<ActionMonitorActionToActionMonitorActionConnection>;
   /** The content of the post. */
   content?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the ContentType type */
@@ -55,10 +60,18 @@ export type ActionMonitorAction = ContentNode & DatabaseIdentifier & Node & Node
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the action_monitor object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the action_monitor object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -73,6 +86,13 @@ export type ActionMonitorAction = ContentNode & DatabaseIdentifier & Node & Node
   modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
   modifiedGmt?: Maybe<Scalars['String']['output']>;
+  /**
+   * The parent of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  parent?: Maybe<ActionMonitorActionToParentConnectionEdge>;
+  /** The password for the action_monitor object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Connection between the ActionMonitorAction type and the ActionMonitorAction type */
   preview?: Maybe<ActionMonitorActionToPreviewConnectionEdge>;
   /** The preview data of the post that triggered this action. */
@@ -103,6 +123,15 @@ export type ActionMonitorAction = ContentNode & DatabaseIdentifier & Node & Node
   title?: Maybe<Scalars['String']['output']>;
   /** The unique resource identifier path */
   uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The ActionMonitorAction type */
+export type ActionMonitorActionAncestorsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -180,6 +209,59 @@ export enum ActionMonitorActionIdType {
 }
 
 /** Connection between the ActionMonitorAction type and the ActionMonitorAction type */
+export type ActionMonitorActionToActionMonitorActionConnection = ActionMonitorActionConnection & Connection & {
+  __typename?: 'ActionMonitorActionToActionMonitorActionConnection';
+  /** Edges for the ActionMonitorActionToActionMonitorActionConnection connection */
+  edges: Array<ActionMonitorActionToActionMonitorActionConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<ActionMonitorAction>;
+  /** Information about pagination in a connection. */
+  pageInfo: ActionMonitorActionToActionMonitorActionConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type ActionMonitorActionToActionMonitorActionConnectionEdge = ActionMonitorActionConnectionEdge & Edge & {
+  __typename?: 'ActionMonitorActionToActionMonitorActionConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The item at the end of the edge
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  node: ActionMonitorAction;
+};
+
+/** Page Info on the &quot;ActionMonitorActionToActionMonitorActionConnection&quot; */
+export type ActionMonitorActionToActionMonitorActionConnectionPageInfo = ActionMonitorActionConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'ActionMonitorActionToActionMonitorActionConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** Raw schema for page */
+  seo?: Maybe<SeoPostTypePageInfo>;
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Connection between the ActionMonitorAction type and the ActionMonitorAction type */
+export type ActionMonitorActionToParentConnectionEdge = ActionMonitorActionConnectionEdge & Edge & OneToOneConnection & {
+  __typename?: 'ActionMonitorActionToParentConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The node of the connection, without the edges
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  node: ActionMonitorAction;
+};
+
+/** Connection between the ActionMonitorAction type and the ActionMonitorAction type */
 export type ActionMonitorActionToPreviewConnectionEdge = ActionMonitorActionConnectionEdge & Edge & OneToOneConnection & {
   __typename?: 'ActionMonitorActionToPreviewConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
@@ -231,6 +313,11 @@ export enum AvatarRatingEnum {
 export type Bestallning = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithRevisions & NodeWithTemplate & Previewable & UniformResourceIdentifiable & {
   __typename?: 'Bestallning';
   /**
+   * The ancestors of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  ancestors?: Maybe<BestallningToBestallningConnection>;
+  /**
    * The id field matches the WP_Post-&gt;ID field.
    * @deprecated Deprecated in favor of the databaseId field
    */
@@ -259,10 +346,18 @@ export type Bestallning = ContentNode & DatabaseIdentifier & MenuItemLinkable & 
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the bestallning object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the bestallning object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -281,6 +376,13 @@ export type Bestallning = ContentNode & DatabaseIdentifier & MenuItemLinkable & 
   modifiedGmt?: Maybe<Scalars['String']['output']>;
   /** Added to the GraphQL Schema because the ACF Field Group &quot;Beställning&quot; was set to Show in GraphQL. */
   orderAFC?: Maybe<Bestallning_Orderafc>;
+  /**
+   * The parent of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  parent?: Maybe<BestallningToParentConnectionEdge>;
+  /** The password for the bestallning object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Connection between the Bestallning type and the Bestallning type */
   preview?: Maybe<BestallningToPreviewConnectionEdge>;
   /** The database id of the preview node */
@@ -305,6 +407,15 @@ export type Bestallning = ContentNode & DatabaseIdentifier & MenuItemLinkable & 
   terms?: Maybe<BestallningToTermNodeConnection>;
   /** The unique resource identifier path */
   uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The Bestallning type */
+export type BestallningAncestorsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -449,6 +560,47 @@ export type BestallningTagsNodeInput = {
   slug?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Connection between the Bestallning type and the Bestallning type */
+export type BestallningToBestallningConnection = BestallningConnection & Connection & {
+  __typename?: 'BestallningToBestallningConnection';
+  /** Edges for the BestallningToBestallningConnection connection */
+  edges: Array<BestallningToBestallningConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Bestallning>;
+  /** Information about pagination in a connection. */
+  pageInfo: BestallningToBestallningConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type BestallningToBestallningConnectionEdge = BestallningConnectionEdge & Edge & {
+  __typename?: 'BestallningToBestallningConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The item at the end of the edge
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  node: Bestallning;
+};
+
+/** Page Info on the &quot;BestallningToBestallningConnection&quot; */
+export type BestallningToBestallningConnectionPageInfo = BestallningConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'BestallningToBestallningConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** Raw schema for page */
+  seo?: Maybe<SeoPostTypePageInfo>;
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
 /** Connection between the Bestallning type and the category type */
 export type BestallningToCategoryConnection = CategoryConnection & Connection & {
   __typename?: 'BestallningToCategoryConnection';
@@ -525,11 +677,21 @@ export type BestallningToCategoryConnectionWhereArgs = {
   /** Array of slugs to return term(s) for. Default empty. */
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Connection between the Bestallning type and the Bestallning type */
+export type BestallningToParentConnectionEdge = BestallningConnectionEdge & Edge & OneToOneConnection & {
+  __typename?: 'BestallningToParentConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The node of the connection, without the edges
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  node: Bestallning;
 };
 
 /** Connection between the Bestallning type and the Bestallning type */
@@ -710,8 +872,6 @@ export type BestallningToTagConnectionWhereArgs = {
   /** Array of slugs to return term(s) for. Default empty. */
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
@@ -793,8 +953,6 @@ export type BestallningToTermNodeConnectionWhereArgs = {
   /** The Taxonomy to filter terms by */
   taxonomies?: InputMaybe<Array<InputMaybe<TaxonomyEnum>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
@@ -855,8 +1013,14 @@ export type Category = DatabaseIdentifier & HierarchicalNode & HierarchicalTermN
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -1216,8 +1380,6 @@ export type CategoryToCategoryConnectionWhereArgs = {
   /** Array of slugs to return term(s) for. Default empty. */
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1511,7 +1673,7 @@ export type CategoryToTaxonomyConnectionEdge = Edge & OneToOneConnection & Taxon
 };
 
 /** A Comment object */
-export type Comment = DatabaseIdentifier & Node & {
+export type Comment = DatabaseIdentifier & Node & UniformResourceIdentifiable & {
   __typename?: 'Comment';
   /** User agent used to post the comment. This field is equivalent to WP_Comment-&gt;comment_agent and the value matching the &quot;comment_agent&quot; column in SQL. */
   agent?: Maybe<Scalars['String']['output']>;
@@ -1522,7 +1684,10 @@ export type Comment = DatabaseIdentifier & Node & {
   approved?: Maybe<Scalars['Boolean']['output']>;
   /** The author of the comment */
   author?: Maybe<CommentToCommenterConnectionEdge>;
-  /** IP address for the author. This field is equivalent to WP_Comment-&gt;comment_author_IP and the value matching the &quot;comment_author_IP&quot; column in SQL. */
+  /**
+   * IP address for the author at the time of commenting. This field is equivalent to WP_Comment-&gt;comment_author_IP and the value matching the &quot;comment_author_IP&quot; column in SQL.
+   * @deprecated Use the ipAddress field on the edge between the comment and author
+   */
   authorIp?: Maybe<Scalars['String']['output']>;
   /**
    * ID for the comment, unique among comments.
@@ -1541,10 +1706,22 @@ export type Comment = DatabaseIdentifier & Node & {
   dateGmt?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier for the comment object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
+  /** Whether the node is a Content Node */
+  isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
+  /** Whether the node is a Term */
+  isTermNode: Scalars['Boolean']['output'];
   /** Karma value for the comment. This field is equivalent to WP_Comment-&gt;comment_karma and the value matching the &quot;comment_karma&quot; column in SQL. */
   karma?: Maybe<Scalars['Int']['output']>;
+  /** The permalink of the comment */
+  link?: Maybe<Scalars['String']['output']>;
   /** Connection between the Comment type and the Comment type */
   parent?: Maybe<CommentToParentCommentConnectionEdge>;
   /** The database id of the parent comment node or null if it is the root comment */
@@ -1557,6 +1734,8 @@ export type Comment = DatabaseIdentifier & Node & {
   status?: Maybe<CommentStatusEnum>;
   /** Type of comment. This field is equivalent to WP_Comment-&gt;comment_type and the value matching the &quot;comment_type&quot; column in SQL. */
   type?: Maybe<Scalars['String']['output']>;
+  /** The unique resource identifier path */
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -1751,8 +1930,8 @@ export type CommentToCommentConnectionWhereArgs = {
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']['input']>;
+  /** One or more Comment Statuses to limit results by */
+  statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -1762,8 +1941,16 @@ export type CommentToCommenterConnectionEdge = CommenterConnectionEdge & Edge & 
   __typename?: 'CommentToCommenterConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
   cursor?: Maybe<Scalars['String']['output']>;
+  /** The email address representing the author for this particular comment */
+  email?: Maybe<Scalars['String']['output']>;
+  /** IP address of the author at the time of making this comment. This field is equivalent to WP_Comment-&gt;comment_author_IP and the value matching the &quot;comment_author_IP&quot; column in SQL. */
+  ipAddress?: Maybe<Scalars['String']['output']>;
+  /** The display name of the comment author for this particular comment */
+  name?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Commenter;
+  /** The url entered for the comment author on this particular comment */
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the Comment type and the ContentNode type */
@@ -1840,8 +2027,8 @@ export type CommentToParentCommentConnectionWhereArgs = {
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']['input']>;
+  /** One or more Comment Statuses to limit results by */
+  statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -1944,8 +2131,14 @@ export type ContentNode = {
   guid?: Maybe<Scalars['String']['output']>;
   /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -2168,6 +2361,8 @@ export type ContentType = Node & UniformResourceIdentifiable & {
   hierarchical?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the post-type object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
   /** Whether this page is set to the static front page. */
@@ -2493,7 +2688,9 @@ export type CreateCategoryInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   /** The name of the category object to mutate */
   name: Scalars['String']['input'];
-  /** The ID of the category that should be set as the parent */
+  /** The database ID of the category that should be set as the parent. This field cannot be used in conjunction with parentId */
+  parentDatabaseId?: InputMaybe<Scalars['Int']['input']>;
+  /** The ID of the category that should be set as the parent. This field cannot be used in conjunction with parentDatabaseId */
   parentId?: InputMaybe<Scalars['ID']['input']>;
   /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -2510,8 +2707,6 @@ export type CreateCategoryPayload = {
 
 /** Input for the createComment mutation. */
 export type CreateCommentInput = {
-  /** The approval status of the comment. */
-  approved?: InputMaybe<Scalars['String']['input']>;
   /** The name of the comment's author. */
   author?: InputMaybe<Scalars['String']['input']>;
   /** The email of the comment's author. */
@@ -3177,6 +3372,8 @@ export type EnqueuedAsset = {
    * @deprecated Use `EnqueuedScript.extraData` instead.
    */
   extra?: Maybe<Scalars['String']['output']>;
+  /** The loading group to which this asset belongs. */
+  group?: Maybe<Scalars['Int']['output']>;
   /** The handle of the enqueued asset */
   handle?: Maybe<Scalars['String']['output']>;
   /** The ID of the enqueued asset */
@@ -3210,6 +3407,10 @@ export type EnqueuedScript = EnqueuedAsset & Node & {
   extra?: Maybe<Scalars['String']['output']>;
   /** Extra data supplied to the enqueued script */
   extraData?: Maybe<Scalars['String']['output']>;
+  /** The loading group to which this asset belongs. */
+  group?: Maybe<Scalars['Int']['output']>;
+  /** The location where this script should be loaded */
+  groupLocation?: Maybe<ScriptLoadingGroupLocationEnum>;
   /** The handle of the enqueued asset */
   handle?: Maybe<Scalars['String']['output']>;
   /** The global ID of the enqueued script */
@@ -3275,6 +3476,8 @@ export type EnqueuedStylesheet = EnqueuedAsset & Node & {
    * @deprecated Use `EnqueuedScript.extraData` instead.
    */
   extra?: Maybe<Scalars['String']['output']>;
+  /** The loading group to which this asset belongs. */
+  group?: Maybe<Scalars['Int']['output']>;
   /** The handle of the enqueued asset */
   handle?: Maybe<Scalars['String']['output']>;
   /** The global ID of the enqueued stylesheet */
@@ -3405,8 +3608,14 @@ export type HierarchicalContentNode = {
   guid?: Maybe<Scalars['String']['output']>;
   /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -3666,8 +3875,14 @@ export type HierarchicalTermNode = {
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -3715,6 +3930,8 @@ export type MediaDetails = {
   __typename?: 'MediaDetails';
   /** The filename of the mediaItem */
   file?: Maybe<Scalars['String']['output']>;
+  /** The path to the mediaItem relative to the uploads directory */
+  filePath?: Maybe<Scalars['String']['output']>;
   /** The height of the mediaItem */
   height?: Maybe<Scalars['Int']['output']>;
   /** Meta information associated with the mediaItem */
@@ -3777,14 +3994,26 @@ export type MediaItem = ContentNode & DatabaseIdentifier & HierarchicalContentNo
   enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
   /** Connection between the ContentNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
+  /** The filename of the mediaItem for the specified size (default size is full) */
+  file?: Maybe<Scalars['String']['output']>;
+  /** The path to the original file relative to the uploads directory */
+  filePath?: Maybe<Scalars['String']['output']>;
   /** The filesize in bytes of the resource */
   fileSize?: Maybe<Scalars['Int']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the attachment object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the attachment object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -3818,6 +4047,8 @@ export type MediaItem = ContentNode & DatabaseIdentifier & HierarchicalContentNo
   parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
   parentId?: Maybe<Scalars['ID']['output']>;
+  /** The password for the attachment object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** The database id of the preview node */
   previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
@@ -3900,6 +4131,18 @@ export type MediaItemEnqueuedStylesheetsArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** The mediaItem type */
+export type MediaItemFileArgs = {
+  size?: InputMaybe<MediaItemSizeEnum>;
+};
+
+
+/** The mediaItem type */
+export type MediaItemFilePathArgs = {
+  size?: InputMaybe<MediaItemSizeEnum>;
 };
 
 
@@ -4130,8 +4373,8 @@ export type MediaItemToCommentConnectionWhereArgs = {
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']['input']>;
+  /** One or more Comment Statuses to limit results by */
+  statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -4141,6 +4384,8 @@ export type MediaSize = {
   __typename?: 'MediaSize';
   /** The filename of the referenced size */
   file?: Maybe<Scalars['String']['output']>;
+  /** The path of the file for the referenced size (default size is full) */
+  filePath?: Maybe<Scalars['String']['output']>;
   /** The filesize of the resource */
   fileSize?: Maybe<Scalars['Int']['output']>;
   /** The height of the referenced size */
@@ -4324,8 +4569,14 @@ export type MenuItemLinkable = {
   databaseId: Scalars['Int']['output'];
   /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the node is a Term */
   isTermNode: Scalars['Boolean']['output'];
   /** The unique resource identifier path */
@@ -4901,8 +5152,12 @@ export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   featuredImageId?: Maybe<Scalars['ID']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the page object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the page object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
   /** Whether this page is set to the static front page. */
@@ -4940,6 +5195,8 @@ export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
   parentId?: Maybe<Scalars['ID']['output']>;
+  /** The password for the page object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Connection between the Page type and the page type */
   preview?: Maybe<PageToPreviewConnectionEdge>;
   /** The database id of the preview node */
@@ -5185,8 +5442,8 @@ export type PageToCommentConnectionWhereArgs = {
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']['input']>;
+  /** One or more Comment Statuses to limit results by */
+  statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -5357,6 +5614,11 @@ export enum PluginStatusEnum {
 /** The post type */
 export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithAuthor & NodeWithComments & NodeWithContentEditor & NodeWithExcerpt & NodeWithFeaturedImage & NodeWithRevisions & NodeWithTemplate & NodeWithTitle & NodeWithTrackbacks & Previewable & UniformResourceIdentifiable & {
   __typename?: 'Post';
+  /**
+   * The ancestors of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  ancestors?: Maybe<PostToPostConnection>;
   /** Connection between the NodeWithAuthor type and the User type */
   author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
   /** The database identifier of the author of the node */
@@ -5403,10 +5665,18 @@ export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & 
   featuredImageId?: Maybe<Scalars['ID']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the post object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the post object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -5425,6 +5695,13 @@ export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & 
   modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
   modifiedGmt?: Maybe<Scalars['String']['output']>;
+  /**
+   * The parent of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  parent?: Maybe<PostToParentConnectionEdge>;
+  /** The password for the post object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Whether the pings are open or closed for this particular post. */
   pingStatus?: Maybe<Scalars['String']['output']>;
   /** URLs that have been pinged. */
@@ -5464,6 +5741,15 @@ export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & 
   toPing?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The unique resource identifier path */
   uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The post type */
+export type PostAncestorsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -5631,8 +5917,14 @@ export type PostFormat = DatabaseIdentifier & Node & TermNode & UniformResourceI
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -6139,8 +6431,6 @@ export type PostToCategoryConnectionWhereArgs = {
   /** Array of slugs to return term(s) for. Default empty. */
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
@@ -6237,10 +6527,63 @@ export type PostToCommentConnectionWhereArgs = {
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']['input']>;
+  /** One or more Comment Statuses to limit results by */
+  statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+/** Connection between the Post type and the post type */
+export type PostToParentConnectionEdge = Edge & OneToOneConnection & PostConnectionEdge & {
+  __typename?: 'PostToParentConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The node of the connection, without the edges
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  node: Post;
+};
+
+/** Connection between the Post type and the post type */
+export type PostToPostConnection = Connection & PostConnection & {
+  __typename?: 'PostToPostConnection';
+  /** Edges for the PostToPostConnection connection */
+  edges: Array<PostToPostConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Post>;
+  /** Information about pagination in a connection. */
+  pageInfo: PostToPostConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type PostToPostConnectionEdge = Edge & PostConnectionEdge & {
+  __typename?: 'PostToPostConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The item at the end of the edge
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  node: Post;
+};
+
+/** Page Info on the &quot;PostToPostConnection&quot; */
+export type PostToPostConnectionPageInfo = PageInfo & PostConnectionPageInfo & WpPageInfo & {
+  __typename?: 'PostToPostConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** Raw schema for page */
+  seo?: Maybe<SeoPostTypePageInfo>;
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the Post type and the postFormat type */
@@ -6318,8 +6661,6 @@ export type PostToPostFormatConnectionWhereArgs = {
   search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
@@ -6512,8 +6853,6 @@ export type PostToTagConnectionWhereArgs = {
   /** Array of slugs to return term(s) for. Default empty. */
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
@@ -6594,8 +6933,6 @@ export type PostToTermNodeConnectionWhereArgs = {
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** The Taxonomy to filter terms by */
   taxonomies?: InputMaybe<Array<InputMaybe<TaxonomyEnum>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
@@ -6712,6 +7049,11 @@ export type ReadingSettings = {
 /** The Recept type */
 export type Recept = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithRevisions & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & {
   __typename?: 'Recept';
+  /**
+   * The ancestors of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  ancestors?: Maybe<ReceptToReceptConnection>;
   /** Connection between the Recept type and the category type */
   categories?: Maybe<ReceptToCategoryConnection>;
   /** The content of the post. */
@@ -6744,10 +7086,18 @@ export type Recept = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node 
   featuredImageId?: Maybe<Scalars['ID']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the recept object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the recept object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -6764,6 +7114,13 @@ export type Recept = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node 
   modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
   modifiedGmt?: Maybe<Scalars['String']['output']>;
+  /**
+   * The parent of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  parent?: Maybe<ReceptToParentConnectionEdge>;
+  /** The password for the recept object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Connection between the Recept type and the Recept type */
   preview?: Maybe<ReceptToPreviewConnectionEdge>;
   /** The database id of the preview node */
@@ -6797,6 +7154,15 @@ export type Recept = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node 
   title?: Maybe<Scalars['String']['output']>;
   /** The unique resource identifier path */
   uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The Recept type */
+export type ReceptAncestorsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -7029,11 +7395,21 @@ export type ReceptToCategoryConnectionWhereArgs = {
   /** Array of slugs to return term(s) for. Default empty. */
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Connection between the Recept type and the Recept type */
+export type ReceptToParentConnectionEdge = Edge & OneToOneConnection & ReceptConnectionEdge & {
+  __typename?: 'ReceptToParentConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The node of the connection, without the edges
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  node: Recept;
 };
 
 /** Connection between the Recept type and the Recept type */
@@ -7043,6 +7419,47 @@ export type ReceptToPreviewConnectionEdge = Edge & OneToOneConnection & ReceptCo
   cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Recept;
+};
+
+/** Connection between the Recept type and the Recept type */
+export type ReceptToReceptConnection = Connection & ReceptConnection & {
+  __typename?: 'ReceptToReceptConnection';
+  /** Edges for the ReceptToReceptConnection connection */
+  edges: Array<ReceptToReceptConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Recept>;
+  /** Information about pagination in a connection. */
+  pageInfo: ReceptToReceptConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type ReceptToReceptConnectionEdge = Edge & ReceptConnectionEdge & {
+  __typename?: 'ReceptToReceptConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The item at the end of the edge
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  node: Recept;
+};
+
+/** Page Info on the &quot;ReceptToReceptConnection&quot; */
+export type ReceptToReceptConnectionPageInfo = PageInfo & ReceptConnectionPageInfo & WpPageInfo & {
+  __typename?: 'ReceptToReceptConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** Raw schema for page */
+  seo?: Maybe<SeoPostTypePageInfo>;
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the Recept type and the Recept type */
@@ -7214,8 +7631,6 @@ export type ReceptToTagConnectionWhereArgs = {
   /** Array of slugs to return term(s) for. Default empty. */
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
@@ -7296,8 +7711,6 @@ export type ReceptToTermNodeConnectionWhereArgs = {
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** The Taxonomy to filter terms by */
   taxonomies?: InputMaybe<Array<InputMaybe<TaxonomyEnum>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
@@ -8634,8 +9047,6 @@ export type RootQueryToCategoryConnectionWhereArgs = {
   /** Array of slugs to return term(s) for. Default empty. */
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
@@ -8732,8 +9143,8 @@ export type RootQueryToCommentConnectionWhereArgs = {
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']['input']>;
+  /** One or more Comment Statuses to limit results by */
+  statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -9392,8 +9803,6 @@ export type RootQueryToPostFormatConnectionWhereArgs = {
   /** Array of slugs to return term(s) for. Default empty. */
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
@@ -9641,8 +10050,6 @@ export type RootQueryToTagConnectionWhereArgs = {
   /** Array of slugs to return term(s) for. Default empty. */
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
   updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
@@ -9758,8 +10165,6 @@ export type RootQueryToTermNodeConnectionWhereArgs = {
   slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** The Taxonomy to filter terms by */
   taxonomies?: InputMaybe<Array<InputMaybe<TaxonomyEnum>>>;
-  /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
   termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
@@ -10273,6 +10678,14 @@ export type SeoWebmaster = {
   yandexVerify?: Maybe<Scalars['String']['output']>;
 };
 
+/** Location in the document where the script to be loaded */
+export enum ScriptLoadingGroupLocationEnum {
+  /** A script to be loaded in document at right before the closing `<body>` tag */
+  Footer = 'FOOTER',
+  /** A script to be loaded in document `<head>` tag */
+  Header = 'HEADER'
+}
+
 /** The strategy to use when loading the script */
 export enum ScriptLoadingStrategyEnum {
   /** Use the script `async` attribute */
@@ -10363,8 +10776,14 @@ export type Tag = DatabaseIdentifier & MenuItemLinkable & Node & TermNode & Unif
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -11130,8 +11549,14 @@ export type TermNode = {
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -11366,6 +11791,11 @@ export type ThemeConnectionPageInfo = {
 /** The Tip type */
 export type Tip = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithRevisions & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & {
   __typename?: 'Tip';
+  /**
+   * The ancestors of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  ancestors?: Maybe<TipToTipConnection>;
   /** The content of the post. */
   content?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the ContentType type */
@@ -11396,10 +11826,18 @@ export type Tip = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & N
   featuredImageId?: Maybe<Scalars['ID']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']['output']>;
+  /** Whether the tips object is password protected. */
+  hasPassword?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the tips object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
   isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
@@ -11416,6 +11854,13 @@ export type Tip = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & N
   modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
   modifiedGmt?: Maybe<Scalars['String']['output']>;
+  /**
+   * The parent of the content node.
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  parent?: Maybe<TipToParentConnectionEdge>;
+  /** The password for the tips object. */
+  password?: Maybe<Scalars['String']['output']>;
   /** Connection between the Tip type and the Tip type */
   preview?: Maybe<TipToPreviewConnectionEdge>;
   /** The database id of the preview node */
@@ -11445,6 +11890,15 @@ export type Tip = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & N
   title?: Maybe<Scalars['String']['output']>;
   /** The unique resource identifier path */
   uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The Tip type */
+export type TipAncestorsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -11532,6 +11986,18 @@ export enum TipIdType {
 }
 
 /** Connection between the Tip type and the Tip type */
+export type TipToParentConnectionEdge = Edge & OneToOneConnection & TipConnectionEdge & {
+  __typename?: 'TipToParentConnectionEdge';
+  /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The node of the connection, without the edges
+   * @deprecated This content type is not hierarchical and typically will not have a parent
+   */
+  node: Tip;
+};
+
+/** Connection between the Tip type and the Tip type */
 export type TipToPreviewConnectionEdge = Edge & OneToOneConnection & TipConnectionEdge & {
   __typename?: 'TipToPreviewConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
@@ -11613,6 +12079,47 @@ export type TipToRevisionConnectionWhereArgs = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Connection between the Tip type and the Tip type */
+export type TipToTipConnection = Connection & TipConnection & {
+  __typename?: 'TipToTipConnection';
+  /** Edges for the TipToTipConnection connection */
+  edges: Array<TipToTipConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Tip>;
+  /** Information about pagination in a connection. */
+  pageInfo: TipToTipConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type TipToTipConnectionEdge = Edge & TipConnectionEdge & {
+  __typename?: 'TipToTipConnectionEdge';
+  /**
+   * A cursor for use in pagination
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /**
+   * The item at the end of the edge
+   * @deprecated This content type is not hierarchical and typically will not have ancestors
+   */
+  node: Tip;
+};
+
+/** Page Info on the &quot;TipToTipConnection&quot; */
+export type TipToTipConnectionPageInfo = PageInfo & TipConnectionPageInfo & WpPageInfo & {
+  __typename?: 'TipToTipConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** Raw schema for page */
+  seo?: Maybe<SeoPostTypePageInfo>;
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
 /** Field Group */
 export type Tip_Tips = AcfFieldGroup & {
   __typename?: 'Tip_Tips';
@@ -11625,8 +12132,14 @@ export type Tip_Tips = AcfFieldGroup & {
 export type UniformResourceIdentifiable = {
   /** The globally unique ID for the object */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the node is a Term */
   isTermNode: Scalars['Boolean']['output'];
   /** The unique resource identifier path */
@@ -11711,7 +12224,9 @@ export type UpdateCategoryInput = {
   id: Scalars['ID']['input'];
   /** The name of the category object to mutate */
   name?: InputMaybe<Scalars['String']['input']>;
-  /** The ID of the category that should be set as the parent */
+  /** The database ID of the category that should be set as the parent. This field cannot be used in conjunction with parentId */
+  parentDatabaseId?: InputMaybe<Scalars['Int']['input']>;
+  /** The ID of the category that should be set as the parent. This field cannot be used in conjunction with parentDatabaseId */
   parentId?: InputMaybe<Scalars['ID']['input']>;
   /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -11728,8 +12243,6 @@ export type UpdateCategoryPayload = {
 
 /** Input for the updateComment mutation. */
 export type UpdateCommentInput = {
-  /** The approval status of the comment. */
-  approved?: InputMaybe<Scalars['String']['input']>;
   /** The name of the comment's author. */
   author?: InputMaybe<Scalars['String']['input']>;
   /** The email of the comment's author. */
@@ -12157,8 +12670,14 @@ export type User = Commenter & DatabaseIdentifier & Node & UniformResourceIdenti
   firstName?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier for the user object. */
   id: Scalars['ID']['output'];
+  /** Whether the node is a Comment */
+  isComment: Scalars['Boolean']['output'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean']['output'];
+  /** Whether the node represents the front page. */
+  isFrontPage: Scalars['Boolean']['output'];
+  /** Whether  the node represents the blog page. */
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
   isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
@@ -12495,8 +13014,8 @@ export type UserToCommentConnectionWhereArgs = {
   parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
   search?: InputMaybe<Scalars['String']['input']>;
-  /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']['input']>;
+  /** One or more Comment Statuses to limit results by */
+  statusIn?: InputMaybe<Array<InputMaybe<CommentStatusEnum>>>;
   /** Include comments for a specific user ID. */
   userId?: InputMaybe<Scalars['ID']['input']>;
 };
