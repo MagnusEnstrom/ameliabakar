@@ -4,7 +4,7 @@
     "pnpm": ">=9"
   },
   "scripts": {
-    "dev": "graphql-codegen --config codegen.ts && node ./add-ts-nocheck.js && next dev",
+    "dev": "graphql-codegen --config codegen.ts && node ./add-ts-nocheck.js && next dev --turbopack",
     "build": "graphql-codegen --config codegen.ts && node ./add-ts-nocheck.js && next build",
     "start": "next start",
     "lint": "next lint",
@@ -14,39 +14,37 @@
     "@apollo/client": "^3.13.5",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@next/env": "^15.2.4",
-    "@tailwindcss/postcss": "^4.1.1",
     "firebase": "^11.6.0",
     "graphql": "^16.10.0",
     "graphql-tag": "^2.12.6",
-    "next": "^15.2.3",
-    "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "next": "15.2.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3",
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/client-preset": "4.3.3",
     "@graphql-codegen/schema-ast": "^4.1.0",
     "@parcel/watcher": "^2.5.1",
-    "@types/node": "^20.17.30",
-    "@types/react": "^18.3.20",
-    "@types/react-dom": "^18.3.5",
+    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/forms": "^0.5.10",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",
-    "eslint": "^9.23.0",
-    "eslint-config-next": "latest",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.4",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.5",
     "eslint-plugin-react": "^7.37.4",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
-    "tailwindcss": "^4.1.1",
-    "typescript": "^5.8.2"
+    "tailwindcss": "^4",
+    "typescript": "^5"
   },
   "pnpm": {
     "overrides": {
-      "react": "19.0.0-rc-cd22717c-20241013",
-      "react-dom": "19.0.0-rc-cd22717c-20241013",
-      "@types/react": "npm:types-react@19.0.0-rc.1",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
       "ws@>=8.0.0 <8.17.1": ">=8.17.1",
       "cookie@<0.7.0": ">=0.7.0"
     },

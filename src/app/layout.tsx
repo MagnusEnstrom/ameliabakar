@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 
 import '@/app/globals.css';
 
-import Navigation from '@/components/Globals/Navigation/Navigation';
+import Navigation from '@/components/Globals/Navigation/navigation';
 import Footer from '@/components/Globals/Footer/footer';
 //import { PreviewNotice } from '@/components/Globals/PreviewNotice/PreviewNotice';
 

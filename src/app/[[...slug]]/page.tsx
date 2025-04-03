@@ -48,9 +48,9 @@ export function generateStaticParams() {
 
 export default async function Page(props: { params: Params, searchParams: SearchParams }) {
   const params = await props.params;
-  const searchParams = await props.searchParams;
+  //const searchParams = await props.searchParams;
   const slug = nextSlugToWpSlug(params.slug);
-  const query = searchParams.query;
+  //const query = searchParams.query;
 
   const isPreview = slug.includes('preview');
   const { contentNode } = await fetchGraphQL<{ contentNode: ContentNode }>(
